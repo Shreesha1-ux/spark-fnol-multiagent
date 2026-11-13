@@ -1,0 +1,34 @@
+{
+  "_comment": "Realistic Indian motor insurance repair cost estimates in INR (2026). Zone × Severity matrix.",
+  "_attribution": "Estimates based on IRDAI workshop survey data and market averages. Synthetic for demo purposes.",
+  "front": {
+    "Minor": 8000,
+    "Moderate": 35000,
+    "Severe": 90000
+  },
+  "rear": {
+    "Minor": 7000,
+    "Moderate": 30000,
+    "Severe": 80000
+  },
+  "left": {
+    "Minor": 5000,
+    "Moderate": 22000,
+    "Severe": 60000
+  },
+  "right": {
+    "Minor": 5000,
+    "Moderate": 22000,
+    "Severe": 60000
+  },
+  "corners": {
+    "Minor": 4000,
+    "Moderate": 18000,
+    "Severe": 45000
+  },
+  "roof_windshield": {
+    "Minor": 6000,
+    "Moderate": 28000,
+    "Severe": 75000
+  }
+}
