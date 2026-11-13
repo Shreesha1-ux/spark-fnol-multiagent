@@ -220,7 +220,7 @@
       "injuries": false,
       "third_party": true,
       "police_report": false,
-      "claim_status": "STUCK",
+      "claim_status": "DISCARDED",
       "current_stage": "2 COVERAGE",
       "stages_completed": [
         "1 INTAKE & TRIAGE"
@@ -251,7 +251,7 @@
       "coverage_result": null,
       "fraud_report": null,
       "final_tier": null,
-      "headline_summary": "Loss date precedes policy effective date by 2 days — coverage gate failed",
+      "headline_summary": "Discarded — dismissed by Adjuster. Adjuster note: Adjuster dismissed claim",
       "what_spark_did": "Spark executed deterministic policy schedule validation. The incident date reported precedes policy inception. Per core protocol, auto-rejection is prohibited; claim escalated to desk adjuster.",
       "recommendation_title": "Coverage Gate Failed — Adjuster Review Required",
       "confidence_score": 12,
@@ -278,6 +278,13 @@
           "agent_or_tool": "Desk Adjuster (Human)",
           "purpose": "Surveyor Assignment",
           "result_summary": "Claim dispatched to Senior Surveyor for physical inspection. (AI Recommendation: Senior Surveyor — Claim involves bodily injury or third-party liability requiring senior oversight.)."
+        },
+        {
+          "timestamp": "2026-11-13T21:16:35.716867+00:00",
+          "stage": "2 COVERAGE",
+          "agent_or_tool": "Desk Adjuster (Human)",
+          "purpose": "Dismiss / reject recommendation",
+          "result_summary": "Claim dismissed/rejected by adjuster. Adjuster note: Adjuster dismissed claim"
         }
       ],
       "chat_history": []
