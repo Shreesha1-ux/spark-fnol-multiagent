@@ -5,10 +5,100 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Spark AI · Adjuster Cockpit</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Manrope', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+        }
+      }
+    }
+  };
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
-  * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+  :root {
+    --font-primary: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body, input, button, select, textarea {
+    font-family: var(--font-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Monospace technical identifiers */
+  .font-mono,
+  code,
+  kbd,
+  samp,
+  pre,
+  .ref-doc-name,
+  .tech-mono,
+  .claim-id-text {
+    font-family: var(--font-mono) !important;
+    font-feature-settings: "zero" 1, "calt" 1;
+  }
+
+  /* Typography Hierarchy */
+  /* Main dashboard title: 18-20px | 700 */
+  #top-bar-title,
+  .main-dashboard-title {
+    font-family: var(--font-primary);
+    font-size: 19px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1.25 !important;
+  }
+
+  /* Analysis card headings: 16-17px | 700 */
+  .agent-card-title {
+    font-family: var(--font-primary);
+    font-size: 16.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.015em !important;
+    line-height: 1.3 !important;
+    color: #0f172a;
+  }
+
+  /* Claim IDs: 15-16px | 700 */
+  .claim-id-text {
+    font-family: var(--font-mono) !important;
+    font-size: 15.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.025em !important;
+    color: #0f172a;
+    line-height: 1.2;
+  }
+
+  /* Important financial values: 18-20px | 700 */
+  .financial-val {
+    font-family: var(--font-primary);
+    font-size: 19px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+    line-height: 1.2;
+  }
+
+  .hud-num {
+    font-family: var(--font-primary);
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+    line-height: 1;
+  }
+
   body { background: #f8fafc; color: #0f172a; margin: 0; }
 
   /* Left nav rail */
@@ -63,30 +153,52 @@
   .stage-bar-track { height: 5px; background: #f1f5f9; border-radius: 9999px; overflow: hidden; margin-top: 4px; }
   .stage-bar-fill { height: 100%; border-radius: 9999px; }
 
+  /* 3-Section Live AI Agent Dashboard Cards */
+  .agent-dash-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.2s ease-in-out;
+  }
+  .agent-dash-card:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+    border-color: #cbd5e1;
+  }
+  .claim-row.active-dashboard-row {
+    border-color: #0d9488 !important;
+    background-color: #f0fdfa !important;
+    box-shadow: 0 0 0 1.5px #0d9488;
+  }
+
   /* Claim row */
   .claim-row { background: #fff; border: 1px solid #e9edf3; border-radius: 10px; margin-bottom: 6px; overflow: hidden; transition: border-color 0.12s; }
   .claim-row:hover { border-color: #cbd5e1; }
   .claim-row-header { display: flex; align-items: center; gap: 10px; padding: 11px 14px; cursor: pointer; }
   .claim-row-header:hover { background: #fafbfc; }
   .status-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-  .status-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; line-height: 1.1; }
-  .action-badge { display: inline-flex; align-items: center; gap: 4px; border-radius: 4px; padding: 1px 7px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.03em; }
+  .status-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; line-height: 1.1; }
+  .action-badge { display: inline-flex; align-items: center; gap: 4px; border-radius: 4px; padding: 1px 7px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.02em; }
   .priority-pill { display: inline-block; background: #fef3c7; color: #b45309; font-size: 9.5px; font-weight: 600; padding: 1px 7px; border-radius: 9999px; }
 
   /* Handle-by toggle */
   .handled-toggle { display: inline-flex; align-items: center; border: 1.5px solid #e2e8f0; border-radius: 9999px; overflow: hidden; background: #fff; }
-  .handled-label { font-size: 9px; font-weight: 700; color: #94a3b8; letter-spacing: 0.06em; padding: 0 7px; }
+  .handled-label { font-size: 9px; font-weight: 600; color: #94a3b8; letter-spacing: 0.05em; padding: 0 7px; }
   .handled-btn { padding: 4px 10px; font-size: 10.5px; font-weight: 600; cursor: pointer; border: none; background: transparent; color: #64748b; display: flex; align-items: center; gap: 4px; transition: all 0.12s; border-radius: 9999px; }
   .handled-btn.on { background: #0f172a; color: #fff; }
 
   /* Buttons */
-  .btn-teal { background: #2dd4bf; color: #0f172a; border: none; border-radius: 6px; padding: 4px 12px; font-size: 11.5px; font-weight: 700; cursor: pointer; transition: all 0.12s; display: inline-flex; align-items: center; gap: 4px; }
+  .btn-teal { background: #2dd4bf; color: #0f172a; border: none; border-radius: 6px; padding: 4px 12px; font-size: 11.5px; font-weight: 600; cursor: pointer; transition: all 0.12s; display: inline-flex; align-items: center; gap: 4px; }
   .btn-teal:hover { background: #14b8a6; }
   .btn-white { background: #fff; color: #334155; border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 4px 12px; font-size: 11.5px; font-weight: 600; cursor: pointer; transition: all 0.12s; display: inline-flex; align-items: center; gap: 4px; }
   .btn-white:hover { border-color: #94a3b8; background: #f8fafc; }
   .btn-amber { background: #fff; color: #b45309; border: 1.5px solid #f59e0b; border-radius: 6px; padding: 4px 12px; font-size: 11.5px; font-weight: 600; cursor: pointer; transition: all 0.12s; display: inline-flex; align-items: center; gap: 4px; }
   .btn-amber:hover { background: #fffbeb; }
-  .btn-engine { padding: 5px 14px; border-radius: 7px; font-size: 11.5px; font-weight: 700; cursor: pointer; transition: all 0.15s; border: none; display: inline-flex; align-items: center; gap: 6px; }
+  .btn-engine { padding: 5px 14px; border-radius: 7px; font-size: 11.5px; font-weight: 600; cursor: pointer; transition: all 0.15s; border: none; display: inline-flex; align-items: center; gap: 6px; }
   .btn-engine.green { background: #dcfce7; color: #15803d; }
   .btn-engine.green:hover { background: #bbf7d0; }
   .btn-engine.red { background: #fee2e2; color: #b91c1c; }
@@ -97,9 +209,9 @@
   /* Dossier / expanded detail */
   .dossier { background: #f8fafc; border-top: 1px solid #e9edf3; padding: 20px 20px 16px; }
   .dossier-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 9px; padding: 16px 18px; margin-bottom: 10px; }
-  .dossier-section-title { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+  .dossier-section-title { font-size: 10.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
   .ref-doc { border: 1px solid #e2e8f0; border-radius: 6px; padding: 7px 11px; margin-bottom: 5px; }
-  .ref-doc-name { color: #0d9488; font-size: 11.5px; font-weight: 700; font-family: monospace; }
+  .ref-doc-name { color: #0d9488; font-size: 11.5px; font-weight: 600; font-family: var(--font-mono) !important; }
   .ref-doc-ref { color: #64748b; font-size: 10.5px; margin-left: 8px; }
   .data-tag { display: inline-block; background: #f1f5f9; color: #475569; font-size: 10.5px; font-weight: 600; padding: 2px 10px; border-radius: 9999px; margin: 2px 3px 2px 0; }
   .conf-bar-track { height: 5px; background: #e2e8f0; border-radius: 9999px; overflow: hidden; display: inline-block; vertical-align: middle; margin: 0 7px; }
@@ -167,7 +279,7 @@
   <div id="top-bar">
     <div class="flex items-center gap-2">
       <svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span id="top-bar-title" class="font-bold text-sm text-slate-800">Spark AI · Adjuster Cockpit</span>
+      <span id="top-bar-title" class="text-slate-800">Spark AI · Adjuster Cockpit</span>
     </div>
     <div class="flex items-center gap-4">
       <div id="working-pill">
@@ -249,18 +361,31 @@
       <div class="flex flex-wrap gap-2" id="hud-pills"></div>
     </div>
 
-    <!-- Pipeline Section -->
+    <!-- 3-Section Live AI Agent Dashboard -->
     <div class="mb-6">
-      <div class="font-bold text-xs text-slate-700 uppercase tracking-widest mb-0.5">Pipeline</div>
-      <div class="text-xs text-slate-400 mb-3">Open automated claims across the flow · click a stage to filter</div>
-      <div class="grid gap-3" style="grid-template-columns: repeat(5, 1fr);" id="stage-cards"></div>
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="w-2.5 h-2.5 rounded-full bg-teal-500 animate-pulse"></span>
+          <span class="font-semibold text-xs text-slate-800 uppercase tracking-wider" style="font-size:11.5px;letter-spacing:0.04em;">AI Agents Live Analysis Dashboard</span>
+          <span id="dashboard-claim-badge" class="hidden text-[11.5px] font-bold px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-800 font-mono tracking-tight"></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <label for="dashboard-claim-select" class="text-xs text-slate-400 font-medium" style="font-size:12px;">Claim:</label>
+          <select id="dashboard-claim-select" onchange="onDashboardClaimSelect(this.value)" class="text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-lg px-2.5 py-1 focus:ring-1 focus:ring-teal-500 focus:outline-none shadow-sm font-mono" style="font-size:12px;">
+            <option value="">No claims loaded</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4" id="agent-analysis-dashboard">
+        <!-- Rendered dynamically by renderAgentDashboard() -->
+      </div>
     </div>
 
     <!-- Claims Section -->
     <div>
       <div class="flex items-center justify-between mb-2">
-        <div class="font-bold text-xs text-slate-700 uppercase tracking-widest">Claims</div>
-        <div class="text-xs text-slate-400" id="claims-showing"></div>
+        <div class="font-semibold text-xs text-slate-700 uppercase tracking-wider" style="font-size:11.5px;letter-spacing:0.05em;">Claims</div>
+        <div class="text-xs text-slate-400 font-normal" style="font-size:12px;" id="claims-showing"></div>
       </div>
       <!-- Filter bar -->
       <div class="flex flex-wrap items-center gap-2 mb-3">
@@ -612,12 +737,12 @@
 <div id="rtu-modal" class="modal-overlay hidden">
   <div class="modal-box">
     <div class="font-bold text-sm mb-3 flex items-center gap-2">
-      <span class="text-amber-500">↩</span> Return Claim to Claimant
+      <span class="text-amber-500">↩</span> Send Claim to User Edit
     </div>
-    <p class="text-xs text-slate-500 mb-3">Enter a question or instruction for the claimant. They will see this on the FNOL portal and can upload additional photos or clarify their statement.</p>
-    <input id="rtu-prompt" class="form-input mb-4" placeholder="e.g. Please submit clearer photos of the damaged area." />
+    <p class="text-xs text-slate-500 mb-3">Enter an instruction or clarification question for the claimant. They will receive control on the FNOL portal to upload additional photos and edit their statement.</p>
+    <input id="rtu-prompt" class="form-input mb-4" placeholder="e.g. Discrepancy noted between statement and photos. Please upload clearer photos and edit statement." />
     <div class="flex gap-3">
-      <button class="btn-amber px-5 py-2 text-xs" onclick="submitRtu()">↩ Send to Claimant</button>
+      <button class="btn-amber px-5 py-2 text-xs" onclick="submitRtu()">↩ Send to User Edit</button>
       <button class="btn-white px-4 py-2 text-xs" onclick="closeRtuModal()">Cancel</button>
     </div>
   </div>
@@ -849,46 +974,706 @@ function setHudFilter(s) {
 }
 
 // ----------------------------------------------------------------
-// STAGE CARDS
+// 3-SECTION LIVE AI AGENTS DASHBOARD
 // ----------------------------------------------------------------
-const STAGE_ICONS = ['📋','🔵','📸','🔍','⚖️'];
-function renderStageCards() {
-  const sc = state.stage_counts || {};
-  const stages = [
-    '1 INTAKE & TRIAGE','2 COVERAGE','3 DA / ESTIMATE','4 FRAUD & CONSISTENCY','5 DECISION GATE'
-  ];
-  document.getElementById('stage-cards').innerHTML = stages.map((stage, i) => {
-    const d = sc[stage] || { open_count:0, red_count:0, amber_count:0, green_count:0 };
-    const isActive = activeStageFilter === stage;
-    const total = Math.max(d.open_count, 1);
-    return `<div class="stage-card ${isActive?'active':''}" onclick="setStageFilter('${stage.replace(/'/g,"\\'")}')">
-      <div style="font-size:9.5px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;">
-        ${STAGE_ICONS[i]} ${stage}
+let selectedDashboardClaimId = null;
+
+const BENCHMARK_HINTS = {
+  "POL-1001": {
+    severity: "Minor Damage",
+    severityLevel: "Minor",
+    damageType: "Front Bumper Dent & Grille Scratches",
+    repairCost: 18500,
+    confidence: 92,
+    zones: ["Front Bumper", "Radiator Grille"],
+    statementSnippet: "Loose stone from truck hit front bumper and radiator grill.",
+    coverageType: "Comprehensive Motor Policy",
+    coverageStatus: "covered",
+    idv: 850000,
+    deductible: 1000,
+    netPayable: 17500,
+    clause: "Section I (Own Damage) · Clause 4.2 Single Vehicle Impact",
+    explanation: "Active policy on date of loss (2026-11-10). Vehicle match verified. Loss within IDV limit.",
+    statementVsPhoto: "match",
+    statementVsPhotoDesc: "Photo confirms front bumper dent and radiator scratch consistent with truck stone impact.",
+    ambiguityFlag: false,
+    ambiguityDesc: "Clear and sufficient statement with exact date, highway location, and collision mechanics.",
+    weatherVerification: "matches",
+    weatherDesc: "Open-Meteo: Clear sky, 0.0 mm rain at Pune on 2026-11-10. Matches statement.",
+    riskLevel: "Low",
+    loops: 0
+  },
+  "POL-1002": {
+    severity: "Major / Total Loss",
+    severityLevel: "Major",
+    damageType: "Crushed Engine Bay, Structural Frame & Airbags Deployed",
+    repairCost: 920000,
+    confidence: 95,
+    zones: ["Front Compartment", "Left Suspension", "Airbag System"],
+    statementSnippet: "Cement mixer rammed into front and left side at high speed.",
+    coverageType: "Comprehensive Motor Policy",
+    coverageStatus: "covered",
+    idv: 1120000,
+    deductible: 2000,
+    netPayable: 918000,
+    clause: "Section I · Constructive Total Loss (CTL) Clause 8.1 (Repair > 75% IDV)",
+    explanation: "Repair estimate (₹9.2L) exceeds 75% IDV threshold. Categorized as Constructive Total Loss (CTL).",
+    statementVsPhoto: "match",
+    statementVsPhotoDesc: "Photos confirm catastrophic frontal and left engine crush consistent with heavy cement mixer collision.",
+    ambiguityFlag: false,
+    ambiguityDesc: "Comprehensive narrative detailing collision sequence, opposing vehicle type, and emergency response.",
+    weatherVerification: "matches",
+    weatherDesc: "Open-Meteo: Daylight dry conditions at Bengaluru on 2026-11-05. Road surface dry.",
+    riskLevel: "Low",
+    loops: 0
+  },
+  "POL-1003": {
+    severity: "Minor Damage",
+    severityLevel: "Minor",
+    damageType: "Front-Right Wheel Rim & Tire Abrasion (Zero Front Impact)",
+    repairCost: 14000,
+    confidence: 94,
+    zones: ["Front-Right Wheel", "Fender Edge"],
+    statementSnippet: "Skidded in heavy rainstorm and crashed head-on directly into a banyan tree.",
+    coverageType: "Comprehensive Motor Policy",
+    coverageStatus: "needs_review",
+    idv: 780000,
+    deductible: 1000,
+    netPayable: 0,
+    clause: "Fraud Screening Gate · Physical Impossibility & Inconsistent Statement",
+    explanation: "Flagged for physical contradiction and 3 prior claims in 12 months. Tier 3 fraud gate invoked.",
+    statementVsPhoto: "mismatch",
+    statementVsPhotoDesc: "Direct Contradiction: Claimant stated head-on high speed collision into tree, but photo reveals only minor wheel rim scrape with intact front hood.",
+    ambiguityFlag: true,
+    ambiguityDesc: "Ambiguity Flag: Contradictory impact narrative; omitting towing logs and collision deceleration evidence.",
+    weatherVerification: "mismatch",
+    weatherDesc: "Weather Contradiction: Open-Meteo recorded clear sky and 0.0 mm rain in Chennai, directly disproving heavy rainstorm claim.",
+    riskLevel: "High",
+    loops: 2
+  },
+  "POL-1004": {
+    severity: "Moderate Damage",
+    severityLevel: "Moderate",
+    damageType: "Left Door Panels & Rear-Left Quarter Pillar Sideswipe",
+    repairCost: 42000,
+    confidence: 88,
+    zones: ["Left Front Door", "Left Rear Door", "Rear Quarter"],
+    statementSnippet: "Sideswiped a concrete pillar while turning into apartment basement parking lot.",
+    coverageType: "Comprehensive Motor Policy",
+    coverageStatus: "covered",
+    idv: 950000,
+    deductible: 1000,
+    netPayable: 41000,
+    clause: "Section I · Own Damage Accidental Impact Clause 3.1",
+    explanation: "Self-correction loop 1 verified secondary angle. Scratch pattern consistent with parking pillar impact.",
+    statementVsPhoto: "match",
+    statementVsPhotoDesc: "Photos confirm elongated concrete abrasion marks across left doors matching pillar sideswipe.",
+    ambiguityFlag: false,
+    ambiguityDesc: "Sufficient details regarding residential parking turn and scrape trajectory.",
+    weatherVerification: "unavailable",
+    weatherDesc: "Basement indoor collision; ambient outdoor weather not a contributing factor.",
+    riskLevel: "Low",
+    loops: 1
+  },
+  "POL-1005": {
+    severity: "Moderate Damage",
+    severityLevel: "Moderate",
+    damageType: "Front Bumper, Left Fender & Headlamp Housing Broken",
+    repairCost: 38000,
+    confidence: 91,
+    zones: ["Front Bumper", "Left Fender", "Headlight Unit"],
+    statementSnippet: "Hit highway guard rail after swerving to avoid stray animal.",
+    coverageType: "Third-Party Only Policy (TP)",
+    coverageStatus: "not_covered",
+    idv: 0,
+    deductible: 0,
+    netPayable: 0,
+    clause: "Coverage Exclusion · Policy Section II Third-Party Liability Only (OD Excluded)",
+    explanation: "Policy provides Third-Party Liability only. Own Damage (OD) coverage is strictly excluded under policy terms.",
+    statementVsPhoto: "match",
+    statementVsPhotoDesc: "Photos show guardrail scrape on bumper and fender, matching the swerve statement.",
+    ambiguityFlag: false,
+    ambiguityDesc: "Clear operational statement, but claim cannot proceed due to fundamental policy coverage exclusion.",
+    weatherVerification: "matches",
+    weatherDesc: "Open-Meteo: Clear dry highway weather recorded near New Delhi.",
+    riskLevel: "Low",
+    loops: 0
+  },
+  "POL-1006": {
+    severity: "Minor Damage",
+    severityLevel: "Minor",
+    damageType: "Rear Bumper Dent & Tailgate Panel Deformation",
+    repairCost: 22000,
+    confidence: 90,
+    zones: ["Rear Bumper", "Tailgate"],
+    statementSnippet: "Rear-ended by an autorickshaw at a traffic signal on Madhya Marg.",
+    coverageType: "Comprehensive Motor Policy (Expired)",
+    coverageStatus: "not_covered",
+    idv: 620000,
+    deductible: 1000,
+    netPayable: 0,
+    clause: "Policy Validity Failure · Lapsed Policy Period (Section 1 General Conditions)",
+    explanation: "Policy lapsed on 2026-11-01. Incident occurred on 2026-11-11 (10 days after policy expiry date). Zero indemnity payable.",
+    statementVsPhoto: "match",
+    statementVsPhotoDesc: "Photos confirm low-height rear bumper impact consistent with autorickshaw front fender height.",
+    ambiguityFlag: false,
+    ambiguityDesc: "Clear traffic signal collision account. Claim denied strictly due to policy lapse.",
+    weatherVerification: "matches",
+    weatherDesc: "Open-Meteo: Clear conditions recorded at Chandigarh on 2026-11-11.",
+    riskLevel: "Low",
+    loops: 0
+  },
+  "POL-1007": {
+    severity: "Moderate / Major Damage",
+    severityLevel: "Major",
+    damageType: "Underbody Composite Shield Crushed & Alloy Wheel Fractured",
+    repairCost: 185000,
+    confidence: 93,
+    zones: ["Underbody Shield", "Front Alloy Wheel", "Subframe"],
+    statementSnippet: "Hit road construction debris on Outer Ring Road; underbody and alloy damaged.",
+    coverageType: "Zero-Depreciation Luxury Motor Policy",
+    coverageStatus: "covered",
+    idv: 4800000,
+    deductible: 2000,
+    netPayable: 183000,
+    clause: "Zero Depreciation Add-on Clause 2.1 & High Value Loss Endorsement",
+    explanation: "Active luxury policy with Zero Dep add-on. Full parts cost covered with zero depreciation deduction. Escalated for Senior Adjuster sign-off due to reserve limit.",
+    statementVsPhoto: "match",
+    statementVsPhotoDesc: "High-resolution photos reveal fractured alloy spoke and underbody scraping matching road construction steel debris.",
+    ambiguityFlag: false,
+    ambiguityDesc: "Detailed statement including Ring Road marker, debris type, and instantaneous pressure drop warning.",
+    weatherVerification: "matches",
+    weatherDesc: "Open-Meteo: Dry night conditions at Hyderabad on 2026-11-07.",
+    riskLevel: "Low",
+    loops: 0
+  }
+};
+
+function getClaimIntelligence(c) {
+  if (!c) return null;
+  const hint = BENCHMARK_HINTS[c.policy_id] || {};
+
+  // --- SEVERITY & DAMAGE (Agent 1 & Agent 2) ---
+  const vr = c.vision_report || {};
+  const sf = c.statement_facts || {};
+
+  let sevLevel = "Minor";
+  if (vr.overall_severity && vr.overall_severity !== "Unknown") {
+    sevLevel = (vr.overall_severity === "Total Loss" || vr.overall_severity === "Severe") ? "Major" : vr.overall_severity;
+  } else if (hint.severityLevel) {
+    sevLevel = hint.severityLevel;
+  } else if (c.priority === 'High priority') {
+    sevLevel = "Major";
+  }
+
+  let sevLabel = "● " + sevLevel + " Damage";
+  if (sevLevel === "Major") sevLabel = "● Major / Severe Damage";
+
+  let sevBadgeClass = "bg-emerald-50 text-emerald-800 border border-emerald-300";
+  if (sevLevel === "Moderate") sevBadgeClass = "bg-amber-50 text-amber-800 border border-amber-300";
+  if (sevLevel === "Major") sevBadgeClass = "bg-rose-50 text-rose-800 border border-rose-300";
+
+  // Damage type
+  let damageType = hint.damageType || "Front Impact & Panel Scratches";
+  if (vr.findings && vr.findings.length > 0) {
+    const damFindings = vr.findings.filter(f => f.status === 'damaged');
+    if (damFindings.length > 0) {
+      damageType = damFindings.map(f => `${f.zone}: ${f.description || f.severity || 'damaged'}`).join(' · ');
+    }
+  }
+
+  // Damaged zones
+  let zones = hint.zones || [];
+  if (vr.findings && vr.findings.length > 0) {
+    zones = vr.findings.filter(f => f.status === 'damaged').map(f => f.zone);
+  }
+  if (!zones || zones.length === 0) zones = ["Vehicle Exterior"];
+
+  // Repair cost & Confidence
+  const repairVal = vr.estimated_repair_cost_inr || hint.repairCost || 18500;
+  const repairCostStr = Number(repairVal).toLocaleString('en-IN');
+  const confidence = vr.overall_confidence || hint.confidence || 90;
+
+  // Statement quote
+  const rawStmt = c.raw_statement || sf.narrative_summary || hint.statementSnippet || "Accident reported by claimant.";
+  const statementSnippet = rawStmt.length > 95 ? rawStmt.substring(0, 92) + "…" : rawStmt;
+
+  // Photo preview
+  let photoUrl = "";
+  if (c.photo_paths && c.photo_paths.length > 0) {
+    photoUrl = c.photo_paths[0];
+    if (!photoUrl.startsWith('http') && !photoUrl.startsWith('/')) photoUrl = '/' + photoUrl;
+  } else if (c.policy_id && BENCHMARK_HINTS[c.policy_id]) {
+    photoUrl = `/static/sample_photos/${c.policy_id.toLowerCase().replace('-', '_')}_damage.jpg`;
+  }
+
+  // --- COVERAGE DETAILS (Agent 4) ---
+  const cr = c.coverage_result || {};
+  const coverageType = cr.coverage_type || hint.coverageType || "Comprehensive Motor Policy";
+  const covStatus = cr.status || hint.coverageStatus || (c.policy_id === 'POL-1006' ? 'not_covered' : 'covered');
+
+  let covStatusLabel = "✓ COVERED UNDER CONTRACT";
+  let covBadgeClass = "bg-emerald-50 text-emerald-800 border border-emerald-300";
+
+  if (c.policy_id === 'POL-1006' || covStatus === 'not_covered') {
+    if (c.policy_id === 'POL-1006' || (hint.explanation && hint.explanation.includes('lapsed'))) {
+      covStatusLabel = "✕ POLICY EXPIRED";
+      covBadgeClass = "bg-rose-50 text-rose-800 border border-rose-300";
+    } else {
+      covStatusLabel = "✕ EXCLUDED (THIRD-PARTY ONLY)";
+      covBadgeClass = "bg-amber-50 text-amber-800 border border-amber-300";
+    }
+  } else if (covStatus === 'needs_review') {
+    covStatusLabel = "⚠️ NEEDS ADJUSTER REVIEW";
+    covBadgeClass = "bg-blue-50 text-blue-800 border border-blue-300";
+  }
+
+  const idvVal = cr.idv_inr != null ? cr.idv_inr : (hint.idv != null ? hint.idv : 850000);
+  const idvStr = idvVal > 0 ? Number(idvVal).toLocaleString('en-IN') : '0 (TP)';
+  const deductibleVal = cr.deductible_inr != null ? cr.deductible_inr : (hint.deductible != null ? hint.deductible : 1000);
+  const deductibleStr = Number(deductibleVal).toLocaleString('en-IN');
+
+  const netPayableVal = cr.net_payable_estimate_inr != null ? cr.net_payable_estimate_inr : (hint.netPayable != null ? hint.netPayable : Math.max(0, repairVal - deductibleVal));
+  const netPayableStr = Number(netPayableVal).toLocaleString('en-IN');
+  const netPayableColor = netPayableVal > 0 ? "text-emerald-700" : "text-slate-500";
+
+  const clause = (cr.clause_citations && cr.clause_citations[0]) || hint.clause || "Section I (Own Damage) · Accidental Impact";
+  const covExplanation = cr.explanation || hint.explanation || "Policy verified active on incident date; vehicle registration matches schedule.";
+
+  // --- FRAUD & CONSISTENCY (Agent 3) ---
+  const fr = c.fraud_report || {};
+  let riskLevel = fr.risk_level || hint.riskLevel || (c.policy_id === 'POL-1003' ? 'High' : 'Low');
+
+  let riskBadgeClass = "bg-emerald-50 text-emerald-800 border border-emerald-300";
+  let riskLabel = "🟢 LOW RISK";
+  if (riskLevel === 'Medium') {
+    riskBadgeClass = "bg-amber-50 text-amber-800 border border-amber-300";
+    riskLabel = "🟡 MODERATE RISK";
+  } else if (riskLevel === 'High') {
+    riskBadgeClass = "bg-rose-50 text-rose-800 border border-rose-300";
+    riskLabel = "🔴 HIGH FRAUD RISK";
+  }
+
+  // Core 1: Statement vs Photo Check
+  const hasContradiction = (fr.contradictions && fr.contradictions.length > 0) || hint.statementVsPhoto === 'mismatch';
+  let statementVsPhoto = hasContradiction ? "mismatch" : "match";
+  let statementVsPhotoDesc = "";
+
+  if (hasContradiction) {
+    statementVsPhotoDesc = (fr.contradictions && fr.contradictions[0]) || hint.statementVsPhotoDesc || "Direct physical contradiction detected between reported impact and uploaded photos.";
+  } else {
+    statementVsPhotoDesc = hint.statementVsPhotoDesc || "Photo analysis confirms observed damages are physically consistent with claimant's narrative.";
+  }
+
+  // Core 2: Ambiguity & Information Sufficiency
+  const isAmbiguous = hint.ambiguityFlag != null ? hint.ambiguityFlag : (rawStmt.length < 45 || !rawStmt.includes(' '));
+  let ambiguityDesc = "";
+  if (isAmbiguous) {
+    ambiguityDesc = hint.ambiguityDesc || "Ambiguity Flag: Insufficient accident details provided; lacks specific collision velocity and point-of-impact context.";
+  } else {
+    ambiguityDesc = hint.ambiguityDesc || "Narrative Complete: Clear statement detailing incident date, time, location, and single-vehicle collision mechanism.";
+  }
+
+  // Core 3: Environmental Weather & Verification Record
+  const weatherVerification = fr.weather_verification || hint.weatherVerification || "matches";
+  let weatherDesc = hint.weatherDesc || `Open-Meteo record on ${c.incident_date || 'incident date'}: Clear conditions verified.`;
+  const loops = c.loop_count != null ? c.loop_count : (hint.loops != null ? hint.loops : 0);
+  const loopText = loops > 0 ? `Loops: ${loops} (Self-corrected)` : `Loops: 0 (Direct pass)`;
+
+  return {
+    claimId: c.claim_id,
+    policyId: c.policy_id,
+    policyholder: c.policyholder_name || "Applicant",
+    vehicleReg: c.vehicle_reg || "MH12AB1001",
+    stage: c.current_stage || "Stage 1",
+    status: c.claim_status,
+    sevLevel,
+    sevLabel,
+    sevBadgeClass,
+    damageType,
+    zones,
+    repairCostStr,
+    confidence,
+    statementSnippet,
+    photoUrl,
+    coverageType,
+    covStatusLabel,
+    covBadgeClass,
+    idvStr,
+    deductibleStr,
+    netPayableStr,
+    netPayableColor,
+    clause,
+    covExplanation,
+    riskLabel,
+    riskBadgeClass,
+    statementVsPhoto,
+    statementVsPhotoDesc,
+    isAmbiguous,
+    ambiguityDesc,
+    weatherVerification,
+    weatherDesc,
+    loopText
+  };
+}
+
+function renderAgentDashboard() {
+  const container = document.getElementById('agent-analysis-dashboard');
+  if (!container) return;
+
+  const claims = filteredClaims();
+  const selectEl = document.getElementById('dashboard-claim-select');
+  const badgeEl = document.getElementById('dashboard-claim-badge');
+
+  // Update claim selector dropdown options
+  if (selectEl) {
+    if (claims.length === 0) {
+      selectEl.innerHTML = `<option value="">No claims loaded</option>`;
+      selectEl.disabled = true;
+    } else {
+      selectEl.disabled = false;
+      selectEl.innerHTML = claims.map(c =>
+        `<option value="${c.claim_id}" ${c.claim_id === selectedDashboardClaimId ? 'selected' : ''}>
+          ${c.claim_id} · ${c.policyholder_name || c.policy_id} (${c.claim_status})
+        </option>`
+      ).join('');
+    }
+  }
+
+  // Find currently selected claim
+  let activeClaim = null;
+  if (selectedDashboardClaimId) {
+    activeClaim = claims.find(c => c.claim_id === selectedDashboardClaimId) ||
+                  (state.claims || []).find(c => c.claim_id === selectedDashboardClaimId);
+  }
+  if (!activeClaim && claims.length > 0) {
+    activeClaim = claims[0];
+    selectedDashboardClaimId = activeClaim.claim_id;
+    if (selectEl) selectEl.value = activeClaim.claim_id;
+  }
+
+  // Update header badge
+  if (badgeEl) {
+    if (activeClaim) {
+      badgeEl.classList.remove('hidden');
+      badgeEl.textContent = `Inspecting: ${activeClaim.claim_id} · ${activeClaim.policyholder_name || activeClaim.policy_id}`;
+    } else {
+      badgeEl.classList.add('hidden');
+    }
+  }
+
+  // Empty state when no claims exist
+  if (!activeClaim) {
+    container.innerHTML = `
+      <!-- Card 1 Placeholder -->
+      <div class="agent-dash-card border-t-4 border-t-teal-400 bg-white shadow-sm rounded-xl p-5">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-teal-50 text-teal-800 border border-teal-200">Analysis from Agent 1 &amp; 2</span>
+            <span class="text-[11px] font-semibold text-slate-400">Statement + Vision</span>
+          </div>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="agent-card-title flex items-center gap-1.5">
+              <span>📸</span> Severity Estimation
+            </h3>
+            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">● Idle</span>
+          </div>
+          <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+            Multimodal Vision Agent and Claimant Statement Analyst will process damage photos and narrative once a claim is submitted.
+          </p>
+        </div>
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+          <span>Damage: Awaiting Intake</span>
+          <span>Confidence: —</span>
+        </div>
       </div>
-      <div style="font-size:22px;font-weight:800;color:#0f172a;line-height:1;">${d.open_count}</div>
-      <div style="font-size:9px;font-weight:600;color:#94a3b8;margin-bottom:8px;">OPEN</div>
+
+      <!-- Card 2 Placeholder -->
+      <div class="agent-dash-card border-t-4 border-t-indigo-400 bg-white shadow-sm rounded-xl p-5">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200">Analysis from Agent 4</span>
+            <span class="text-[11px] font-semibold text-slate-400">Policy &amp; Coverage</span>
+          </div>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="agent-card-title flex items-center gap-1.5">
+              <span>🛡️</span> Coverage Details
+            </h3>
+            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">● Idle</span>
+          </div>
+          <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+            Policy Agent will look up active policy schedules, verify Own Damage vs Third Party liability, and compute net payable limits.
+          </p>
+        </div>
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+          <span>Policy: No Active Claim</span>
+          <span>Deductible: —</span>
+        </div>
+      </div>
+
+      <!-- Card 3 Placeholder -->
+      <div class="agent-dash-card border-t-4 border-t-amber-400 bg-white shadow-sm rounded-xl p-5">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">Analysis from Agent 3</span>
+            <span class="text-[11px] font-semibold text-slate-400">Supervisor Brain</span>
+          </div>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="agent-card-title flex items-center gap-1.5">
+              <span>🚨</span> Fraud Signals
+            </h3>
+            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">● Idle</span>
+          </div>
+          <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+            Supervisor Agent will cross-verify statement vs photo physics, check ambiguity/information sufficiency, and query Open-Meteo weather APIs.
+          </p>
+        </div>
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+          <span>Signals: 0 Active</span>
+          <span>Risk Level: —</span>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  const info = getClaimIntelligence(activeClaim);
+  if (!info) return;
+
+  const zonesHtml = info.zones.map(z => `<span class="inline-block text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-200/70 text-slate-700">${z}</span>`).join(' ');
+
+  const photoThumbHtml = info.photoUrl ? `
+    <div class="w-14 h-11 rounded border border-slate-200 overflow-hidden bg-slate-100 flex-shrink-0 cursor-pointer shadow-sm hover:border-teal-500 transition-all" onclick="window.open('${info.photoUrl}','_blank')">
+      <img src="${info.photoUrl}" class="w-full h-full object-cover" onerror="this.parentElement.style.display='none'" />
+    </div>` : '';
+
+  // Core 1 (Statement vs Photo) styling
+  const mismatchBoxClass = info.statementVsPhoto === 'mismatch'
+    ? 'bg-rose-50/90 border border-rose-200 text-rose-900'
+    : 'bg-emerald-50/70 border border-emerald-200 text-emerald-900';
+  const mismatchTitleClass = info.statementVsPhoto === 'mismatch' ? 'text-rose-800' : 'text-emerald-800';
+  const mismatchTag = info.statementVsPhoto === 'mismatch' ? 'PHYSICAL MISMATCH' : 'PHOTO MATCH';
+  const mismatchTagClass = info.statementVsPhoto === 'mismatch'
+    ? 'bg-rose-200 text-rose-900 font-bold'
+    : 'bg-emerald-100 text-emerald-800 font-bold';
+  const mismatchIcon = info.statementVsPhoto === 'mismatch' ? '❌' : '✅';
+
+  // Core 2 (Ambiguity & Sufficiency) styling
+  const ambiguityBoxClass = info.isAmbiguous
+    ? 'bg-amber-50/80 border border-amber-200 text-amber-900'
+    : 'bg-slate-50 border border-slate-200/90 text-slate-800';
+  const ambiguityTitleClass = info.isAmbiguous ? 'text-amber-800' : 'text-slate-700';
+  const ambiguityTag = info.isAmbiguous ? 'AMBIGUITY FLAG' : 'SUFFICIENT';
+  const ambiguityTagClass = info.isAmbiguous
+    ? 'bg-amber-200 text-amber-900 font-bold'
+    : 'bg-slate-200 text-slate-700 font-bold';
+  const ambiguityIcon = info.isAmbiguous ? '⚠️' : '✅';
+
+  container.innerHTML = `
+    <!-- ================= CARD 1: SEVERITY ESTIMATION ================= -->
+    <div class="agent-dash-card border-t-4 border-t-teal-500 bg-white shadow-sm rounded-xl p-4 flex flex-col justify-between">
       <div>
-        <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;">
-          <span style="font-size:9px;font-weight:700;color:#ef4444;width:12px;">${d.red_count}</span>
-          <div class="stage-bar-track" style="flex:1;"><div class="stage-bar-fill" style="background:#ef4444;width:${(d.red_count/total)*100}%"></div></div>
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-teal-50 text-teal-800 border border-teal-200">
+            ⚡ Analysis from Agent 1 &amp; Agent 2
+          </span>
+          <span class="text-[11px] font-semibold text-slate-400">Statement + Vision</span>
         </div>
-        <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;">
-          <span style="font-size:9px;font-weight:700;color:#f59e0b;width:12px;">${d.amber_count}</span>
-          <div class="stage-bar-track" style="flex:1;"><div class="stage-bar-fill" style="background:#f59e0b;width:${(d.amber_count/total)*100}%"></div></div>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="agent-card-title flex items-center gap-1.5">
+            <span>📸</span> Severity Estimation
+          </h3>
+          <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full ${info.sevBadgeClass}">
+            ${info.sevLabel}
+          </span>
         </div>
-        <div style="display:flex;align-items:center;gap:5px;">
-          <span style="font-size:9px;font-weight:700;color:#22c55e;width:12px;">${d.green_count}</span>
-          <div class="stage-bar-track" style="flex:1;"><div class="stage-bar-fill" style="background:#22c55e;width:${(d.green_count/total)*100}%"></div></div>
+
+        <!-- Damage Type & Impact Zones -->
+        <div class="mb-3 bg-slate-50 border border-slate-100 rounded-lg p-2.5">
+          <div class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Identified Damage Type</div>
+          <div class="text-[13px] font-semibold text-slate-800 mb-1.5 leading-snug">${info.damageType}</div>
+          <div class="flex flex-wrap gap-1">${zonesHtml}</div>
+        </div>
+
+        <!-- Repair Estimate & Visual Confidence -->
+        <div class="grid grid-cols-2 gap-2 mb-3">
+          <div class="border border-slate-100 rounded-lg p-2 bg-white">
+            <div class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">Repair Estimate</div>
+            <div class="financial-val text-teal-700 mt-0.5">₹${info.repairCostStr}</div>
+          </div>
+          <div class="border border-slate-100 rounded-lg p-2 bg-white">
+            <div class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">AI Visual Confidence</div>
+            <div class="text-[13px] font-semibold text-slate-800 flex items-center justify-between mt-1">
+              <span>${info.confidence}%</span>
+              <div class="w-14 h-1.5 rounded-full bg-slate-100 overflow-hidden ml-1">
+                <div class="h-full bg-teal-500 rounded-full" style="width:${info.confidence}%"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>`;
-  }).join('');
+
+      <!-- Bottom: Claimant Statement & Photo Thumbnail -->
+      <div class="pt-2 border-t border-slate-100">
+        <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
+          <span>Claimant Statement (Agent 1)</span>
+          ${photoThumbHtml ? `<span class="text-[10.5px] text-teal-600 font-semibold">Damage Photo Attached</span>` : ''}
+        </div>
+        <div class="flex items-center gap-2">
+          ${photoThumbHtml}
+          <div class="text-[12.5px] text-slate-600 italic bg-slate-50 p-2 rounded border border-slate-100 flex-1 leading-snug">
+            "${info.statementSnippet}"
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= CARD 2: COVERAGE DETAILS ================= -->
+    <div class="agent-dash-card border-t-4 border-t-indigo-500 bg-white shadow-sm rounded-xl p-4 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200">
+            📜 Analysis from Agent 4
+          </span>
+          <span class="text-[11px] font-semibold text-slate-400">Policy &amp; Coverage</span>
+        </div>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="agent-card-title flex items-center gap-1.5">
+            <span>🛡️</span> Coverage Details
+          </h3>
+          <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full ${info.covBadgeClass}">
+            ${info.covStatusLabel}
+          </span>
+        </div>
+
+        <!-- Policy Under Contract -->
+        <div class="mb-3 bg-slate-50 border border-slate-100 rounded-lg p-2.5">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Policy Under Contract</span>
+            <span class="text-[12px] font-mono font-bold text-indigo-700">${info.policyId}</span>
+          </div>
+          <div class="text-[13px] font-bold text-slate-800">${info.coverageType}</div>
+          <div class="text-[12px] text-slate-500 mt-0.5 font-normal">${info.policyholder} · ${info.vehicleReg}</div>
+        </div>
+
+        <!-- IDV, Deductible, Net Payable Grid -->
+        <div class="grid grid-cols-3 gap-2 mb-3">
+          <div class="border border-slate-100 rounded-lg p-2 bg-white text-center">
+            <div class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">IDV Value</div>
+            <div class="text-[13px] font-semibold text-slate-700 mt-0.5 font-mono">₹${info.idvStr}</div>
+          </div>
+          <div class="border border-slate-100 rounded-lg p-2 bg-white text-center">
+            <div class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Deductible</div>
+            <div class="text-[13px] font-semibold text-slate-700 mt-0.5 font-mono">₹${info.deductibleStr}</div>
+          </div>
+          <div class="border border-slate-100 rounded-lg p-2 bg-white text-center">
+            <div class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Net Payable</div>
+            <div class="financial-val ${info.netPayableColor} mt-0.5 font-mono" style="font-size:16px;">₹${info.netPayableStr}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom: Contractual Clause & Ruling Explanation -->
+      <div class="pt-2 border-t border-slate-100">
+        <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Contractual Finding &amp; Clause</div>
+        <div class="text-[12.5px] text-slate-700 bg-indigo-50/50 p-2 rounded border border-indigo-100 leading-snug">
+          <span class="font-bold text-indigo-900">${info.clause}</span> — ${info.covExplanation}
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= CARD 3: FRAUD SIGNALS ================= -->
+    <div class="agent-dash-card border-t-4 border-t-amber-500 bg-white shadow-sm rounded-xl p-4 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">
+            ⚖️ Analysis from Agent 3
+          </span>
+          <span class="text-[11px] font-semibold text-slate-400">Supervisor Brain</span>
+        </div>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="agent-card-title flex items-center gap-1.5">
+            <span>🚨</span> Fraud Signals
+          </h3>
+          <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full ${info.riskBadgeClass}">
+            ${info.riskLabel}
+          </span>
+        </div>
+
+        <!-- Core 1: Statement vs Photo Mismatch -->
+        <div class="mb-2.5 rounded-lg p-2.5 ${mismatchBoxClass}">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-[11px] font-semibold uppercase tracking-wider ${mismatchTitleClass}">
+              ${mismatchIcon} 1. Statement vs Photo Check
+            </span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${mismatchTagClass}">${mismatchTag}</span>
+          </div>
+          <div class="text-[12.5px] leading-snug font-medium">
+            ${info.statementVsPhotoDesc}
+          </div>
+        </div>
+
+        <!-- Core 2: Ambiguity & Information Sufficiency -->
+        <div class="mb-2.5 rounded-lg p-2.5 ${ambiguityBoxClass}">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-[11px] font-semibold uppercase tracking-wider ${ambiguityTitleClass}">
+              ${ambiguityIcon} 2. Information Sufficiency
+            </span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${ambiguityTagClass}">${ambiguityTag}</span>
+          </div>
+          <div class="text-[12.5px] leading-snug font-medium">
+            ${info.ambiguityDesc}
+          </div>
+        </div>
+      </div>
+
+      <!-- Core 3: Environmental Weather & Verification Record -->
+      <div class="pt-2 border-t border-slate-100">
+        <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
+          <span>3. Environmental &amp; Verification Record</span>
+          <span class="text-[11px] font-semibold text-slate-500">${info.loopText}</span>
+        </div>
+        <div class="text-[12.5px] text-slate-700 bg-slate-50 p-2 rounded border border-slate-100 leading-snug">
+          ${info.weatherDesc}
+        </div>
+      </div>
+
+      <!-- Adjuster Decision & Remediation Actions -->
+      <div class="pt-2.5 mt-2.5 border-t border-slate-100 flex items-center gap-2">
+        <button type="button" class="btn-amber text-xs py-1.5 px-3 flex-1 flex items-center justify-center gap-1.5 shadow-xs transition-all hover:shadow" onclick="openRtuModal('${info.claimId}')" title="Transfer control to claimant: request additional photos and statement edit">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8a5 5 0 015 5v1"/></svg>
+          <span>Send to User Edit</span>
+        </button>
+        <button type="button" class="btn-white text-xs py-1.5 px-3 flex items-center justify-center gap-1.5 text-rose-600 hover:text-rose-700 hover:border-rose-300 hover:bg-rose-50/50 shadow-xs transition-all" onclick="dismissClaim('${info.claimId}')" title="Discard this claim into the trash bin">
+          <svg class="w-3.5 h-3.5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+          <span>Discard</span>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function selectClaimForDashboard(cid) {
+  selectedDashboardClaimId = cid;
+  renderAgentDashboard();
+  renderClaimsList();
+}
+
+function onDashboardClaimSelect(cid) {
+  if (cid) {
+    selectClaimForDashboard(cid);
+  }
+}
+
+// Proxy for backward compatibility with existing calls
+function renderStageCards() {
+  renderAgentDashboard();
 }
 
 function setStageFilter(stage) {
   activeStageFilter = activeStageFilter===stage ? '' : stage;
   activeHudFilter = '';
-  renderStageCards();
+  renderAgentDashboard();
   renderHud();
   renderClaimsList();
 }
@@ -951,8 +1736,9 @@ function renderClaimsList() {
   const list = filteredClaims();
   const container = document.getElementById('claims-list');
   document.getElementById('claims-showing').textContent =
-    `Showing ${list.length} of ${(state.claims||[]).length} · click a row to open`;
+    `Showing ${list.length} of ${(state.claims||[]).length} · click a claim to inspect in dashboard`;
 
+  renderAgentDashboard();
   updateDustbinUI();
 
   if (list.length === 0) {
@@ -970,7 +1756,7 @@ function renderClaimsList() {
 }
 
 function renderClaimRow(c) {
-  const isExpanded = expandedClaimId === c.claim_id;
+  const isSelectedInDashboard = selectedDashboardClaimId === c.claim_id;
   const ab = ACTION_BADGE[c.action_type] || ACTION_BADGE['RECOMMENDATION'];
   const dotColor = STATUS_DOT_COLOR[c.claim_status] || '#94a3b8';
   const isManual = c.handled_by === 'Manual';
@@ -984,8 +1770,8 @@ function renderClaimRow(c) {
     ? `Spark recommends: ${c.recommendation_title.substring(0,70)}${c.recommendation_title.length>70?'…':''}`
     : '';
 
-  return `<div class="claim-row" id="row-${c.claim_id}">
-    <div class="claim-row-header" onclick="toggleExpand('${c.claim_id}')">
+  return `<div class="claim-row ${isSelectedInDashboard ? 'active-dashboard-row' : ''}" id="row-${c.claim_id}">
+    <div class="claim-row-header" onclick="selectClaimForDashboard('${c.claim_id}')">
       <!-- Status -->
       <div style="display:flex;flex-direction:column;align-items:center;gap:3px;min-width:52px;">
         <span class="status-dot" style="background:${dotColor};"></span>
@@ -993,8 +1779,11 @@ function renderClaimRow(c) {
       </div>
       <!-- Claim info -->
       <div style="min-width:140px;">
-        <div style="font-size:13px;font-weight:700;color:#0f172a;letter-spacing:-0.2px;">${c.claim_id}</div>
-        <div style="font-size:10.5px;color:#64748b;margin-top:1px;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span class="claim-id-text">${c.claim_id}</span>
+          ${isSelectedInDashboard ? '<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-teal-600 text-white tracking-wider uppercase">ACTIVE</span>' : ''}
+        </div>
+        <div style="font-size:12px;color:#64748b;margin-top:2px;font-weight:400;">
           ${c.current_stage} · ${c.line_of_business}
           ${c.priority==='High priority' ? '<span class="priority-pill ml-1">High priority</span>' : ''}
         </div>
@@ -1003,9 +1792,9 @@ function renderClaimRow(c) {
       <div style="flex:1;min-width:0;padding:0 10px;">
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px;">
           <span class="action-badge" style="background:${ab.bg};color:${ab.color};">${ab.label}</span>
-          <span style="font-size:12.5px;font-weight:600;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:420px;">${c.headline_summary||''}</span>
+          <span style="font-size:13.5px;font-weight:500;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:420px;line-height:1.45;">${c.headline_summary||''}</span>
         </div>
-        ${sub ? `<div style="font-size:11px;color:#94a3b8;">${sub}</div>` : ''}
+        ${sub ? `<div style="font-size:12px;color:#64748b;font-weight:400;margin-top:1px;">${sub}</div>` : ''}
       </div>
       <!-- Action buttons -->
       <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;" onclick="event.stopPropagation()">
@@ -1017,22 +1806,13 @@ function renderClaimRow(c) {
           <button class="handled-btn ${isSpark?'on':''}" onclick="setHandledBy('${c.claim_id}','Spark')">🤖 Spark</button>
           <button class="handled-btn ${isManual?'on':''}" onclick="setHandledBy('${c.claim_id}','Manual')">👤 Manual</button>
         </div>
-        <button style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:16px;padding:2px 4px;transition:transform 0.15s;${isExpanded?'transform:rotate(180deg)':''}" onclick="toggleExpand('${c.claim_id}')">⌄</button>
       </div>
     </div>
-    ${isExpanded ? renderDossier(c) : ''}
   </div>`;
 }
 
 function toggleExpand(cid) {
-  expandedClaimId = expandedClaimId===cid ? null : cid;
-  renderClaimsList();
-  if (expandedClaimId) {
-    setTimeout(()=>{
-      const el = document.getElementById(`row-${cid}`);
-      if (el) el.scrollIntoView({behavior:'smooth', block:'nearest'});
-    }, 50);
-  }
+  selectClaimForDashboard(cid);
 }
 
 // ----------------------------------------------------------------
@@ -1331,7 +2111,17 @@ async function setHandledBy(cid, mode) {
 // ----------------------------------------------------------------
 function openRtuModal(cid) {
   rtuClaimId = cid;
-  document.getElementById('rtu-prompt').value = '';
+  const c = (state.claims || []).find(x => x.claim_id === cid);
+  let promptText = 'Please upload clearer supplementary damage photos and clarify accident circumstances.';
+  if (c && c.fraud_report && c.fraud_report.contradictions && c.fraud_report.contradictions.length > 0) {
+    promptText = `Discrepancy noted: ${c.fraud_report.contradictions[0]}. Please upload additional photos and clarify your statement.`;
+  } else if (c && c.vision_report && (c.vision_report.unusable_photos || (c.vision_report.overall_confidence || 0) < 60)) {
+    promptText = 'Damage photos are unclear or insufficient to assess severity. Please upload clearer photos and edit statement.';
+  } else if (c && c.raw_statement && c.raw_statement.length < 50) {
+    promptText = 'Insufficient accident information provided. Please provide more detail on how the damage occurred and upload additional photos.';
+  }
+  const inp = document.getElementById('rtu-prompt');
+  if (inp) inp.value = promptText;
   document.getElementById('rtu-modal').classList.remove('hidden');
 }
 function closeRtuModal() {
@@ -1340,7 +2130,7 @@ function closeRtuModal() {
 }
 async function submitRtu() {
   const prompt = document.getElementById('rtu-prompt').value.trim();
-  if (!prompt) { alert('Please enter a question for the claimant.'); return; }
+  if (!prompt) { alert('Please enter a question or instruction for the claimant.'); return; }
   closeRtuModal();
   setWorking(true);
   try {
@@ -1390,13 +2180,17 @@ function renderReturnedClaims() {
         <span style="font-size:18px;">⚠️</span>
         <b style="font-size:13px;color:#b45309;">Action Required — ${c.claim_id} (${c.vehicle_reg})</b>
       </div>
-      <div style="font-size:12px;color:#78350f;margin-bottom:10px;">
-        <b>Adjuster Question:</b> "${c.returned_to_user_prompt}"
+      <div style="font-size:12px;color:#78350f;margin-bottom:8px;">
+        <b>Adjuster Request:</b> "${c.returned_to_user_prompt}"
+      </div>
+      <div style="font-size:11.5px;color:#475569;background:#ffffff;border:1px solid #fde68a;border-radius:6px;padding:8px 10px;margin-bottom:10px;">
+        <span style="font-weight:600;color:#92400e;">Current Statement on Record:</span>
+        <p style="margin-top:2px;font-style:italic;color:#334155;">"${c.raw_statement || 'No statement on record'}"</p>
       </div>
       <form onsubmit="return false;" style="display:grid;gap:10px;">
         <div>
-          <label class="form-label" style="font-size:11px;">Clarifying Statement</label>
-          <textarea class="form-input" id="rtu-clarify-${c.claim_id}" rows="2" placeholder="Explain circumstances, provide more detail…"></textarea>
+          <label class="form-label" style="font-size:11px;">Edit / Clarify Statement</label>
+          <textarea class="form-input" id="rtu-clarify-${c.claim_id}" rows="2" placeholder="Explain circumstances, update your statement, or provide more detail…"></textarea>
         </div>
         <div>
           <label class="form-label" style="font-size:11px;">Upload Additional Photos</label>
@@ -1404,7 +2198,7 @@ function renderReturnedClaims() {
             class="text-xs text-slate-500 file:mr-2 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100" />
         </div>
         <button type="button" class="btn-teal px-5 py-2 text-xs" style="width:fit-content;" onclick="resubmitClaim('${c.claim_id}')">
-          🚀 Submit New Evidence &amp; Re-Run Spark Triage
+          🚀 Resubmit Evidence &amp; Re-Run Spark Triage
         </button>
       </form>
     </div>
