@@ -1376,11 +1376,13 @@ elif page_nav == "Adjuster Cockpit (Page 2)":
                 )
 
             with col_r:
-                h_label = "🤖 Spark" if claim.handled_by == HandledByEnum.SPARK else "👤 Manual"
                 chevron = "▲" if is_expanded else "∨"
+                is_analysis_open = st.session_state.get(f"show_analysis_{cid}", False)
+                is_surveyor_open = st.session_state.get(f"show_surveyor_{cid}", False)
+                show_exec = (claim.action_type == ActionTypeEnum.RECOMMENDATION or claim.claim_status == ClaimStatusEnum.NEEDS_ATTENTION)
 
-                if claim.action_type == ActionTypeEnum.RECOMMENDATION or claim.claim_status == ClaimStatusEnum.NEEDS_ATTENTION:
-                    r1, r2, r3, r4 = st.columns([1.1, 1.0, 1.2, 0.4])
+                if show_exec:
+                    r1, r2, r3, r4, r5 = st.columns([1.1, 1.0, 1.3, 1.3, 0.4])
                     with r1:
                         if st.button("✓ Execute", key=f"exec_{cid}", type="primary", help="Process & Settle Claim"):
                             ac.execute_claim_action(cid)
@@ -1392,40 +1394,118 @@ elif page_nav == "Adjuster Cockpit (Page 2)":
                             st.toast(f"Claim {cid} Discarded.")
                             st.rerun()
                     with r3:
-                        if st.button(h_label, key=f"toggle_h_{cid}", help="Toggle Spark vs Manual"):
-                            ac.toggle_handled_by(cid)
+                        if st.button("📋 Analysis", key=f"analysis_btn_{cid}", help="View Comprehensive Analysis Report"):
+                            st.session_state[f"show_analysis_{cid}"] = not is_analysis_open
                             st.rerun()
                     with r4:
+                        if st.button("🔍 Surveyor", key=f"surveyor_btn_{cid}", help="View Surveyor Recommendation & Dispatch"):
+                            st.session_state[f"show_surveyor_{cid}"] = not is_surveyor_open
+                            st.rerun()
+                    with r5:
                         if st.button(chevron, key=f"exp_btn_{cid}"):
                             st.session_state.selected_claim_id = None if is_expanded else cid
                             st.rerun()
 
-                elif claim.action_type == ActionTypeEnum.REQUEST:
-                    r1, r2, r3 = st.columns([1.1, 1.3, 0.4])
+                else:
+                    r1, r2, r3, r4 = st.columns([1.0, 1.4, 1.4, 0.4])
                     with r1:
                         if st.button("✕ Dismiss", key=f"dism_{cid}", help="Discard Claim"):
                             ac.dismiss_claim_action(cid)
                             st.toast(f"Claim {cid} Discarded.")
                             st.rerun()
                     with r2:
-                        if st.button(h_label, key=f"toggle_h_{cid}", help="Toggle Spark vs Manual"):
-                            ac.toggle_handled_by(cid)
+                        if st.button("📋 Analysis", key=f"analysis_btn_{cid}", help="View Comprehensive Analysis Report"):
+                            st.session_state[f"show_analysis_{cid}"] = not is_analysis_open
                             st.rerun()
                     with r3:
+                        if st.button("🔍 Surveyor", key=f"surveyor_btn_{cid}", help="View Surveyor Recommendation & Dispatch"):
+                            st.session_state[f"show_surveyor_{cid}"] = not is_surveyor_open
+                            st.rerun()
+                    with r4:
                         if st.button(chevron, key=f"exp_btn_{cid}"):
                             st.session_state.selected_claim_id = None if is_expanded else cid
                             st.rerun()
 
+        # -------------------------------------------------------------------
+        # Inline Analysis Report Panel
+        # -------------------------------------------------------------------
+        if st.session_state.get(f"show_analysis_{cid}", False):
+            with st.container(border=True):
+                st.markdown(f"### 📋 Comprehensive AI Analysis Report — `{cid}`")
+                vr = claim.vision_report
+                cr = claim.coverage_result
+                fr = claim.fraud_report
+                pol = state.policies.get(claim.policy_id) if hasattr(state, "policies") else None
+                rec = ac.compute_surveyor_recommendation(claim)
+
+                c1, c2 = st.columns(2)
+                with c1:
+                    st.markdown("**Section A: Claim & Vehicle Information**")
+                    st.caption(f"• **Policy ID:** {claim.policy_id}\n• **Policyholder:** {claim.policyholder_name}\n• **Reg:** {claim.vehicle_reg}\n• **Incident:** {claim.incident_date} ({claim.incident_time}) at {claim.location}\n• **Statement:** *\"{claim.raw_statement}\"*")
+
+                    st.markdown("**Section B: AI Severity Estimation**")
+                    sev = vr.overall_severity if vr else "Unknown"
+                    cost = f"₹{vr.estimated_repair_cost_inr:,.0f}" if vr and vr.estimated_repair_cost_inr else "₹0"
+                    zones = ", ".join(vr.damaged_zones) if vr and vr.damaged_zones else "Front Bumper"
+                    conf = f"{vr.overall_confidence}%" if vr else "85%"
+                    st.caption(f"• **Severity:** {sev}\n• **Estimated Repair:** {cost}\n• **Damaged Zones:** {zones}\n• **Visual AI Confidence:** {conf}")
+
+                with c2:
+                    st.markdown("**Section C: Coverage Details**")
+                    cov_status = cr.coverage_status if cr else "COVERED"
+                    cov_type = cr.coverage_type if cr else "Comprehensive Motor"
+                    idv = f"₹{cr.idv_inr:,.0f}" if cr and cr.idv_inr else "₹500,000"
+                    ded = f"₹{cr.deductible_inr:,.0f}" if cr and cr.deductible_inr else "₹1,000"
+                    payable = f"₹{cr.estimated_payable_inr:,.0f}" if cr and cr.estimated_payable_inr else "₹0"
+                    st.caption(f"• **Status:** {cov_status}\n• **Plan:** {cov_type}\n• **IDV:** {idv} | **Deductible:** {ded}\n• **Net Estimated Payable:** {payable}\n• **Clause:** {cr.clause_reference if cr else 'Standard OD Clause'}")
+
+                    st.markdown("**Section D: Fraud Signals & Integrity**")
+                    risk = fr.risk_level if fr else "Low"
+                    contra = fr.statement_vs_photo_match if fr else "Consistent"
+                    st.caption(f"• **Risk Classification:** {risk}\n• **Physical Consistency:** {contra}\n• **Screening Heuristics:** Automated indicators represent screening signals only, not confirmed fraud.")
+
+                st.markdown("**Section E: Spark AI Decision Verdict**")
+                st.info(f"**Action:** {claim.action_type.value if hasattr(claim.action_type, 'value') else claim.action_type} — {claim.headline_summary}")
+                if claim.rationale_bullets:
+                    for b in claim.rationale_bullets:
+                        st.markdown(f"• {b}")
+
+                b_col1, b_col2 = st.columns([6, 1])
+                with b_col2:
+                    if st.button("Close Report", key=f"close_an_{cid}"):
+                        st.session_state[f"show_analysis_{cid}"] = False
+                        st.rerun()
+
+        # -------------------------------------------------------------------
+        # Inline Surveyor Report Panel
+        # -------------------------------------------------------------------
+        if st.session_state.get(f"show_surveyor_{cid}", False):
+            with st.container(border=True):
+                st.markdown(f"### 🔍 AI Surveyor Assignment Report — `{cid}`")
+                rec = ac.compute_surveyor_recommendation(claim)
+                st.success(f"**AI Recommended Surveyor:** {rec['recommendation']}")
+                st.caption(f"**Rationale:** {rec['reason']}")
+
+                if claim.assigned_surveyor:
+                    st.markdown(f"✅ **Currently Assigned:** {claim.assigned_surveyor} *({claim.surveyor_assigned_at or 'Active'})*")
                 else:
-                    r1, r2 = st.columns([1.5, 0.4])
-                    with r1:
-                        if st.button(h_label, key=f"toggle_h_{cid}", help="Toggle Spark vs Manual"):
-                            ac.toggle_handled_by(cid)
-                            st.rerun()
-                    with r2:
-                        if st.button(chevron, key=f"exp_btn_{cid}"):
-                            st.session_state.selected_claim_id = None if is_expanded else cid
-                            st.rerun()
+                    st.warning("⚠️ **Current Status:** Unassigned (Awaiting Field Dispatch)")
+
+                sur_c1, sur_c2, sur_c3 = st.columns([1.5, 1.5, 1])
+                with sur_c1:
+                    if st.button("Assign Junior Surveyor", key=f"assign_jr_{cid}"):
+                        ac.assign_surveyor_action(cid, "Junior Surveyor", "Dispatched from Surveyor Report panel.")
+                        st.toast(f"Assigned {cid} to Junior Surveyor!")
+                        st.rerun()
+                with sur_c2:
+                    if st.button("Assign Senior Surveyor", key=f"assign_sr_{cid}"):
+                        ac.assign_surveyor_action(cid, "Senior Surveyor", "Dispatched from Surveyor Report panel.")
+                        st.toast(f"Assigned {cid} to Senior Surveyor!")
+                        st.rerun()
+                with sur_c3:
+                    if st.button("Close", key=f"close_sur_{cid}"):
+                        st.session_state[f"show_surveyor_{cid}"] = False
+                        st.rerun()
 
         # -------------------------------------------------------------------
         # Expanded Claim Detail View (Screenshots 6, 7)

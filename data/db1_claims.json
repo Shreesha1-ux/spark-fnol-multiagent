@@ -12,12 +12,12 @@
       "location": "Pune",
       "raw_statement": "While driving on Pune-Solapur Highway, a loose stone from a truck hit my front bumper and radiator grill, causing a dent and scratch.",
       "photo_paths": [
-        "data/sample_photos/front_scratch_dent.jpg"
+        "static/sample_photos/pol_1001_damage.jpg"
       ],
       "injuries": false,
       "third_party": false,
       "police_report": false,
-      "claim_status": "NEEDS ATTENTION",
+      "claim_status": "DISCARDED",
       "current_stage": "3 DA / ESTIMATE",
       "stages_completed": [
         "1 INTAKE & TRIAGE",
@@ -73,7 +73,7 @@
       "coverage_result": null,
       "fraud_report": null,
       "final_tier": null,
-      "headline_summary": "Liability confidence 62% — below the 80% automation threshold, your decision...",
+      "headline_summary": "Discarded — dismissed by Adjuster. Adjuster note: Adjuster dismissed claim",
       "what_spark_did": "Spark completed the analysis for this vehicle collision file and prepared a decision package for approval.",
       "recommendation_title": "Approve the prepared outcome for ₹29,550.",
       "confidence_score": 81,
@@ -112,6 +112,13 @@
           "agent_or_tool": "Desk Adjuster (Human)",
           "purpose": "Surveyor Assignment",
           "result_summary": "Claim dispatched to Junior Surveyor for physical inspection. (AI Recommendation: Junior Surveyor — Minor cosmetic damage with consistent evidence and high visual confidence, suitable for standard field inspection.)."
+        },
+        {
+          "timestamp": "2026-11-13T21:10:21.138902+00:00",
+          "stage": "3 DA / ESTIMATE",
+          "agent_or_tool": "Desk Adjuster (Human)",
+          "purpose": "Dismiss / reject recommendation",
+          "result_summary": "Claim dismissed/rejected by adjuster. Adjuster note: Adjuster dismissed claim"
         }
       ],
       "chat_history": []
@@ -128,7 +135,7 @@
       "location": "Bengaluru",
       "raw_statement": "Severe collision with cement mixer on Outer Ring Road. Front engine compartment crushed.",
       "photo_paths": [
-        "data/sample_photos/severe_front_crush.jpg"
+        "static/sample_photos/pol_1002_damage.jpg"
       ],
       "injuries": false,
       "third_party": true,
@@ -208,7 +215,7 @@
       "location": "Chandigarh",
       "raw_statement": "Rear-ended by an autorickshaw at traffic signal on Madhya Marg.",
       "photo_paths": [
-        "data/sample_photos/rear_bumper_damage.jpg"
+        "static/sample_photos/pol_1006_damage.jpg"
       ],
       "injuries": false,
       "third_party": true,
@@ -287,7 +294,7 @@
       "location": "Ahmedabad",
       "raw_statement": "Sideswiped pillar in apartment basement.",
       "photo_paths": [
-        "data/sample_photos/front_scratch_dent.jpg"
+        "static/sample_photos/pol_1004_damage.jpg"
       ],
       "injuries": false,
       "third_party": false,
@@ -367,7 +374,7 @@
       "location": "New Delhi",
       "raw_statement": "Hit highway guard rail after swerving to avoid stray animal.",
       "photo_paths": [
-        "data/sample_photos/front_scratch_dent.jpg"
+        "static/sample_photos/pol_1005_damage.jpg"
       ],
       "injuries": false,
       "third_party": false,
@@ -437,7 +444,7 @@
       "location": "Hyderabad",
       "raw_statement": "Debris hit underbody and front bumper on ORR.",
       "photo_paths": [
-        "data/sample_photos/severe_front_crush.jpg"
+        "static/sample_photos/pol_1007_damage.jpg"
       ],
       "injuries": false,
       "third_party": false,
@@ -515,7 +522,7 @@
       "location": "Chennai",
       "raw_statement": "Work-related vehicle transit incident.",
       "photo_paths": [
-        "data/sample_photos/front_scratch_dent.jpg"
+        "static/sample_photos/pol_1001_damage.jpg"
       ],
       "injuries": false,
       "third_party": false,
