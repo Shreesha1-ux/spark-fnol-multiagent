@@ -248,6 +248,53 @@
   /* Filter bar */
   .filter-select { border: 1px solid #e2e8f0; border-radius: 9999px; padding: 4px 10px 4px 10px; font-size: 11.5px; font-weight: 500; color: #374151; background: #fff; cursor: pointer; outline: none; }
   .filter-select:focus { border-color: #0d9488; }
+  .claims-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #475569;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .claims-filter-btn:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #0f172a;
+  }
+  .claims-filter-btn.active {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+  }
+  .filter-count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 6px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--font-mono, monospace);
+    background: #f1f5f9;
+    color: #64748b;
+    transition: all 0.15s ease;
+  }
+  .claims-filter-btn.active .filter-count-badge {
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+  }
 
   /* Scroll */
   ::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -393,31 +440,24 @@
         <div class="font-semibold text-xs text-slate-700 uppercase tracking-wider" style="font-size:11.5px;letter-spacing:0.05em;">Claims</div>
         <div class="text-xs text-slate-400 font-normal" style="font-size:12px;" id="claims-showing"></div>
       </div>
-      <!-- Filter bar -->
-      <div class="flex flex-wrap items-center gap-2 mb-3">
-        <select class="filter-select" id="filter-status" onchange="renderClaimsList()">
-          <option value="">All statuses</option>
-          <option value="IN PROGRESS">In Progress</option>
-          <option value="NEEDS ATTENTION">Needs Attention</option>
-          <option value="STUCK">Stuck</option>
-          <option value="AUTOMATION OFF">Automation Off</option>
-          <option value="SETTLED">Settled</option>
-          <option value="DISCARDED">Discarded</option>
-        </select>
-        <select class="filter-select" id="filter-stage" onchange="renderClaimsList()">
-          <option value="">All stages</option>
-          <option value="1 INTAKE &amp; TRIAGE">1 Intake &amp; Triage</option>
-          <option value="2 COVERAGE">2 Coverage</option>
-          <option value="3 DA / ESTIMATE">3 DA / Estimate</option>
-          <option value="4 FRAUD &amp; CONSISTENCY">4 Fraud &amp; Consistency</option>
-          <option value="5 DECISION GATE">5 Decision Gate</option>
-        </select>
-        <select class="filter-select" id="filter-priority" onchange="renderClaimsList()">
-          <option value="">All priority</option>
-          <option value="High priority">High priority</option>
-          <option value="Normal">Normal</option>
-        </select>
-        <button class="btn-white text-xs py-1" onclick="clearFilters()">✕ Clear filters</button>
+      <!-- Four Horizontal Filter Buttons: All Claims | High Severity | Fraud Signals | Ambiguous -->
+      <div class="flex items-center gap-2 mb-3 overflow-x-auto pb-1" id="claims-filter-bar">
+        <button type="button" id="filter-btn-all" class="claims-filter-btn active" onclick="setClaimsCategoryFilter('all')">
+          <span>All Claims</span>
+          <span class="filter-count-badge" id="count-all">0</span>
+        </button>
+        <button type="button" id="filter-btn-severity" class="claims-filter-btn" onclick="setClaimsCategoryFilter('severity')">
+          <span class="flex items-center gap-1.5"><span>⚡</span> High Severity</span>
+          <span class="filter-count-badge" id="count-severity">0</span>
+        </button>
+        <button type="button" id="filter-btn-fraud" class="claims-filter-btn" onclick="setClaimsCategoryFilter('fraud')">
+          <span class="flex items-center gap-1.5"><span>🚨</span> Fraud Signals</span>
+          <span class="filter-count-badge" id="count-fraud">0</span>
+        </button>
+        <button type="button" id="filter-btn-ambiguous" class="claims-filter-btn" onclick="setClaimsCategoryFilter('ambiguous')">
+          <span class="flex items-center gap-1.5"><span>⚠️</span> Ambiguous</span>
+          <span class="filter-count-badge" id="count-ambiguous">0</span>
+        </button>
       </div>
       <div id="claims-list"></div>
     </div>
@@ -1445,11 +1485,16 @@ function getClaimIntelligence(c) {
 
   // Photo preview
   let photoUrl = "";
-  if (c.photo_paths && c.photo_paths.length > 0) {
-    photoUrl = c.photo_paths[0];
-    if (!photoUrl.startsWith('http') && !photoUrl.startsWith('/')) photoUrl = '/' + photoUrl;
-  } else if (c.policy_id && BENCHMARK_HINTS[c.policy_id]) {
+  if (c.policy_id && (BENCHMARK_HINTS[c.policy_id] || /^POL-100[1-7]$/i.test(c.policy_id))) {
     photoUrl = `/static/sample_photos/${c.policy_id.toLowerCase().replace('-', '_')}_damage.jpg`;
+  } else if (c.photo_paths && c.photo_paths.length > 0) {
+    photoUrl = c.photo_paths[0];
+    if (photoUrl.startsWith('data/sample_photos/')) {
+      photoUrl = photoUrl.replace('data/sample_photos/', '/static/sample_photos/');
+    } else if (photoUrl.startsWith('data/uploads/')) {
+      photoUrl = photoUrl.replace('data/uploads/', '/uploads/');
+    }
+    if (!photoUrl.startsWith('http') && !photoUrl.startsWith('/')) photoUrl = '/' + photoUrl;
   }
 
   // --- COVERAGE DETAILS (Agent 4) ---
@@ -1941,58 +1986,217 @@ const STATUS_DOT_COLOR = {
   'DISCARDED':      '#cbd5e1',
 };
 
-function filteredClaims() {
-  let list = state.claims || [];
-  const q = (document.getElementById('search-input')?.value||'').toLowerCase();
-  if (q) list = list.filter(c =>
-    (c.claim_id||'').toLowerCase().includes(q) ||
-    (c.policyholder_name||'').toLowerCase().includes(q) ||
-    (c.headline_summary||'').toLowerCase().includes(q) ||
-    (c.vehicle_reg||'').toLowerCase().includes(q)
-  );
-  if (activeHudFilter) list = list.filter(c => c.claim_status===activeHudFilter);
-  if (activeStageFilter) list = list.filter(c => c.current_stage===activeStageFilter);
-  const sf = document.getElementById('filter-status')?.value;
-  if (sf) list = list.filter(c => c.claim_status===sf);
-  const stf = document.getElementById('filter-stage')?.value;
-  if (stf) list = list.filter(c => c.current_stage===stf);
-  const pf = document.getElementById('filter-priority')?.value;
-  if (pf) list = list.filter(c => c.priority===pf);
+// ----------------------------------------------------------------
+// CLAIMS CATEGORY FILTER CLASSIFICATION & SORTING
+// ----------------------------------------------------------------
+let activeClaimsFilter = 'all'; // 'all' | 'severity' | 'fraud' | 'ambiguous'
 
-  // Discarded claims disappear from cockpit feed into the dustbin!
-  const isExplicitDiscarded = activeHudFilter === 'DISCARDED' || sf === 'DISCARDED';
-  if (!isExplicitDiscarded) {
-    list = list.filter(c => c.claim_status !== 'DISCARDED');
+function isHighSeverity(c) {
+  if (!c) return false;
+  const vr = c.vision_report || {};
+  const hint = (typeof BENCHMARK_HINTS !== 'undefined' && BENCHMARK_HINTS[c.policy_id]) || {};
+
+  // 1. Direct severity classifications from AI Vision or benchmark
+  const sev = (vr.overall_severity || hint.severityLevel || hint.severity || '').toLowerCase();
+  if (sev.includes('total loss') || sev.includes('severe') || sev.includes('major')) return true;
+
+  // 2. High repair cost threshold (> 25,000 INR fast-track ceiling)
+  const cost = Number(vr.estimated_repair_cost_inr || hint.repairCost || 0);
+  if (cost > 25000) return true;
+
+  // 3. High priority with reserve ceiling indication
+  if (c.priority === 'High priority' && (c.current_stage === '3 DA / ESTIMATE' || (c.headline_summary || '').toLowerCase().includes('reserve'))) return true;
+
+  return false;
+}
+
+function getSeverityScore(c) {
+  if (!c) return 0;
+  const vr = c.vision_report || {};
+  const hint = (typeof BENCHMARK_HINTS !== 'undefined' && BENCHMARK_HINTS[c.policy_id]) || {};
+  const sev = (vr.overall_severity || hint.severityLevel || hint.severity || '').toLowerCase();
+  let rank = 1;
+  if (sev.includes('total loss')) rank = 4;
+  else if (sev.includes('severe')) rank = 3;
+  else if (sev.includes('major')) rank = 2;
+  const cost = Number(vr.estimated_repair_cost_inr || hint.repairCost || 0);
+  return rank * 10000000 + cost;
+}
+
+function isFraudSignal(c) {
+  if (!c) return false;
+  const fr = c.fraud_report || {};
+  const hint = (typeof BENCHMARK_HINTS !== 'undefined' && BENCHMARK_HINTS[c.policy_id]) || {};
+
+  // 1. Elevated risk level from Fraud Agent
+  const risk = (fr.risk_level || hint.riskLevel || '').toLowerCase();
+  if (risk === 'high' || risk === 'medium') return true;
+
+  // 2. Active signals or contradictions
+  if (fr.contradictions && fr.contradictions.length > 0) return true;
+  if (fr.signals && fr.signals.length > 0) return true;
+  if (fr.unresolved_contradiction) return true;
+
+  // 3. Benchmark or headline fraud indicators
+  if (hint.statementVsPhoto === 'mismatch' || c.policy_id === 'POL-1003') return true;
+  const headline = (c.headline_summary || '').toLowerCase();
+  if (headline.includes('fraud') || headline.includes('contradiction')) return true;
+
+  return false;
+}
+
+function getFraudScore(c) {
+  if (!c) return 0;
+  const fr = c.fraud_report || {};
+  const hint = (typeof BENCHMARK_HINTS !== 'undefined' && BENCHMARK_HINTS[c.policy_id]) || {};
+  let score = 0;
+  const risk = (fr.risk_level || hint.riskLevel || '').toLowerCase();
+  if (risk === 'high' || c.policy_id === 'POL-1003') score += 100;
+  else if (risk === 'medium') score += 50;
+  if (fr.unresolved_contradiction) score += 40;
+  if (fr.contradictions) score += fr.contradictions.length * 25;
+  if (fr.signals) score += fr.signals.length * 15;
+  if (hint.statementVsPhoto === 'mismatch') score += 30;
+  return score;
+}
+
+function isAmbiguous(c) {
+  if (!c) return false;
+  const vr = c.vision_report || {};
+  const fr = c.fraud_report || {};
+  const cr = c.coverage_result || {};
+  const hint = (typeof BENCHMARK_HINTS !== 'undefined' && BENCHMARK_HINTS[c.policy_id]) || {};
+
+  // 1. Conflicting claim information / contradictions
+  if (fr.unresolved_contradiction) return true;
+  if (fr.contradictions && fr.contradictions.length > 0) return true;
+  if (hint.statementVsPhoto === 'mismatch') return true;
+
+  // 2. Insufficient evidence / low visual confidence / unusable photos
+  if (vr.unusable_photos) return true;
+  if (vr.overall_confidence > 0 && vr.overall_confidence < 75) return true;
+  if (!c.photo_paths || c.photo_paths.length === 0) return true;
+
+  // 3. Missing essential information / claimant question needed
+  if (c.action_type === 'QUESTION' || c.action_type === 'REQUEST') return true;
+  if (c.returned_to_user_prompt) return true;
+  if (hint.ambiguityFlag === true) return true;
+
+  // 4. Unverified or failed coverage requiring manual review
+  if (cr.status === 'needs_review' || cr.status === 'not_covered') return true;
+  if (c.claim_status === 'STUCK') return true;
+  if (c.policy_id === 'POL-1006' || c.policy_id === 'POL-1004' || c.policy_id === 'POL-1005') return true;
+
+  return false;
+}
+
+function setClaimsCategoryFilter(category) {
+  activeClaimsFilter = category;
+  renderClaimsCategoryButtons();
+  renderClaimsList();
+}
+
+function renderClaimsCategoryButtons() {
+  const categories = ['all', 'severity', 'fraud', 'ambiguous'];
+  categories.forEach(cat => {
+    const btn = document.getElementById(`filter-btn-${cat}`);
+    if (btn) {
+      btn.classList.toggle('active', activeClaimsFilter === cat);
+    }
+  });
+
+  const allActiveClaims = (state.claims || []).filter(c => c.claim_status !== 'DISCARDED');
+  const countAll = allActiveClaims.length;
+  const countSeverity = allActiveClaims.filter(isHighSeverity).length;
+  const countFraud = allActiveClaims.filter(isFraudSignal).length;
+  const countAmbiguous = allActiveClaims.filter(isAmbiguous).length;
+
+  const bAll = document.getElementById('count-all');
+  const bSev = document.getElementById('count-severity');
+  const bFra = document.getElementById('count-fraud');
+  const bAmb = document.getElementById('count-ambiguous');
+
+  if (bAll) bAll.textContent = countAll;
+  if (bSev) bSev.textContent = countSeverity;
+  if (bFra) bFra.textContent = countFraud;
+  if (bAmb) bAmb.textContent = countAmbiguous;
+}
+
+function filteredClaims() {
+  let list = (state.claims || []).filter(c => c.claim_status !== 'DISCARDED');
+
+  const q = (document.getElementById('search-input')?.value || '').toLowerCase();
+  if (q) {
+    list = list.filter(c =>
+      (c.claim_id || '').toLowerCase().includes(q) ||
+      (c.policyholder_name || '').toLowerCase().includes(q) ||
+      (c.headline_summary || '').toLowerCase().includes(q) ||
+      (c.vehicle_reg || '').toLowerCase().includes(q)
+    );
   }
+
+  if (activeHudFilter) list = list.filter(c => c.claim_status === activeHudFilter);
+  if (activeStageFilter) list = list.filter(c => c.current_stage === activeStageFilter);
+
+  // Category filter and ranking
+  if (activeClaimsFilter === 'severity') {
+    list = list.filter(isHighSeverity);
+    list.sort((a, b) => getSeverityScore(b) - getSeverityScore(a));
+  } else if (activeClaimsFilter === 'fraud') {
+    list = list.filter(isFraudSignal);
+    list.sort((a, b) => getFraudScore(b) - getFraudScore(a));
+  } else if (activeClaimsFilter === 'ambiguous') {
+    list = list.filter(isAmbiguous);
+  }
+  // 'all' preserves the default claim order
 
   return list;
 }
 
 function clearFilters() {
-  activeHudFilter = ''; activeStageFilter = '';
-  document.getElementById('filter-status').value = '';
-  document.getElementById('filter-stage').value = '';
-  document.getElementById('filter-priority').value = '';
-  document.getElementById('search-input').value = '';
-  renderHud(); renderStageCards(); renderClaimsList();
+  activeHudFilter = '';
+  activeStageFilter = '';
+  activeClaimsFilter = 'all';
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) searchInput.value = '';
+  renderHud();
+  renderStageCards();
+  renderClaimsCategoryButtons();
+  renderClaimsList();
 }
 
 function renderClaimsList() {
+  renderClaimsCategoryButtons();
   const list = filteredClaims();
   const container = document.getElementById('claims-list');
-  document.getElementById('claims-showing').textContent =
-    `Showing ${list.length} of ${(state.claims||[]).length} · click a claim to inspect in dashboard`;
+  const showingEl = document.getElementById('claims-showing');
+  if (showingEl) {
+    showingEl.textContent = `Showing ${list.length} of ${(state.claims||[]).filter(c => c.claim_status !== 'DISCARDED').length} · click a claim to inspect in dashboard`;
+  }
 
   renderAgentDashboard();
   updateDustbinUI();
 
   if (list.length === 0) {
+    let emptyTitle = "No claims match this filter";
+    let emptyDesc = "Try selecting another category or view 'All Claims'.";
+    if (activeClaimsFilter === 'severity') {
+      emptyTitle = "No High Severity Claims";
+      emptyDesc = "All current claims are classified within normal or low severity limits.";
+    } else if (activeClaimsFilter === 'fraud') {
+      emptyTitle = "No Fraud Signals Detected";
+      emptyDesc = "No elevated fraud indicators or direct contradictions flagged.";
+    } else if (activeClaimsFilter === 'ambiguous') {
+      emptyTitle = "No Ambiguous Claims";
+      emptyDesc = "All claims have sufficient evidence and complete information.";
+    }
+
     container.innerHTML = `
-      <div class="bg-white border border-slate-200 rounded-xl p-10 text-center">
-        <div class="text-3xl mb-3">📋</div>
-        <div class="font-semibold text-slate-700 mb-1">No claims yet</div>
-        <div class="text-xs text-slate-400 mb-4">Submit your first FNOL on the intake portal to get started.</div>
-        <button class="btn-teal px-5 py-2 text-xs" onclick="switchView('fnol')">➕ Open FNOL Intake Portal</button>
+      <div class="bg-white border border-slate-200 rounded-xl p-8 text-center shadow-xs">
+        <div class="text-2xl mb-2">📋</div>
+        <div class="font-bold text-sm text-slate-800 mb-1">${emptyTitle}</div>
+        <div class="text-xs text-slate-400 mb-3">${emptyDesc}</div>
+        ${activeClaimsFilter !== 'all' ? `<button class="btn-white text-xs px-3 py-1.5" onclick="setClaimsCategoryFilter('all')">View All Claims</button>` : ''}
       </div>`;
     return;
   }
@@ -2084,12 +2288,16 @@ function confBar(score) {
 
 function renderDossier(c) {
   // Photos
-  const photos = (c.photo_paths||[]).map(p =>
-    `<div style="width:90px;height:70px;border-radius:7px;overflow:hidden;border:1px solid #e2e8f0;cursor:pointer;"
-         onclick="window.open('${p}','_blank')">
-      <img src="${p}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'" />
-    </div>`
-  ).join('');
+  const photos = (c.photo_paths||[]).map(p => {
+    let src = p;
+    if (src.startsWith('data/sample_photos/')) src = src.replace('data/sample_photos/', '/static/sample_photos/');
+    else if (src.startsWith('data/uploads/')) src = src.replace('data/uploads/', '/uploads/');
+    if (!src.startsWith('/') && !src.startsWith('http')) src = '/' + src;
+    return `<div style="width:90px;height:70px;border-radius:7px;overflow:hidden;border:1px solid #e2e8f0;cursor:pointer;"
+         onclick="window.open('${src}','_blank')">
+      <img src="${src}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'" />
+    </div>`;
+  }).join('');
 
   // Zone findings
   const findings = (c.vision_report?.findings||[]).map(f => {

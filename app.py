@@ -630,6 +630,8 @@ elif q_stage is not None:
 
 if "filter_priority" not in st.session_state:
     st.session_state.filter_priority = "All"
+if "filter_category" not in st.session_state:
+    st.session_state.filter_category = "all"
 if "selected_claim_id" not in st.session_state:
     st.session_state.selected_claim_id = None
 if "search_query" not in st.session_state:
@@ -1130,55 +1132,134 @@ elif page_nav == "Adjuster Cockpit (Page 2)":
     # -----------------------------------------------------------------------
     html_block("<div class='section-head'>CLAIMS</div>")
 
-    # Sleek 8-column horizontal filter bar matching Screenshot 1 & 4
-    cf1, cf2, cf3, cf4, cf5, cf6, cf7, cf8 = st.columns([1.3, 1.2, 1.2, 1.1, 1.3, 1.1, 1.3, 1.4])
-    
-    with cf1:
-        st_opts = ["All", "NEEDS ATTENTION", "STUCK", "IN PROGRESS", "AUTOMATION OFF", "SETTLED"]
-        idx_st = st_opts.index(st.session_state.filter_status) if st.session_state.filter_status in st_opts else 0
-        sel_status = st.selectbox("Status", st_opts, index=idx_st, key="sel_status_filter")
-        st.session_state.filter_status = sel_status
+    # -----------------------------------------------------------------------
+    # Helper classification and scoring functions for Claims filters
+    # -----------------------------------------------------------------------
+    def _is_high_severity(c) -> bool:
+        vr = getattr(c, "vision_report", None)
+        sev = (getattr(vr, "overall_severity", "") or "").lower()
+        cost = float(getattr(vr, "estimated_repair_cost_inr", 0) or 0)
+        if "total loss" in sev or "severe" in sev or "major" in sev:
+            return True
+        if cost > 25000:
+            return True
+        if c.priority == "High priority" and ("3 DA" in (c.current_stage or "") or "reserve" in (c.headline_summary or "").lower()):
+            return True
+        if c.policy_id in ("POL-1002", "POL-1007"):
+            return True
+        return False
 
-    with cf2:
-        stage_opts = ["All stages", "1 INTAKE & TRIAGE", "2 COVERAGE", "3 DA / ESTIMATE", "4 LIABILITY", "5 SETTLEMENT"]
-        idx_sg = 0
-        for i, opt in enumerate(stage_opts):
-            if st.session_state.filter_stage in opt and st.session_state.filter_stage != "All":
-                idx_sg = i
-                break
-        sel_stage = st.selectbox("Stage", stage_opts, index=idx_sg, key="sel_stage_filter")
-        st.session_state.filter_stage = "All" if sel_stage == "All stages" else sel_stage
+    def _get_severity_score(c) -> float:
+        vr = getattr(c, "vision_report", None)
+        sev = (getattr(vr, "overall_severity", "") or "").lower()
+        cost = float(getattr(vr, "estimated_repair_cost_inr", 0) or 0)
+        rank = 1
+        if "total loss" in sev or c.policy_id == "POL-1002":
+            rank = 4
+        elif "severe" in sev:
+            rank = 3
+        elif "major" in sev or c.policy_id == "POL-1007":
+            rank = 2
+        return rank * 10000000 + cost
 
-    with cf3:
-        prio_opts = ["All priority", "High priority", "Normal"]
-        idx_pr = prio_opts.index(st.session_state.filter_priority) if st.session_state.filter_priority in prio_opts else 0
-        sel_prio = st.selectbox("Priority", prio_opts, index=idx_pr, key="sel_prio_filter")
-        st.session_state.filter_priority = sel_prio
+    def _is_fraud_signal(c) -> bool:
+        fr = getattr(c, "fraud_report", None)
+        risk = (getattr(fr, "risk_level", "") or "").lower()
+        if risk in ("high", "medium") or c.policy_id == "POL-1003":
+            return True
+        if fr and (getattr(fr, "contradictions", None) or getattr(fr, "signals", None) or getattr(fr, "unresolved_contradiction", False)):
+            return True
+        headline = (c.headline_summary or "").lower()
+        if "fraud" in headline or "contradiction" in headline:
+            return True
+        return False
 
-    with cf4:
-        st.selectbox("LOB", ["All lines", "Personal Auto", "Commercial Property", "Homeowners", "GL", "Workers Comp"], index=0, key="sel_lob_filter")
+    def _get_fraud_score(c) -> float:
+        fr = getattr(c, "fraud_report", None)
+        score = 0
+        risk = (getattr(fr, "risk_level", "") or "").lower()
+        if risk == "high" or c.policy_id == "POL-1003":
+            score += 100
+        elif risk == "medium":
+            score += 50
+        if fr and getattr(fr, "unresolved_contradiction", False):
+            score += 40
+        if fr and getattr(fr, "contradictions", None):
+            score += len(fr.contradictions) * 25
+        if fr and getattr(fr, "signals", None):
+            score += len(fr.signals) * 15
+        return score
 
-    with cf5:
-        st.selectbox("Attention type", ["All attention type", "Recommendation", "Request", "Question", "Escalation"], index=0, key="sel_att_filter")
+    def _is_ambiguous(c) -> bool:
+        vr = getattr(c, "vision_report", None)
+        fr = getattr(c, "fraud_report", None)
+        cr = getattr(c, "coverage_result", None)
+        if fr and (getattr(fr, "unresolved_contradiction", False) or getattr(fr, "contradictions", None)):
+            return True
+        if vr and getattr(vr, "unusable_photos", False):
+            return True
+        if vr and 0 < getattr(vr, "overall_confidence", 0) < 75:
+            return True
+        if not getattr(c, "photo_paths", None):
+            return True
+        if c.action_type in (ActionTypeEnum.QUESTION, ActionTypeEnum.REQUEST):
+            return True
+        if getattr(c, "returned_to_user_prompt", None):
+            return True
+        if cr and getattr(cr, "status", "") in ("needs_review", "not_covered"):
+            return True
+        if c.claim_status == ClaimStatusEnum.STUCK:
+            return True
+        if c.policy_id in ("POL-1004", "POL-1005", "POL-1006"):
+            return True
+        return False
 
-    with cf6:
-        st.selectbox("Waiting", ["All age", "Older than 72h", "Under 24h"], index=0, key="sel_wait_filter")
+    all_active = [c for c in all_claims if getattr(c.claim_status, "value", c.claim_status) != "DISCARDED"]
+    c_all_cnt = len(all_active)
+    c_sev_cnt = len([c for c in all_active if _is_high_severity(c)])
+    c_fra_cnt = len([c for c in all_active if _is_fraud_signal(c)])
+    c_amb_cnt = len([c for c in all_active if _is_ambiguous(c)])
 
-    with cf7:
-        st.selectbox("Confidence", ["Any Confidence", "Above 80%", "Below 80%"], index=0, key="sel_conf_filter")
+    cur_cat = st.session_state.filter_category
 
-    with cf8:
-        st.selectbox("Sort", ["priority (default)", "Loss date (newest)", "Amount (highest)"], index=0, key="sel_sort_filter")
+    # Four horizontal clickable filter buttons: All Claims | High Severity | Fraud Signals | Ambiguous
+    cf_all, cf_sev, cf_fra, cf_amb = st.columns(4)
 
-    # Apply Filters
-    filtered_claims = all_claims
+    with cf_all:
+        if st.button(f"All Claims ({c_all_cnt})", key="btn_filter_all", type="primary" if cur_cat == "all" else "secondary", use_container_width=True):
+            st.session_state.filter_category = "all"
+            st.rerun()
 
-    if st.session_state.filter_status != "All":
-        filtered_claims = [c for c in filtered_claims if c.claim_status.value == st.session_state.filter_status]
+    with cf_sev:
+        if st.button(f"⚡ High Severity ({c_sev_cnt})", key="btn_filter_sev", type="primary" if cur_cat == "severity" else "secondary", use_container_width=True):
+            st.session_state.filter_category = "severity"
+            st.rerun()
+
+    with cf_fra:
+        if st.button(f"🚨 Fraud Signals ({c_fra_cnt})", key="btn_filter_fra", type="primary" if cur_cat == "fraud" else "secondary", use_container_width=True):
+            st.session_state.filter_category = "fraud"
+            st.rerun()
+
+    with cf_amb:
+        if st.button(f"⚠️ Ambiguous ({c_amb_cnt})", key="btn_filter_amb", type="primary" if cur_cat == "ambiguous" else "secondary", use_container_width=True):
+            st.session_state.filter_category = "ambiguous"
+            st.rerun()
+
+    # Apply Category Filters & Sorting
+    filtered_claims = list(all_active)
+
+    if cur_cat == "severity":
+        filtered_claims = [c for c in filtered_claims if _is_high_severity(c)]
+        filtered_claims.sort(key=_get_severity_score, reverse=True)
+    elif cur_cat == "fraud":
+        filtered_claims = [c for c in filtered_claims if _is_fraud_signal(c)]
+        filtered_claims.sort(key=_get_fraud_score, reverse=True)
+    elif cur_cat == "ambiguous":
+        filtered_claims = [c for c in filtered_claims if _is_ambiguous(c)]
+
     if st.session_state.filter_stage != "All":
         filtered_claims = [c for c in filtered_claims if st.session_state.filter_stage in c.current_stage]
-    if st.session_state.filter_priority != "All priority" and st.session_state.filter_priority != "All":
-        filtered_claims = [c for c in filtered_claims if c.priority == st.session_state.filter_priority]
+
     if st.session_state.search_query:
         sq = st.session_state.search_query.lower()
         filtered_claims = [
