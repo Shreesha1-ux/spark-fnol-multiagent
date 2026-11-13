@@ -267,6 +267,24 @@ class ClaimRecord(BaseModel):
         description="Populated when the Adjuster clicks 'Return to User'; contains the prompt sent."
     )
 
+    # --- Surveyor Assignment ---
+    assigned_surveyor: Optional[str] = Field(
+        default=None,
+        description="Junior Surveyor | Senior Surveyor | None"
+    )
+    surveyor_assigned_at: Optional[str] = Field(
+        default=None,
+        description="ISO-8601 timestamp when the claim was assigned to a surveyor."
+    )
+    surveyor_recommendation: Optional[str] = Field(
+        default=None,
+        description="AI recommendation: Junior Surveyor | Senior Surveyor"
+    )
+    surveyor_recommendation_reason: Optional[str] = Field(
+        default=None,
+        description="AI reasoning for the surveyor recommendation."
+    )
+
     # --- Structured agent outputs ---
     statement_facts: Optional[StatementFacts] = None
     vision_report: Optional[VisionReport] = None

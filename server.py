@@ -564,6 +564,33 @@ def set_handled_by(claim_id: str, body: HandledByBody):
 
 
 # ===========================================================================
+# SURVEYOR MANAGEMENT ENDPOINTS
+# ===========================================================================
+
+@app.get("/api/claims/{claim_id}/surveyor-recommendation")
+def get_surveyor_recommendation(claim_id: str):
+    claim = sm.get_claim_by_id(claim_id)
+    if not claim:
+        raise HTTPException(status_code=404, detail=f"Claim '{claim_id}' not found.")
+    rec = ac.compute_surveyor_recommendation(claim)
+    return JSONResponse({"ok": True, "recommendation": rec})
+
+
+class AssignSurveyorBody(BaseModel):
+    surveyor: str
+    note: str = ""
+
+
+@app.post("/api/claims/{claim_id}/assign-surveyor")
+def assign_surveyor(claim_id: str, body: AssignSurveyorBody):
+    try:
+        claim = ac.assign_surveyor_action(claim_id, surveyor=body.surveyor, adjuster_note=body.note)
+        return JSONResponse({"ok": True, "claim": _claim_to_dict(claim)})
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+# ===========================================================================
 # POST /api/claims/{claim_id}/chat
 # ===========================================================================
 

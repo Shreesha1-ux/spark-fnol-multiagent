@@ -654,6 +654,119 @@ def return_to_user_action(claim_id: str, question_prompt: str) -> ClaimRecord:
     return sm.update_claim(claim)
 
 
+# ===========================================================================
+# SURVEYOR MANAGEMENT & AI RECOMMENDATION
+# ===========================================================================
+
+def compute_surveyor_recommendation(claim: ClaimRecord) -> Dict[str, Any]:
+    """
+    AI Surveyor Recommendation Agent:
+    Analyzes existing claim assessment metrics and recommends whether the claim
+    should be assigned to a Junior Surveyor or Senior Surveyor.
+    Does NOT repeat or re-run the full pipeline; leverages already-computed agent reports.
+    """
+    reasons: List[str] = []
+    is_senior = False
+
+    vr = claim.vision_report
+    cost = vr.estimated_repair_cost_inr if vr else 0.0
+    sev = (vr.overall_severity if vr else "Unknown")
+    confidence = vr.overall_confidence if vr else 0
+    unusable = vr.unusable_photos if vr else False
+
+    fr = claim.fraud_report
+    risk_level = fr.risk_level if fr else "Low"
+    contradictions = fr.contradictions if fr else []
+    unresolved = fr.unresolved_contradiction if fr else False
+
+    # 1. Major damage or total loss
+    if sev in ("Severe", "Total Loss") or (claim.final_tier == "Tier 2" and "total loss" in (claim.headline_summary or "").lower()):
+        is_senior = True
+        reasons.append("Claim involves major vehicle damage / potential total loss requiring senior physical inspection.")
+    elif cost > 30000:
+        is_senior = True
+        reasons.append(f"Estimated repair cost (₹{cost:,.0f}) exceeds the standard threshold, requiring senior technical appraisal.")
+
+    # 2. Fraud & consistency discrepancies
+    if risk_level == "High":
+        is_senior = True
+        reasons.append("Elevated fraud risk indicators flagged during multi-agent triage.")
+    elif contradictions and len(contradictions) > 0:
+        is_senior = True
+        reasons.append(f"Physical discrepancy identified between statement and photos ({contradictions[0][:65]}…).")
+    elif unresolved:
+        is_senior = True
+        reasons.append("Unresolved contradiction between claimed and visible impact points requires senior forensic review.")
+
+    # 3. Evidence uncertainty or complexity
+    if unusable or (confidence > 0 and confidence < 75):
+        is_senior = True
+        reasons.append("Low visual clarity or photographic ambiguity necessitates comprehensive senior on-site audit.")
+
+    damaged_zones = [f.zone for f in (vr.findings if vr else []) if getattr(f, "status", "") == "damaged"]
+    if len(damaged_zones) >= 3:
+        is_senior = True
+        reasons.append(f"Complex multi-zone impact ({', '.join(damaged_zones)}) requires experienced senior assessment.")
+
+    # 4. Injury or third party
+    if claim.injuries or claim.third_party:
+        is_senior = True
+        reasons.append("Claim involves bodily injury or third-party liability requiring senior oversight.")
+
+    if is_senior:
+        primary_reason = reasons[0] if reasons else "The claim involves complex vehicle damage and requires a more experienced physical inspection."
+        return {
+            "recommendation": "Senior Surveyor",
+            "reason": primary_reason,
+            "all_reasons": reasons,
+            "confidence": 92,
+        }
+    else:
+        return {
+            "recommendation": "Junior Surveyor",
+            "reason": "Minor cosmetic damage with consistent evidence and high visual confidence, suitable for standard field inspection.",
+            "all_reasons": [
+                "Minor / moderate cosmetic damage",
+                f"Repair estimate within baseline (₹{cost:,.0f})",
+                "No physical contradictions or fraud signals",
+            ],
+            "confidence": 95,
+        }
+
+
+def assign_surveyor_action(claim_id: str, surveyor: str, adjuster_note: str = "") -> ClaimRecord:
+    """
+    Assign a claim to a Junior Surveyor or Senior Surveyor.
+    Associates the assignment with the claim ID, records AI recommendation and timestamp,
+    appends to agent trace, and persists to db1_claims.json.
+    """
+    claim = sm.get_claim_by_id(claim_id)
+    if not claim:
+        raise ValueError(f"Claim '{claim_id}' not found.")
+
+    valid_surveyors = ("Junior Surveyor", "Senior Surveyor")
+    if surveyor not in valid_surveyors:
+        raise ValueError(f"Invalid surveyor '{surveyor}'. Must be one of: {valid_surveyors}")
+
+    rec = compute_surveyor_recommendation(claim)
+    claim.assigned_surveyor = surveyor
+    claim.surveyor_assigned_at = _now_iso()
+    claim.surveyor_recommendation = rec["recommendation"]
+    claim.surveyor_recommendation_reason = rec["reason"]
+
+    note_text = f" Adjuster note: {adjuster_note}" if adjuster_note else ""
+    _add_trace(
+        claim,
+        claim.current_stage,
+        "Desk Adjuster (Human)",
+        "Surveyor Assignment",
+        f"Claim dispatched to {surveyor} for physical inspection. "
+        f"(AI Recommendation: {rec['recommendation']} — {rec['reason']}).{note_text}",
+    )
+
+    return sm.update_claim(claim)
+
+
 def toggle_handled_by(claim_id: str, mode: Optional[str] = None) -> ClaimRecord:
     """
     Toggle or explicitly set handled_by between 'Spark' and 'Manual'.
