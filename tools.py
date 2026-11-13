@@ -718,18 +718,36 @@ def verify_policy_coverage_deterministic(
 
     # --- 1. Policy existence ---
     if policy is None:
+        is_unverified = not policy_id or policy_id.upper() in (
+            "UNVERIFIED",
+            "POL-UNVERIFIED",
+            "PENDING",
+            "UNKNOWN",
+            "N/A",
+            "NONE",
+        )
         return CoverageResult(
-            policy_id=policy_id,
-            status="not_covered",
+            policy_id=policy_id or "POL-UNVERIFIED",
+            status="needs_review" if is_unverified else "not_covered",
             policy_active_on_date=False,
             vehicle_matched=False,
-            coverage_type="Unknown",
+            coverage_type=(
+                "Unverified / Policy Pending" if is_unverified else "Unknown"
+            ),
             idv_inr=0.0,
             deductible_inr=0.0,
             limit_inr=0.0,
             net_payable_estimate_inr=0.0,
-            clause_citations=["Policy record not found in database"],
-            explanation=f"Policy '{policy_id}' does not exist in our records.",
+            clause_citations=[
+                "Policy schedule unverified or not on record"
+                if is_unverified
+                else "Policy record not found in database"
+            ],
+            explanation=(
+                f"Policy '{policy_id or 'UNVERIFIED'}' is not linked to a registered database schedule. Manual adjuster verification required."
+                if is_unverified
+                else f"Policy '{policy_id}' does not exist in our records."
+            ),
         )
 
     coverage_type: str = policy.get("coverage_type", "Unknown")

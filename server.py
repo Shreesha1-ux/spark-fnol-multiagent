@@ -171,9 +171,10 @@ def get_state():
 
 @app.post("/api/claims/create")
 async def create_claim(
-    policy_id: str = Form(...),
+    policy_id: str = Form(""),
     policyholder_name: str = Form(""),
     vehicle_reg: str = Form(""),
+    vehicle_name: str = Form(""),
     incident_date: str = Form(""),
     incident_time: str = Form(""),
     location: str = Form(""),
@@ -188,14 +189,35 @@ async def create_claim(
     def _bool(v: str) -> bool:
         return str(v).lower() in ("1", "true", "yes", "on")
 
+    from datetime import datetime, timezone
+    today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    now_time_str = datetime.now(timezone.utc).strftime("%H:%M")
+
+    clean_pid = policy_id.strip() or "POL-UNVERIFIED"
+    clean_holder = policyholder_name.strip() or "Claimant (Unassigned)"
+    vname = vehicle_name.strip()
+    vreg = vehicle_reg.strip()
+    if vname and vreg:
+        clean_vreg = f"{vreg} ({vname})"
+    elif vname:
+        clean_vreg = vname
+    elif vreg:
+        clean_vreg = vreg
+    else:
+        clean_vreg = "UNREGISTERED"
+
+    clean_date = incident_date.strip() or today_str
+    clean_time = incident_time.strip() or now_time_str
+    clean_loc = location.strip() or "Location Unspecified"
+
     claim = sm.create_claim_from_intake(
-        policy_id=policy_id,
-        policyholder_name=policyholder_name,
-        vehicle_reg=vehicle_reg,
-        incident_date=incident_date,
-        incident_time=incident_time,
-        location=location,
-        raw_statement=raw_statement,
+        policy_id=clean_pid,
+        policyholder_name=clean_holder,
+        vehicle_reg=clean_vreg,
+        incident_date=clean_date,
+        incident_time=clean_time,
+        location=clean_loc,
+        raw_statement=raw_statement.strip(),
         photo_paths=[],
         injuries=_bool(injuries),
         third_party=_bool(third_party),
@@ -214,13 +236,9 @@ async def create_claim(
                 shutil.copyfileobj(photo.file, f)
             saved_paths.append(str(dest).replace("\\", "/"))
 
-    # If no files uploaded, link preset accident image
-    if not saved_paths:
+    # If no files uploaded, link preset accident image (only if photo_path provided)
+    if not saved_paths and photo_path:
         candidate = photo_path
-        if not candidate and policy_id:
-            policies = sm.load_policies()
-            candidate = policies.get(policy_id, {}).get("accident_photo", "")
-
         if candidate:
             fname = Path(candidate).name
             src1 = BASE_DIR / "data" / "sample_photos" / fname

@@ -2,210 +2,17 @@
   "claims": [
     {
       "claim_id": "CLM-26-00001",
-      "created_at": "2026-11-13T17:00:15.175162+00:00",
-      "policy_id": "POL-1001",
-      "policyholder_name": "Arjun Mehta",
-      "vehicle_reg": "MH12AB1001",
+      "created_at": "2026-11-13T18:46:32.519605+00:00",
+      "policy_id": "nigga",
+      "policyholder_name": "Claimant (Unassigned)",
+      "vehicle_reg": "UNREGISTERED",
       "line_of_business": "Personal Auto",
-      "incident_date": "2026-11-10",
-      "incident_time": "14:30",
-      "location": "Pune",
-      "raw_statement": "While driving on Pune-Solapur Highway, a loose stone from a truck hit my front bumper and radiator grill, causing a dent and scratch. No other vehicles were involved.",
+      "incident_date": "2026-11-13",
+      "incident_time": "00:15",
+      "location": "Location Unspecified",
+      "raw_statement": "I was driving my Maruti Suzuki Swift through Mangaluru when the vehicle in front of me suddenly applied its brakes. I couldn't stop in time and collided with the rear of that vehicle. The impact damaged my car's front bumper and grille. I noticed visible cracks and dents on the front section. No one was injured in the accident.",
       "photo_paths": [
-        "C:/Users/shree/OneDrive/Desktop/fnol-project/data/uploads/CLM-26-00001/pol_1001_damage.jpg"
-      ],
-      "injuries": false,
-      "third_party": false,
-      "police_report": false,
-      "claim_status": "NEEDS ATTENTION",
-      "current_stage": "5 DECISION GATE",
-      "stages_completed": [
-        "1 INTAKE & TRIAGE",
-        "2 COVERAGE",
-        "3 DA / ESTIMATE",
-        "4 FRAUD & CONSISTENCY",
-        "5 DECISION GATE"
-      ],
-      "priority": "High priority",
-      "action_type": "QUESTION",
-      "handled_by": "Spark",
-      "loop_count": 0,
-      "returned_to_user_prompt": null,
-      "statement_facts": {
-        "claimed_zones": [],
-        "incident_date": "2026-11-10",
-        "incident_time": "14:30",
-        "location": "Pune",
-        "narrative_summary": "While driving on Pune-Solapur Highway, a loose stone from a truck hit my front bumper and radiator grill, causing a dent and scratch. No other vehicles were involved.",
-        "injuries_reported": false,
-        "third_party_involved": false,
-        "police_report_filed": false,
-        "weather_claimed": ""
-      },
-      "vision_report": {
-        "findings": [],
-        "overall_severity": "Unknown",
-        "estimated_repair_cost_inr": 0.0,
-        "overall_confidence": 0,
-        "unusable_photos": true,
-        "notes": "Vision analysis failed: GEMINI_API_KEY is not set. Add it to your .env file."
-      },
-      "coverage_result": {
-        "policy_id": "POL-1001",
-        "status": "covered",
-        "policy_active_on_date": true,
-        "vehicle_matched": true,
-        "coverage_type": "Comprehensive",
-        "idv_inr": 850000.0,
-        "deductible_inr": 1000.0,
-        "limit_inr": 850000.0,
-        "net_payable_estimate_inr": 0.0,
-        "clause_citations": [],
-        "explanation": "Policy covered. Net payable estimate: INR 0."
-      },
-      "fraud_report": {
-        "risk_level": "Low",
-        "signals": [
-          {
-            "signal_name": "Damage Zone Contradiction",
-            "weight": "High",
-            "triggered": false,
-            "reason": "Claimed zones consistent with observed damage."
-          },
-          {
-            "signal_name": "Early Policy Inception",
-            "weight": "High",
-            "triggered": false,
-            "reason": "Policy was 184 days old at incident date — no early inception concern."
-          },
-          {
-            "signal_name": "Prior Claim Frequency",
-            "weight": "Medium",
-            "triggered": false,
-            "reason": "0 prior claim(s) — within normal range."
-          },
-          {
-            "signal_name": "Weather Plausibility Mismatch",
-            "weight": "Low",
-            "triggered": false,
-            "reason": "Weather data unavailable — signal not evaluated."
-          }
-        ],
-        "contradictions": [],
-        "unresolved_contradiction": false,
-        "weather_verification": "Weather data unavailable (not treated as suspicious)"
-      },
-      "final_tier": "Tier 2",
-      "headline_summary": "Spark has a question — all submitted photos are too blurry or dark to assess — clearer photos required",
-      "what_spark_did": "Spark attempted vision analysis but could not reach the minimum confidence threshold. All submitted photos are too blurry or dark to assess. The claim cannot be auto-processed until clear photographic evidence is available.",
-      "recommendation_title": "Additional Photo Evidence Required",
-      "confidence_score": 0,
-      "rationale_bullets": [
-        "All submitted photos are too blurry or dark to assess.",
-        "Vision overall confidence: 0% (minimum required: 80%)",
-        "Automation halted pending additional evidence — no decision issued."
-      ],
-      "referenced_documents": [
-        {
-          "doc_name": "FNOL_intake_CLM-26-00001.pdf",
-          "section_ref": "p. 1, loss narrative",
-          "summary": "Loss description and reported circumstances used for triage."
-        },
-        {
-          "doc_name": "Policy_schedule_POL-1001.pdf",
-          "section_ref": "Cover section, p. 4",
-          "summary": "Cover, limits and deductible confirmed in force on the loss date."
-        },
-        {
-          "doc_name": "Vision_assessment_CLM-26-00001.pdf",
-          "section_ref": "Findings, p. 2",
-          "summary": "Zone-by-zone photographic damage assessment supporting the outcome."
-        }
-      ],
-      "data_tags": [
-        "Policy Schedule DB2",
-        "Fraud Screening Result"
-      ],
-      "agent_trace": [
-        {
-          "timestamp": "2026-11-13T17:00:19.764919+00:00",
-          "stage": "1 INTAKE & TRIAGE",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Intake validation & orchestration",
-          "result_summary": "Observed intake package for Arjun Mehta. Photos submitted: 1. Dispatching Statement Analyst Agent."
-        },
-        {
-          "timestamp": "2026-11-13T17:00:19.765025+00:00",
-          "stage": "1 INTAKE & TRIAGE",
-          "agent_or_tool": "Statement Analyst",
-          "purpose": "Untrusted narrative parsing & fact extraction",
-          "result_summary": "Claimed zones: ['unspecified']. Injuries: False, Third-party: False, Police report: False. Narrative summarized."
-        },
-        {
-          "timestamp": "2026-11-13T17:00:19.765032+00:00",
-          "stage": "1 INTAKE & TRIAGE",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Draft case plan",
-          "result_summary": "Plan drafted: [1] Verify policy schedule & deductibles -> [2] Neutral zone-by-zone visual appraisal -> [3] Weather & multi-signal consistency cross-check -> [4] Decision Gate evaluation."
-        },
-        {
-          "timestamp": "2026-11-13T17:00:22.769381+00:00",
-          "stage": "2 COVERAGE",
-          "agent_or_tool": "Policy Coverage Agent",
-          "purpose": "Contractual terms & schedule validation",
-          "result_summary": "Coverage status: COVERED (Comprehensive). Active on date: True, Vehicle matched: True. IDV: ₹850,000, Deductible: ₹1,000. Citations: Standard Schedule Provisions."
-        },
-        {
-          "timestamp": "2026-11-13T17:00:24.776830+00:00",
-          "stage": "3 DA / ESTIMATE",
-          "agent_or_tool": "Vision Assessor Agent",
-          "purpose": "Neutral multimodal damage assessment",
-          "result_summary": "Inspecting 1 photo(s) using neutral zone checklist without statement bias."
-        },
-        {
-          "timestamp": "2026-11-13T17:00:24.777424+00:00",
-          "stage": "3 DA / ESTIMATE",
-          "agent_or_tool": "Vision Assessor Agent",
-          "purpose": "Damage severity appraisal & repair calculation",
-          "result_summary": "Damaged zones identified: ['None']. Severity: Unknown. Calculated repair cost: ₹0 from standard IRDAI table. Overall confidence: 0%."
-        },
-        {
-          "timestamp": "2026-11-13T17:00:40.193450+00:00",
-          "stage": "4 FRAUD & CONSISTENCY",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Environmental verification via Open-Meteo",
-          "result_summary": "Weather observation: Weather data unavailable (not treated as suspicious)"
-        },
-        {
-          "timestamp": "2026-11-13T17:00:40.195454+00:00",
-          "stage": "4 FRAUD & CONSISTENCY",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Fraud & Consistency analysis complete",
-          "result_summary": "Risk Level: Low. Triggered signals: ['None']. Unresolved contradiction: False. Loops executed: 0."
-        },
-        {
-          "timestamp": "2026-11-13T17:00:56.927199+00:00",
-          "stage": "5 DECISION GATE",
-          "agent_or_tool": "Decision Gate",
-          "purpose": "Tier assignment — missing/low-confidence evidence",
-          "result_summary": "Tier 2 (NEEDS ATTENTION / QUESTION). No photos: False. Unusable: True. Confidence: 0%."
-        }
-      ],
-      "chat_history": []
-    },
-    {
-      "claim_id": "CLM-26-00002",
-      "created_at": "2026-11-13T17:00:15.190664+00:00",
-      "policy_id": "POL-1003",
-      "policyholder_name": "Rajan Pillai",
-      "vehicle_reg": "TN09EF3003",
-      "line_of_business": "Personal Auto",
-      "incident_date": "2026-11-12",
-      "incident_time": "10:00",
-      "location": "Chennai",
-      "raw_statement": "I was driving through a heavy rainstorm when my car skidded and crashed head-on directly into a banyan tree, crushing the entire front hood and radiator.",
-      "photo_paths": [
-        "C:/Users/shree/OneDrive/Desktop/fnol-project/data/uploads/CLM-26-00002/pol_1003_damage.jpg"
+        "C:/Users/shree/OneDrive/Desktop/fnol-project/data/uploads/CLM-26-00001/sddefault.jpg"
       ],
       "injuries": false,
       "third_party": false,
@@ -226,10 +33,10 @@
       "returned_to_user_prompt": null,
       "statement_facts": {
         "claimed_zones": [],
-        "incident_date": "2026-11-12",
-        "incident_time": "10:00",
-        "location": "Chennai",
-        "narrative_summary": "I was driving through a heavy rainstorm when my car skidded and crashed head-on directly into a banyan tree, crushing the entire front hood and radiator.",
+        "incident_date": "2026-11-13",
+        "incident_time": "00:15",
+        "location": "Location Unspecified",
+        "narrative_summary": "I was driving my Maruti Suzuki Swift through Mangaluru when the vehicle in front of me suddenly applied its brakes. I couldn't stop in time and collided with the rear of that vehicle. The impact damaged my car's front bumper and grille. I noticed visible cracks and dents on the front section. No one was injured in the accident.",
         "injuries_reported": false,
         "third_party_involved": false,
         "police_report_filed": false,
@@ -244,210 +51,19 @@
         "notes": "Vision analysis failed: GEMINI_API_KEY is not set. Add it to your .env file."
       },
       "coverage_result": {
-        "policy_id": "POL-1003",
-        "status": "covered",
-        "policy_active_on_date": true,
-        "vehicle_matched": true,
-        "coverage_type": "Comprehensive",
-        "idv_inr": 320000.0,
-        "deductible_inr": 2000.0,
-        "limit_inr": 320000.0,
+        "policy_id": "nigga",
+        "status": "not_covered",
+        "policy_active_on_date": false,
+        "vehicle_matched": false,
+        "coverage_type": "Unknown",
+        "idv_inr": 0.0,
+        "deductible_inr": 0.0,
+        "limit_inr": 0.0,
         "net_payable_estimate_inr": 0.0,
-        "clause_citations": [],
-        "explanation": "Policy covered. Net payable estimate: INR 0."
-      },
-      "fraud_report": {
-        "risk_level": "High",
-        "signals": [
-          {
-            "signal_name": "Damage Zone Contradiction",
-            "weight": "High",
-            "triggered": false,
-            "reason": "Claimed zones consistent with observed damage."
-          },
-          {
-            "signal_name": "Early Policy Inception",
-            "weight": "High",
-            "triggered": true,
-            "reason": "Incident occurred only 3 day(s) after policy inception (effective 2026-11-09) — elevated moral hazard risk."
-          },
-          {
-            "signal_name": "Prior Claim Frequency",
-            "weight": "Medium",
-            "triggered": true,
-            "reason": "3 prior claim(s) on record — elevated frequency risk."
-          },
-          {
-            "signal_name": "Weather Plausibility Mismatch",
-            "weight": "Low",
-            "triggered": false,
-            "reason": "Weather data unavailable — signal not evaluated."
-          }
+        "clause_citations": [
+          "Policy record not found in database"
         ],
-        "contradictions": [],
-        "unresolved_contradiction": false,
-        "weather_verification": "Weather data unavailable (not treated as suspicious)"
-      },
-      "final_tier": "Tier 3",
-      "headline_summary": "High fraud risk — Early Policy Inception, Prior Claim Frequency — SIU review required",
-      "what_spark_did": "Spark completed all five pipeline stages. Fraud & Consistency analysis returned a High risk rating based on multiple weighted signals. No auto-denial has been issued — the evidence is forwarded to the Special Investigations Unit for human review.",
-      "recommendation_title": "Refer to Special Investigations Unit",
-      "confidence_score": 0,
-      "rationale_bullets": [
-        "Early Policy Inception (High): Incident occurred only 3 day(s) after policy inception (effective 2026-11-09) — elevated moral hazard risk.",
-        "Prior Claim Frequency (Medium): 3 prior claim(s) on record — elevated frequency risk."
-      ],
-      "referenced_documents": [
-        {
-          "doc_name": "FNOL_intake_CLM-26-00002.pdf",
-          "section_ref": "p. 1, loss narrative",
-          "summary": "Loss description and reported circumstances used for triage."
-        },
-        {
-          "doc_name": "Policy_schedule_POL-1003.pdf",
-          "section_ref": "Cover section, p. 4",
-          "summary": "Cover, limits and deductible confirmed in force on the loss date."
-        },
-        {
-          "doc_name": "Vision_assessment_CLM-26-00002.pdf",
-          "section_ref": "Findings, p. 2",
-          "summary": "Zone-by-zone photographic damage assessment supporting the outcome."
-        }
-      ],
-      "data_tags": [
-        "Policy Schedule DB2",
-        "Policy Loss History",
-        "Fraud Screening Result"
-      ],
-      "agent_trace": [
-        {
-          "timestamp": "2026-11-13T17:00:19.768885+00:00",
-          "stage": "1 INTAKE & TRIAGE",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Intake validation & orchestration",
-          "result_summary": "Observed intake package for Rajan Pillai. Photos submitted: 1. Dispatching Statement Analyst Agent."
-        },
-        {
-          "timestamp": "2026-11-13T17:00:19.769562+00:00",
-          "stage": "1 INTAKE & TRIAGE",
-          "agent_or_tool": "Statement Analyst",
-          "purpose": "Untrusted narrative parsing & fact extraction",
-          "result_summary": "Claimed zones: ['unspecified']. Injuries: False, Third-party: False, Police report: False. Narrative summarized."
-        },
-        {
-          "timestamp": "2026-11-13T17:00:19.769614+00:00",
-          "stage": "1 INTAKE & TRIAGE",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Draft case plan",
-          "result_summary": "Plan drafted: [1] Verify policy schedule & deductibles -> [2] Neutral zone-by-zone visual appraisal -> [3] Weather & multi-signal consistency cross-check -> [4] Decision Gate evaluation."
-        },
-        {
-          "timestamp": "2026-11-13T17:00:22.778150+00:00",
-          "stage": "2 COVERAGE",
-          "agent_or_tool": "Policy Coverage Agent",
-          "purpose": "Contractual terms & schedule validation",
-          "result_summary": "Coverage status: COVERED (Comprehensive). Active on date: True, Vehicle matched: True. IDV: ₹320,000, Deductible: ₹2,000. Citations: Standard Schedule Provisions."
-        },
-        {
-          "timestamp": "2026-11-13T17:00:24.785504+00:00",
-          "stage": "3 DA / ESTIMATE",
-          "agent_or_tool": "Vision Assessor Agent",
-          "purpose": "Neutral multimodal damage assessment",
-          "result_summary": "Inspecting 1 photo(s) using neutral zone checklist without statement bias."
-        },
-        {
-          "timestamp": "2026-11-13T17:00:24.789132+00:00",
-          "stage": "3 DA / ESTIMATE",
-          "agent_or_tool": "Vision Assessor Agent",
-          "purpose": "Damage severity appraisal & repair calculation",
-          "result_summary": "Damaged zones identified: ['None']. Severity: Unknown. Calculated repair cost: ₹0 from standard IRDAI table. Overall confidence: 0%."
-        },
-        {
-          "timestamp": "2026-11-13T17:00:48.225507+00:00",
-          "stage": "4 FRAUD & CONSISTENCY",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Environmental verification via Open-Meteo",
-          "result_summary": "Weather observation: Weather data unavailable (not treated as suspicious)"
-        },
-        {
-          "timestamp": "2026-11-13T17:00:48.226263+00:00",
-          "stage": "4 FRAUD & CONSISTENCY",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Fraud & Consistency analysis complete",
-          "result_summary": "Risk Level: High. Triggered signals: ['Early Policy Inception', 'Prior Claim Frequency']. Unresolved contradiction: False. Loops executed: 0."
-        },
-        {
-          "timestamp": "2026-11-13T17:00:56.936912+00:00",
-          "stage": "5 DECISION GATE",
-          "agent_or_tool": "Decision Gate",
-          "purpose": "Tier assignment — fraud/contradiction",
-          "result_summary": "Tier 3 assigned. Risk: High. Unresolved: False."
-        }
-      ],
-      "chat_history": []
-    },
-    {
-      "claim_id": "CLM-26-00003",
-      "created_at": "2026-11-13T17:23:33.129045+00:00",
-      "policy_id": "POL-1001",
-      "policyholder_name": "Arjun Mehta",
-      "vehicle_reg": "MH12AB1001",
-      "line_of_business": "Personal Auto",
-      "incident_date": "2026-11-10",
-      "incident_time": "14:30",
-      "location": "Pune",
-      "raw_statement": "While driving on Pune-Solapur Highway, a loose stone from a truck hit my front bumper and radiator grill, causing a dent and scratch. No other vehicles were involved.",
-      "photo_paths": [
-        "C:/Users/shree/OneDrive/Desktop/fnol-project/data/uploads/CLM-26-00003/pol_1001_damage.jpg"
-      ],
-      "injuries": false,
-      "third_party": false,
-      "police_report": false,
-      "claim_status": "NEEDS ATTENTION",
-      "current_stage": "5 DECISION GATE",
-      "stages_completed": [
-        "1 INTAKE & TRIAGE",
-        "2 COVERAGE",
-        "3 DA / ESTIMATE",
-        "4 FRAUD & CONSISTENCY",
-        "5 DECISION GATE"
-      ],
-      "priority": "High priority",
-      "action_type": "QUESTION",
-      "handled_by": "Spark",
-      "loop_count": 0,
-      "returned_to_user_prompt": null,
-      "statement_facts": {
-        "claimed_zones": [],
-        "incident_date": "2026-11-10",
-        "incident_time": "14:30",
-        "location": "Pune",
-        "narrative_summary": "While driving on Pune-Solapur Highway, a loose stone from a truck hit my front bumper and radiator grill, causing a dent and scratch. No other vehicles were involved.",
-        "injuries_reported": false,
-        "third_party_involved": false,
-        "police_report_filed": false,
-        "weather_claimed": ""
-      },
-      "vision_report": {
-        "findings": [],
-        "overall_severity": "Unknown",
-        "estimated_repair_cost_inr": 0.0,
-        "overall_confidence": 0,
-        "unusable_photos": true,
-        "notes": "Vision analysis failed: GEMINI_API_KEY is not set. Add it to your .env file."
-      },
-      "coverage_result": {
-        "policy_id": "POL-1001",
-        "status": "covered",
-        "policy_active_on_date": true,
-        "vehicle_matched": true,
-        "coverage_type": "Comprehensive",
-        "idv_inr": 850000.0,
-        "deductible_inr": 1000.0,
-        "limit_inr": 850000.0,
-        "net_payable_estimate_inr": 0.0,
-        "clause_citations": [],
-        "explanation": "Policy covered. Net payable estimate: INR 0."
+        "explanation": "Policy 'nigga' does not exist in our records."
       },
       "fraud_report": {
         "risk_level": "Low",
@@ -462,7 +78,7 @@
             "signal_name": "Early Policy Inception",
             "weight": "High",
             "triggered": false,
-            "reason": "Policy was 184 days old at incident date — no early inception concern."
+            "reason": ""
           },
           {
             "signal_name": "Prior Claim Frequency",
@@ -474,115 +90,116 @@
             "signal_name": "Weather Plausibility Mismatch",
             "weight": "Low",
             "triggered": false,
-            "reason": "No weather conditions claimed — signal not applicable."
+            "reason": "Weather data unavailable — signal not evaluated."
           }
         ],
         "contradictions": [],
         "unresolved_contradiction": false,
-        "weather_verification": "Mainly clear / 0.0 mm precipitation / 30.3°C max on 2026-11-10 near Pune (Weather data by Open-Meteo.com)"
+        "weather_verification": "Weather data unavailable (not treated as suspicious)"
       },
       "final_tier": "Tier 2",
-      "headline_summary": "Spark has a question — all submitted photos are too blurry or dark to assess — clearer photos required",
-      "what_spark_did": "Spark attempted vision analysis but could not reach the minimum confidence threshold. All submitted photos are too blurry or dark to assess. The claim cannot be auto-processed until clear photographic evidence is available.",
-      "recommendation_title": "Additional Photo Evidence Required",
+      "headline_summary": "Loss date / policy coverage gate failed — human sign-off required before rejection",
+      "what_spark_did": "Spark completed the coverage check. The claim cannot be auto-processed because: Policy 'nigga' does not exist in our records. No rejection has been issued — per protocol, coverage denials require a named adjuster sign-off.",
+      "recommendation_title": "Coverage Gate Failed — Adjuster Sign-Off Required",
       "confidence_score": 0,
       "rationale_bullets": [
-        "All submitted photos are too blurry or dark to assess.",
-        "Vision overall confidence: 0% (minimum required: 80%)",
-        "Automation halted pending additional evidence — no decision issued."
+        "Policy active on date: False",
+        "Vehicle matched: False",
+        "Coverage type: Unknown",
+        "Clause citation(s): Policy record not found in database",
+        "System rule: auto-rejection is prohibited — human sign-off required."
       ],
       "referenced_documents": [
         {
-          "doc_name": "FNOL_intake_CLM-26-00003.pdf",
+          "doc_name": "FNOL_intake_CLM-26-00001.pdf",
           "section_ref": "p. 1, loss narrative",
           "summary": "Loss description and reported circumstances used for triage."
         },
         {
-          "doc_name": "Policy_schedule_POL-1001.pdf",
+          "doc_name": "Policy_schedule_nigga.pdf",
           "section_ref": "Cover section, p. 4",
           "summary": "Cover, limits and deductible confirmed in force on the loss date."
         },
         {
-          "doc_name": "Vision_assessment_CLM-26-00003.pdf",
+          "doc_name": "Vision_assessment_CLM-26-00001.pdf",
           "section_ref": "Findings, p. 2",
           "summary": "Zone-by-zone photographic damage assessment supporting the outcome."
         }
       ],
       "data_tags": [
         "Policy Schedule DB2",
-        "Open-Meteo Weather",
         "Fraud Screening Result"
       ],
       "agent_trace": [
         {
-          "timestamp": "2026-11-13T17:23:33.149585+00:00",
+          "timestamp": "2026-11-13T18:46:32.530804+00:00",
           "stage": "1 INTAKE & TRIAGE",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Intake validation & orchestration",
-          "result_summary": "Observed intake package for Arjun Mehta. Photos submitted: 1. Dispatching Statement Analyst Agent."
+          "result_summary": "Observed intake package for Claimant (Unassigned). Photos submitted: 1. Dispatching Statement Analyst Agent."
         },
         {
-          "timestamp": "2026-11-13T17:23:33.149675+00:00",
+          "timestamp": "2026-11-13T18:46:32.530914+00:00",
           "stage": "1 INTAKE & TRIAGE",
           "agent_or_tool": "Statement Analyst",
           "purpose": "Untrusted narrative parsing & fact extraction",
           "result_summary": "Claimed zones: ['unspecified']. Injuries: False, Third-party: False, Police report: False. Narrative summarized."
         },
         {
-          "timestamp": "2026-11-13T17:23:33.149679+00:00",
+          "timestamp": "2026-11-13T18:46:32.530924+00:00",
           "stage": "1 INTAKE & TRIAGE",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Draft case plan",
           "result_summary": "Plan drafted: [1] Verify policy schedule & deductibles -> [2] Neutral zone-by-zone visual appraisal -> [3] Weather & multi-signal consistency cross-check -> [4] Decision Gate evaluation."
         },
         {
-          "timestamp": "2026-11-13T17:23:33.157533+00:00",
+          "timestamp": "2026-11-13T18:46:32.534670+00:00",
           "stage": "2 COVERAGE",
           "agent_or_tool": "Policy Coverage Agent",
           "purpose": "Contractual terms & schedule validation",
-          "result_summary": "Coverage status: COVERED (Comprehensive). Active on date: True, Vehicle matched: True. IDV: ₹850,000, Deductible: ₹1,000. Citations: Standard Schedule Provisions."
+          "result_summary": "Coverage status: NOT_COVERED (Unknown). Active on date: False, Vehicle matched: False. IDV: ₹0, Deductible: ₹0. Citations: Policy record not found in database."
         },
         {
-          "timestamp": "2026-11-13T17:23:33.173623+00:00",
+          "timestamp": "2026-11-13T18:46:32.538214+00:00",
           "stage": "3 DA / ESTIMATE",
           "agent_or_tool": "Vision Assessor Agent",
           "purpose": "Neutral multimodal damage assessment",
           "result_summary": "Inspecting 1 photo(s) using neutral zone checklist without statement bias."
         },
         {
-          "timestamp": "2026-11-13T17:23:33.176221+00:00",
+          "timestamp": "2026-11-13T18:46:32.538578+00:00",
           "stage": "3 DA / ESTIMATE",
           "agent_or_tool": "Vision Assessor Agent",
           "purpose": "Damage severity appraisal & repair calculation",
           "result_summary": "Damaged zones identified: ['None']. Severity: Unknown. Calculated repair cost: ₹0 from standard IRDAI table. Overall confidence: 0%."
         },
         {
-          "timestamp": "2026-11-13T17:23:35.036373+00:00",
+          "timestamp": "2026-11-13T18:46:47.928216+00:00",
           "stage": "4 FRAUD & CONSISTENCY",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Environmental verification via Open-Meteo",
-          "result_summary": "Weather observation: Mainly clear / 0.0 mm precipitation / 30.3°C max on 2026-11-10 near Pune (Weather data by Open-Meteo.com)"
+          "result_summary": "Weather observation: Weather data unavailable (not treated as suspicious)"
         },
         {
-          "timestamp": "2026-11-13T17:23:35.037185+00:00",
+          "timestamp": "2026-11-13T18:46:47.928621+00:00",
           "stage": "4 FRAUD & CONSISTENCY",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Fraud & Consistency analysis complete",
           "result_summary": "Risk Level: Low. Triggered signals: ['None']. Unresolved contradiction: False. Loops executed: 0."
         },
         {
-          "timestamp": "2026-11-13T17:23:35.045782+00:00",
+          "timestamp": "2026-11-13T18:46:47.932592+00:00",
           "stage": "5 DECISION GATE",
           "agent_or_tool": "Decision Gate",
-          "purpose": "Tier assignment — missing/low-confidence evidence",
-          "result_summary": "Tier 2 (NEEDS ATTENTION / QUESTION). No photos: False. Unusable: True. Confidence: 0%."
+          "purpose": "Tier assignment — coverage gate",
+          "result_summary": "Tier 2 (STUCK). Coverage status: not_covered. Clauses: Policy record not found in database."
         }
       ],
       "chat_history": []
     },
     {
-      "claim_id": "CLM-26-00004",
-      "created_at": "2026-11-13T17:23:35.053630+00:00",
+      "claim_id": "CLM-26-00002",
+      "created_at": "2026-11-13T19:15:41.905520+00:00",
       "policy_id": "POL-1002",
       "policyholder_name": "Priya Nair",
       "vehicle_reg": "KA05CD2002",
@@ -592,7 +209,7 @@
       "location": "Bengaluru",
       "raw_statement": "Severe collision on Outer Ring Road. An oncoming cement mixer rammed into the front and left side of my vehicle at high speed. The front engine compartment is completely crushed, suspension broken, and airbags deployed.",
       "photo_paths": [
-        "C:/Users/shree/OneDrive/Desktop/fnol-project/data/uploads/CLM-26-00004/pol_1002_damage.jpg"
+        "C:/Users/shree/OneDrive/Desktop/fnol-project/data/uploads/CLM-26-00002/pol_1002_damage.jpg"
       ],
       "injuries": false,
       "third_party": false,
@@ -687,7 +304,7 @@
       ],
       "referenced_documents": [
         {
-          "doc_name": "FNOL_intake_CLM-26-00004.pdf",
+          "doc_name": "FNOL_intake_CLM-26-00002.pdf",
           "section_ref": "p. 1, loss narrative",
           "summary": "Loss description and reported circumstances used for triage."
         },
@@ -697,7 +314,7 @@
           "summary": "Cover, limits and deductible confirmed in force on the loss date."
         },
         {
-          "doc_name": "Vision_assessment_CLM-26-00004.pdf",
+          "doc_name": "Vision_assessment_CLM-26-00002.pdf",
           "section_ref": "Findings, p. 2",
           "summary": "Zone-by-zone photographic damage assessment supporting the outcome."
         }
@@ -709,63 +326,63 @@
       ],
       "agent_trace": [
         {
-          "timestamp": "2026-11-13T17:23:35.076306+00:00",
+          "timestamp": "2026-11-13T19:15:41.924146+00:00",
           "stage": "1 INTAKE & TRIAGE",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Intake validation & orchestration",
           "result_summary": "Observed intake package for Priya Nair. Photos submitted: 1. Dispatching Statement Analyst Agent."
         },
         {
-          "timestamp": "2026-11-13T17:23:35.076406+00:00",
+          "timestamp": "2026-11-13T19:15:41.924458+00:00",
           "stage": "1 INTAKE & TRIAGE",
           "agent_or_tool": "Statement Analyst",
           "purpose": "Untrusted narrative parsing & fact extraction",
           "result_summary": "Claimed zones: ['unspecified']. Injuries: False, Third-party: False, Police report: False. Narrative summarized."
         },
         {
-          "timestamp": "2026-11-13T17:23:35.076412+00:00",
+          "timestamp": "2026-11-13T19:15:41.924471+00:00",
           "stage": "1 INTAKE & TRIAGE",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Draft case plan",
           "result_summary": "Plan drafted: [1] Verify policy schedule & deductibles -> [2] Neutral zone-by-zone visual appraisal -> [3] Weather & multi-signal consistency cross-check -> [4] Decision Gate evaluation."
         },
         {
-          "timestamp": "2026-11-13T17:23:35.084148+00:00",
+          "timestamp": "2026-11-13T19:15:41.931471+00:00",
           "stage": "2 COVERAGE",
           "agent_or_tool": "Policy Coverage Agent",
           "purpose": "Contractual terms & schedule validation",
           "result_summary": "Coverage status: COVERED (Comprehensive). Active on date: True, Vehicle matched: True. IDV: ₹450,000, Deductible: ₹2,000. Citations: Standard Schedule Provisions."
         },
         {
-          "timestamp": "2026-11-13T17:23:35.093350+00:00",
+          "timestamp": "2026-11-13T19:15:41.937594+00:00",
           "stage": "3 DA / ESTIMATE",
           "agent_or_tool": "Vision Assessor Agent",
           "purpose": "Neutral multimodal damage assessment",
           "result_summary": "Inspecting 1 photo(s) using neutral zone checklist without statement bias."
         },
         {
-          "timestamp": "2026-11-13T17:23:35.094016+00:00",
+          "timestamp": "2026-11-13T19:15:41.938445+00:00",
           "stage": "3 DA / ESTIMATE",
           "agent_or_tool": "Vision Assessor Agent",
           "purpose": "Damage severity appraisal & repair calculation",
           "result_summary": "Damaged zones identified: ['None']. Severity: Unknown. Calculated repair cost: ₹0 from standard IRDAI table. Overall confidence: 0%."
         },
         {
-          "timestamp": "2026-11-13T17:23:37.061345+00:00",
+          "timestamp": "2026-11-13T19:15:43.801991+00:00",
           "stage": "4 FRAUD & CONSISTENCY",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Environmental verification via Open-Meteo",
           "result_summary": "Weather observation: Moderate rain / 6.8 mm precipitation / 27.9°C max on 2026-11-05 near Bengaluru (Weather data by Open-Meteo.com)"
         },
         {
-          "timestamp": "2026-11-13T17:23:37.061961+00:00",
+          "timestamp": "2026-11-13T19:15:43.804052+00:00",
           "stage": "4 FRAUD & CONSISTENCY",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Fraud & Consistency analysis complete",
           "result_summary": "Risk Level: Low. Triggered signals: ['None']. Unresolved contradiction: False. Loops executed: 0."
         },
         {
-          "timestamp": "2026-11-13T17:23:37.069877+00:00",
+          "timestamp": "2026-11-13T19:15:43.810347+00:00",
           "stage": "5 DECISION GATE",
           "agent_or_tool": "Decision Gate",
           "purpose": "Tier assignment — missing/low-confidence evidence",
@@ -775,23 +392,23 @@
       "chat_history": []
     },
     {
-      "claim_id": "CLM-26-00005",
-      "created_at": "2026-11-13T17:23:37.077054+00:00",
-      "policy_id": "POL-1003",
-      "policyholder_name": "Rajan Pillai",
-      "vehicle_reg": "TN09EF3003",
+      "claim_id": "CLM-26-00003",
+      "created_at": "2026-11-13T19:15:42.831801+00:00",
+      "policy_id": "POL-1002",
+      "policyholder_name": "Priya Nair",
+      "vehicle_reg": "KA05CD2002",
       "line_of_business": "Personal Auto",
-      "incident_date": "2026-11-12",
-      "incident_time": "10:00",
-      "location": "Chennai",
-      "raw_statement": "I was driving through a heavy rainstorm when my car skidded and crashed head-on directly into a banyan tree, crushing the entire front hood and radiator.",
+      "incident_date": "2026-11-05",
+      "incident_time": "09:15",
+      "location": "Bengaluru",
+      "raw_statement": "Severe collision on Outer Ring Road. An oncoming cement mixer rammed into the front and left side of my vehicle at high speed. The front engine compartment is completely crushed, suspension broken, and airbags deployed.",
       "photo_paths": [
-        "C:/Users/shree/OneDrive/Desktop/fnol-project/data/uploads/CLM-26-00005/pol_1003_damage.jpg"
+        "C:/Users/shree/OneDrive/Desktop/fnol-project/data/uploads/CLM-26-00003/pol_1002_damage.jpg"
       ],
       "injuries": false,
       "third_party": false,
       "police_report": false,
-      "claim_status": "STUCK",
+      "claim_status": "NEEDS ATTENTION",
       "current_stage": "5 DECISION GATE",
       "stages_completed": [
         "1 INTAKE & TRIAGE",
@@ -801,16 +418,16 @@
         "5 DECISION GATE"
       ],
       "priority": "High priority",
-      "action_type": "ESCALATION",
+      "action_type": "QUESTION",
       "handled_by": "Spark",
       "loop_count": 0,
       "returned_to_user_prompt": null,
       "statement_facts": {
         "claimed_zones": [],
-        "incident_date": "2026-11-12",
-        "incident_time": "10:00",
-        "location": "Chennai",
-        "narrative_summary": "I was driving through a heavy rainstorm when my car skidded and crashed head-on directly into a banyan tree, crushing the entire front hood and radiator.",
+        "incident_date": "2026-11-05",
+        "incident_time": "09:15",
+        "location": "Bengaluru",
+        "narrative_summary": "Severe collision on Outer Ring Road. An oncoming cement mixer rammed into the front and left side of my vehicle at high speed. The front engine compartment is completely crushed, suspension broken, and airbags deployed.",
         "injuries_reported": false,
         "third_party_involved": false,
         "police_report_filed": false,
@@ -825,20 +442,20 @@
         "notes": "Vision analysis failed: GEMINI_API_KEY is not set. Add it to your .env file."
       },
       "coverage_result": {
-        "policy_id": "POL-1003",
+        "policy_id": "POL-1002",
         "status": "covered",
         "policy_active_on_date": true,
         "vehicle_matched": true,
         "coverage_type": "Comprehensive",
-        "idv_inr": 320000.0,
+        "idv_inr": 450000.0,
         "deductible_inr": 2000.0,
-        "limit_inr": 320000.0,
+        "limit_inr": 450000.0,
         "net_payable_estimate_inr": 0.0,
         "clause_citations": [],
         "explanation": "Policy covered. Net payable estimate: INR 0."
       },
       "fraud_report": {
-        "risk_level": "High",
+        "risk_level": "Low",
         "signals": [
           {
             "signal_name": "Damage Zone Contradiction",
@@ -849,14 +466,14 @@
           {
             "signal_name": "Early Policy Inception",
             "weight": "High",
-            "triggered": true,
-            "reason": "Incident occurred only 3 day(s) after policy inception (effective 2026-11-09) — elevated moral hazard risk."
+            "triggered": false,
+            "reason": "Policy was 294 days old at incident date — no early inception concern."
           },
           {
             "signal_name": "Prior Claim Frequency",
             "weight": "Medium",
-            "triggered": true,
-            "reason": "3 prior claim(s) on record — elevated frequency risk."
+            "triggered": false,
+            "reason": "0 prior claim(s) — within normal range."
           },
           {
             "signal_name": "Weather Plausibility Mismatch",
@@ -867,110 +484,110 @@
         ],
         "contradictions": [],
         "unresolved_contradiction": false,
-        "weather_verification": "Light drizzle / 0.1 mm precipitation / 31.3°C max on 2026-11-12 near Chennai (Weather data by Open-Meteo.com)"
+        "weather_verification": "Moderate rain / 6.8 mm precipitation / 27.9°C max on 2026-11-05 near Bengaluru (Weather data by Open-Meteo.com)"
       },
-      "final_tier": "Tier 3",
-      "headline_summary": "High fraud risk — Early Policy Inception, Prior Claim Frequency — SIU review required",
-      "what_spark_did": "Spark completed all five pipeline stages. Fraud & Consistency analysis returned a High risk rating based on multiple weighted signals. No auto-denial has been issued — the evidence is forwarded to the Special Investigations Unit for human review.",
-      "recommendation_title": "Refer to Special Investigations Unit",
+      "final_tier": "Tier 2",
+      "headline_summary": "Spark has a question — all submitted photos are too blurry or dark to assess — clearer photos required",
+      "what_spark_did": "Spark attempted vision analysis but could not reach the minimum confidence threshold. All submitted photos are too blurry or dark to assess. The claim cannot be auto-processed until clear photographic evidence is available.",
+      "recommendation_title": "Additional Photo Evidence Required",
       "confidence_score": 0,
       "rationale_bullets": [
-        "Early Policy Inception (High): Incident occurred only 3 day(s) after policy inception (effective 2026-11-09) — elevated moral hazard risk.",
-        "Prior Claim Frequency (Medium): 3 prior claim(s) on record — elevated frequency risk."
+        "All submitted photos are too blurry or dark to assess.",
+        "Vision overall confidence: 0% (minimum required: 80%)",
+        "Automation halted pending additional evidence — no decision issued."
       ],
       "referenced_documents": [
         {
-          "doc_name": "FNOL_intake_CLM-26-00005.pdf",
+          "doc_name": "FNOL_intake_CLM-26-00003.pdf",
           "section_ref": "p. 1, loss narrative",
           "summary": "Loss description and reported circumstances used for triage."
         },
         {
-          "doc_name": "Policy_schedule_POL-1003.pdf",
+          "doc_name": "Policy_schedule_POL-1002.pdf",
           "section_ref": "Cover section, p. 4",
           "summary": "Cover, limits and deductible confirmed in force on the loss date."
         },
         {
-          "doc_name": "Vision_assessment_CLM-26-00005.pdf",
+          "doc_name": "Vision_assessment_CLM-26-00003.pdf",
           "section_ref": "Findings, p. 2",
           "summary": "Zone-by-zone photographic damage assessment supporting the outcome."
         }
       ],
       "data_tags": [
         "Policy Schedule DB2",
-        "Policy Loss History",
         "Open-Meteo Weather",
         "Fraud Screening Result"
       ],
       "agent_trace": [
         {
-          "timestamp": "2026-11-13T17:23:37.093134+00:00",
+          "timestamp": "2026-11-13T19:15:45.395666+00:00",
           "stage": "1 INTAKE & TRIAGE",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Intake validation & orchestration",
-          "result_summary": "Observed intake package for Rajan Pillai. Photos submitted: 1. Dispatching Statement Analyst Agent."
+          "result_summary": "Observed intake package for Priya Nair. Photos submitted: 1. Dispatching Statement Analyst Agent."
         },
         {
-          "timestamp": "2026-11-13T17:23:37.093206+00:00",
+          "timestamp": "2026-11-13T19:15:45.395732+00:00",
           "stage": "1 INTAKE & TRIAGE",
           "agent_or_tool": "Statement Analyst",
           "purpose": "Untrusted narrative parsing & fact extraction",
           "result_summary": "Claimed zones: ['unspecified']. Injuries: False, Third-party: False, Police report: False. Narrative summarized."
         },
         {
-          "timestamp": "2026-11-13T17:23:37.093210+00:00",
+          "timestamp": "2026-11-13T19:15:45.395737+00:00",
           "stage": "1 INTAKE & TRIAGE",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Draft case plan",
           "result_summary": "Plan drafted: [1] Verify policy schedule & deductibles -> [2] Neutral zone-by-zone visual appraisal -> [3] Weather & multi-signal consistency cross-check -> [4] Decision Gate evaluation."
         },
         {
-          "timestamp": "2026-11-13T17:23:37.100920+00:00",
+          "timestamp": "2026-11-13T19:15:47.537402+00:00",
           "stage": "2 COVERAGE",
           "agent_or_tool": "Policy Coverage Agent",
           "purpose": "Contractual terms & schedule validation",
-          "result_summary": "Coverage status: COVERED (Comprehensive). Active on date: True, Vehicle matched: True. IDV: ₹320,000, Deductible: ₹2,000. Citations: Standard Schedule Provisions."
+          "result_summary": "Coverage status: COVERED (Comprehensive). Active on date: True, Vehicle matched: True. IDV: ₹450,000, Deductible: ₹2,000. Citations: Standard Schedule Provisions."
         },
         {
-          "timestamp": "2026-11-13T17:23:37.107846+00:00",
+          "timestamp": "2026-11-13T19:15:47.892961+00:00",
           "stage": "3 DA / ESTIMATE",
           "agent_or_tool": "Vision Assessor Agent",
           "purpose": "Neutral multimodal damage assessment",
           "result_summary": "Inspecting 1 photo(s) using neutral zone checklist without statement bias."
         },
         {
-          "timestamp": "2026-11-13T17:23:37.108113+00:00",
+          "timestamp": "2026-11-13T19:15:47.895241+00:00",
           "stage": "3 DA / ESTIMATE",
           "agent_or_tool": "Vision Assessor Agent",
           "purpose": "Damage severity appraisal & repair calculation",
           "result_summary": "Damaged zones identified: ['None']. Severity: Unknown. Calculated repair cost: ₹0 from standard IRDAI table. Overall confidence: 0%."
         },
         {
-          "timestamp": "2026-11-13T17:23:39.041023+00:00",
+          "timestamp": "2026-11-13T19:15:52.090954+00:00",
           "stage": "4 FRAUD & CONSISTENCY",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Environmental verification via Open-Meteo",
-          "result_summary": "Weather observation: Light drizzle / 0.1 mm precipitation / 31.3°C max on 2026-11-12 near Chennai (Weather data by Open-Meteo.com)"
+          "result_summary": "Weather observation: Moderate rain / 6.8 mm precipitation / 27.9°C max on 2026-11-05 near Bengaluru (Weather data by Open-Meteo.com)"
         },
         {
-          "timestamp": "2026-11-13T17:23:39.041409+00:00",
+          "timestamp": "2026-11-13T19:15:52.092622+00:00",
           "stage": "4 FRAUD & CONSISTENCY",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Fraud & Consistency analysis complete",
-          "result_summary": "Risk Level: High. Triggered signals: ['Early Policy Inception', 'Prior Claim Frequency']. Unresolved contradiction: False. Loops executed: 0."
+          "result_summary": "Risk Level: Low. Triggered signals: ['None']. Unresolved contradiction: False. Loops executed: 0."
         },
         {
-          "timestamp": "2026-11-13T17:23:39.048606+00:00",
+          "timestamp": "2026-11-13T19:15:52.888827+00:00",
           "stage": "5 DECISION GATE",
           "agent_or_tool": "Decision Gate",
-          "purpose": "Tier assignment — fraud/contradiction",
-          "result_summary": "Tier 3 assigned. Risk: High. Unresolved: False."
+          "purpose": "Tier assignment — missing/low-confidence evidence",
+          "result_summary": "Tier 2 (NEEDS ATTENTION / QUESTION). No photos: False. Unusable: True. Confidence: 0%."
         }
       ],
       "chat_history": []
     },
     {
-      "claim_id": "CLM-26-00006",
-      "created_at": "2026-11-13T17:23:39.056796+00:00",
+      "claim_id": "CLM-26-00004",
+      "created_at": "2026-11-13T19:15:42.847304+00:00",
       "policy_id": "POL-1004",
       "policyholder_name": "Sneha Kulkarni",
       "vehicle_reg": "GJ01GH4004",
@@ -980,7 +597,7 @@
       "location": "Ahmedabad",
       "raw_statement": "Sideswiped a concrete pillar while turning into my apartment basement parking lot, scratching the left doors and rear-left quarter panel.",
       "photo_paths": [
-        "C:/Users/shree/OneDrive/Desktop/fnol-project/data/uploads/CLM-26-00006/pol_1004_damage.jpg"
+        "C:/Users/shree/OneDrive/Desktop/fnol-project/data/uploads/CLM-26-00004/pol_1004_damage.jpg"
       ],
       "injuries": false,
       "third_party": false,
@@ -1075,7 +692,7 @@
       ],
       "referenced_documents": [
         {
-          "doc_name": "FNOL_intake_CLM-26-00006.pdf",
+          "doc_name": "FNOL_intake_CLM-26-00004.pdf",
           "section_ref": "p. 1, loss narrative",
           "summary": "Loss description and reported circumstances used for triage."
         },
@@ -1085,7 +702,7 @@
           "summary": "Cover, limits and deductible confirmed in force on the loss date."
         },
         {
-          "doc_name": "Vision_assessment_CLM-26-00006.pdf",
+          "doc_name": "Vision_assessment_CLM-26-00004.pdf",
           "section_ref": "Findings, p. 2",
           "summary": "Zone-by-zone photographic damage assessment supporting the outcome."
         }
@@ -1097,63 +714,63 @@
       ],
       "agent_trace": [
         {
-          "timestamp": "2026-11-13T17:23:39.075812+00:00",
+          "timestamp": "2026-11-13T19:15:45.403849+00:00",
           "stage": "1 INTAKE & TRIAGE",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Intake validation & orchestration",
           "result_summary": "Observed intake package for Sneha Kulkarni. Photos submitted: 1. Dispatching Statement Analyst Agent."
         },
         {
-          "timestamp": "2026-11-13T17:23:39.076434+00:00",
+          "timestamp": "2026-11-13T19:15:45.404077+00:00",
           "stage": "1 INTAKE & TRIAGE",
           "agent_or_tool": "Statement Analyst",
           "purpose": "Untrusted narrative parsing & fact extraction",
           "result_summary": "Claimed zones: ['unspecified']. Injuries: False, Third-party: False, Police report: False. Narrative summarized."
         },
         {
-          "timestamp": "2026-11-13T17:23:39.076451+00:00",
+          "timestamp": "2026-11-13T19:15:45.404095+00:00",
           "stage": "1 INTAKE & TRIAGE",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Draft case plan",
           "result_summary": "Plan drafted: [1] Verify policy schedule & deductibles -> [2] Neutral zone-by-zone visual appraisal -> [3] Weather & multi-signal consistency cross-check -> [4] Decision Gate evaluation."
         },
         {
-          "timestamp": "2026-11-13T17:23:39.085808+00:00",
+          "timestamp": "2026-11-13T19:15:47.542870+00:00",
           "stage": "2 COVERAGE",
           "agent_or_tool": "Policy Coverage Agent",
           "purpose": "Contractual terms & schedule validation",
           "result_summary": "Coverage status: COVERED (Comprehensive). Active on date: True, Vehicle matched: True. IDV: ₹980,000, Deductible: ₹2,000. Citations: Standard Schedule Provisions."
         },
         {
-          "timestamp": "2026-11-13T17:23:39.095104+00:00",
+          "timestamp": "2026-11-13T19:15:47.902615+00:00",
           "stage": "3 DA / ESTIMATE",
           "agent_or_tool": "Vision Assessor Agent",
           "purpose": "Neutral multimodal damage assessment",
           "result_summary": "Inspecting 1 photo(s) using neutral zone checklist without statement bias."
         },
         {
-          "timestamp": "2026-11-13T17:23:39.095452+00:00",
+          "timestamp": "2026-11-13T19:15:47.903763+00:00",
           "stage": "3 DA / ESTIMATE",
           "agent_or_tool": "Vision Assessor Agent",
           "purpose": "Damage severity appraisal & repair calculation",
           "result_summary": "Damaged zones identified: ['None']. Severity: Unknown. Calculated repair cost: ₹0 from standard IRDAI table. Overall confidence: 0%."
         },
         {
-          "timestamp": "2026-11-13T17:23:41.163722+00:00",
+          "timestamp": "2026-11-13T19:15:53.891765+00:00",
           "stage": "4 FRAUD & CONSISTENCY",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Environmental verification via Open-Meteo",
           "result_summary": "Weather observation: Clear sky / 0.0 mm precipitation / 36.2°C max on 2026-11-08 near Ahmedabad (Weather data by Open-Meteo.com)"
         },
         {
-          "timestamp": "2026-11-13T17:23:41.164122+00:00",
+          "timestamp": "2026-11-13T19:15:53.892567+00:00",
           "stage": "4 FRAUD & CONSISTENCY",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Fraud & Consistency analysis complete",
           "result_summary": "Risk Level: Low. Triggered signals: ['None']. Unresolved contradiction: False. Loops executed: 0."
         },
         {
-          "timestamp": "2026-11-13T17:23:41.172446+00:00",
+          "timestamp": "2026-11-13T19:15:55.038846+00:00",
           "stage": "5 DECISION GATE",
           "agent_or_tool": "Decision Gate",
           "purpose": "Tier assignment — missing/low-confidence evidence",
@@ -1163,415 +780,18 @@
       "chat_history": []
     },
     {
-      "claim_id": "CLM-26-00007",
-      "created_at": "2026-11-13T17:23:41.183212+00:00",
-      "policy_id": "POL-1005",
-      "policyholder_name": "Vikram Sharma",
-      "vehicle_reg": "DL08IJ5005",
+      "claim_id": "CLM-26-00005",
+      "created_at": "2026-11-13T19:15:43.817148+00:00",
+      "policy_id": "POL-1004",
+      "policyholder_name": "Sneha Kulkarni",
+      "vehicle_reg": "GJ01GH4004",
       "line_of_business": "Personal Auto",
-      "incident_date": "2026-11-09",
-      "incident_time": "11:20",
-      "location": "New Delhi",
-      "raw_statement": "Hit a highway guard rail after swerving to avoid a stray animal, damaging the front bumper, left fender, and headlights.",
+      "incident_date": "2026-11-08",
+      "incident_time": "18:45",
+      "location": "Ahmedabad",
+      "raw_statement": "Sideswiped a concrete pillar while turning into my apartment basement parking lot, scratching the left doors and rear-left quarter panel.",
       "photo_paths": [
-        "C:/Users/shree/OneDrive/Desktop/fnol-project/data/uploads/CLM-26-00007/pol_1005_damage.jpg"
-      ],
-      "injuries": false,
-      "third_party": false,
-      "police_report": false,
-      "claim_status": "STUCK",
-      "current_stage": "5 DECISION GATE",
-      "stages_completed": [
-        "1 INTAKE & TRIAGE",
-        "2 COVERAGE",
-        "3 DA / ESTIMATE",
-        "4 FRAUD & CONSISTENCY",
-        "5 DECISION GATE"
-      ],
-      "priority": "High priority",
-      "action_type": "ESCALATION",
-      "handled_by": "Spark",
-      "loop_count": 0,
-      "returned_to_user_prompt": null,
-      "statement_facts": {
-        "claimed_zones": [],
-        "incident_date": "2026-11-09",
-        "incident_time": "11:20",
-        "location": "New Delhi",
-        "narrative_summary": "Hit a highway guard rail after swerving to avoid a stray animal, damaging the front bumper, left fender, and headlights.",
-        "injuries_reported": false,
-        "third_party_involved": false,
-        "police_report_filed": false,
-        "weather_claimed": ""
-      },
-      "vision_report": {
-        "findings": [],
-        "overall_severity": "Unknown",
-        "estimated_repair_cost_inr": 0.0,
-        "overall_confidence": 0,
-        "unusable_photos": true,
-        "notes": "Vision analysis failed: GEMINI_API_KEY is not set. Add it to your .env file."
-      },
-      "coverage_result": {
-        "policy_id": "POL-1005",
-        "status": "not_covered",
-        "policy_active_on_date": true,
-        "vehicle_matched": true,
-        "coverage_type": "Third_Party_Only",
-        "idv_inr": 0.0,
-        "deductible_inr": 0.0,
-        "limit_inr": 750000.0,
-        "net_payable_estimate_inr": 0.0,
-        "clause_citations": [
-          "Section I — Own Damage Excluded under Third-Party Liability Only Policy"
-        ],
-        "explanation": "Policy type 'Third_Party_Only' does not cover own-vehicle damage. Own damage is excluded under Third-Party Liability Only policies."
-      },
-      "fraud_report": {
-        "risk_level": "Low",
-        "signals": [
-          {
-            "signal_name": "Damage Zone Contradiction",
-            "weight": "High",
-            "triggered": false,
-            "reason": "Claimed zones consistent with observed damage."
-          },
-          {
-            "signal_name": "Early Policy Inception",
-            "weight": "High",
-            "triggered": false,
-            "reason": "Policy was 203 days old at incident date — no early inception concern."
-          },
-          {
-            "signal_name": "Prior Claim Frequency",
-            "weight": "Medium",
-            "triggered": false,
-            "reason": "0 prior claim(s) — within normal range."
-          },
-          {
-            "signal_name": "Weather Plausibility Mismatch",
-            "weight": "Low",
-            "triggered": false,
-            "reason": "No weather conditions claimed — signal not applicable."
-          }
-        ],
-        "contradictions": [],
-        "unresolved_contradiction": false,
-        "weather_verification": "Light drizzle / 0.2 mm precipitation / 28.2°C max on 2026-11-09 near New Delhi (Weather data by Open-Meteo.com)"
-      },
-      "final_tier": "Tier 2",
-      "headline_summary": "Loss date / policy coverage gate failed — human sign-off required before rejection",
-      "what_spark_did": "Spark completed the coverage check. The claim cannot be auto-processed because: Policy type 'Third_Party_Only' does not cover own-vehicle damage. Own damage is excluded under Third-Party Liability Only policies. No rejection has been issued — per protocol, coverage denials require a named adjuster sign-off.",
-      "recommendation_title": "Coverage Gate Failed — Adjuster Sign-Off Required",
-      "confidence_score": 0,
-      "rationale_bullets": [
-        "Policy active on date: True",
-        "Vehicle matched: True",
-        "Coverage type: Third_Party_Only",
-        "Clause citation(s): Section I — Own Damage Excluded under Third-Party Liability Only Policy",
-        "System rule: auto-rejection is prohibited — human sign-off required."
-      ],
-      "referenced_documents": [
-        {
-          "doc_name": "FNOL_intake_CLM-26-00007.pdf",
-          "section_ref": "p. 1, loss narrative",
-          "summary": "Loss description and reported circumstances used for triage."
-        },
-        {
-          "doc_name": "Policy_schedule_POL-1005.pdf",
-          "section_ref": "Cover section, p. 4",
-          "summary": "Cover, limits and deductible confirmed in force on the loss date."
-        },
-        {
-          "doc_name": "Vision_assessment_CLM-26-00007.pdf",
-          "section_ref": "Findings, p. 2",
-          "summary": "Zone-by-zone photographic damage assessment supporting the outcome."
-        }
-      ],
-      "data_tags": [
-        "Policy Schedule DB2",
-        "Open-Meteo Weather",
-        "Fraud Screening Result"
-      ],
-      "agent_trace": [
-        {
-          "timestamp": "2026-11-13T17:23:41.201842+00:00",
-          "stage": "1 INTAKE & TRIAGE",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Intake validation & orchestration",
-          "result_summary": "Observed intake package for Vikram Sharma. Photos submitted: 1. Dispatching Statement Analyst Agent."
-        },
-        {
-          "timestamp": "2026-11-13T17:23:41.201951+00:00",
-          "stage": "1 INTAKE & TRIAGE",
-          "agent_or_tool": "Statement Analyst",
-          "purpose": "Untrusted narrative parsing & fact extraction",
-          "result_summary": "Claimed zones: ['unspecified']. Injuries: False, Third-party: False, Police report: False. Narrative summarized."
-        },
-        {
-          "timestamp": "2026-11-13T17:23:41.201962+00:00",
-          "stage": "1 INTAKE & TRIAGE",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Draft case plan",
-          "result_summary": "Plan drafted: [1] Verify policy schedule & deductibles -> [2] Neutral zone-by-zone visual appraisal -> [3] Weather & multi-signal consistency cross-check -> [4] Decision Gate evaluation."
-        },
-        {
-          "timestamp": "2026-11-13T17:23:41.213267+00:00",
-          "stage": "2 COVERAGE",
-          "agent_or_tool": "Policy Coverage Agent",
-          "purpose": "Contractual terms & schedule validation",
-          "result_summary": "Coverage status: NOT_COVERED (Third_Party_Only). Active on date: True, Vehicle matched: True. IDV: ₹0, Deductible: ₹0. Citations: Section I — Own Damage Excluded under Third-Party Liability Only Policy."
-        },
-        {
-          "timestamp": "2026-11-13T17:23:41.224988+00:00",
-          "stage": "3 DA / ESTIMATE",
-          "agent_or_tool": "Vision Assessor Agent",
-          "purpose": "Neutral multimodal damage assessment",
-          "result_summary": "Inspecting 1 photo(s) using neutral zone checklist without statement bias."
-        },
-        {
-          "timestamp": "2026-11-13T17:23:41.225432+00:00",
-          "stage": "3 DA / ESTIMATE",
-          "agent_or_tool": "Vision Assessor Agent",
-          "purpose": "Damage severity appraisal & repair calculation",
-          "result_summary": "Damaged zones identified: ['None']. Severity: Unknown. Calculated repair cost: ₹0 from standard IRDAI table. Overall confidence: 0%."
-        },
-        {
-          "timestamp": "2026-11-13T17:23:44.831063+00:00",
-          "stage": "4 FRAUD & CONSISTENCY",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Environmental verification via Open-Meteo",
-          "result_summary": "Weather observation: Light drizzle / 0.2 mm precipitation / 28.2°C max on 2026-11-09 near New Delhi (Weather data by Open-Meteo.com)"
-        },
-        {
-          "timestamp": "2026-11-13T17:23:44.831856+00:00",
-          "stage": "4 FRAUD & CONSISTENCY",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Fraud & Consistency analysis complete",
-          "result_summary": "Risk Level: Low. Triggered signals: ['None']. Unresolved contradiction: False. Loops executed: 0."
-        },
-        {
-          "timestamp": "2026-11-13T17:23:44.844309+00:00",
-          "stage": "5 DECISION GATE",
-          "agent_or_tool": "Decision Gate",
-          "purpose": "Tier assignment — coverage gate",
-          "result_summary": "Tier 2 (STUCK). Coverage status: not_covered. Clauses: Section I — Own Damage Excluded under Third-Party Liability Only Policy."
-        }
-      ],
-      "chat_history": []
-    },
-    {
-      "claim_id": "CLM-26-00008",
-      "created_at": "2026-11-13T17:23:44.856556+00:00",
-      "policy_id": "POL-1006",
-      "policyholder_name": "Meena Iyer",
-      "vehicle_reg": "PB10KL6006",
-      "line_of_business": "Personal Auto",
-      "incident_date": "2026-11-11",
-      "incident_time": "16:10",
-      "location": "Chandigarh",
-      "raw_statement": "Rear-ended by an autorickshaw at a traffic signal on Madhya Marg, cracking the rear bumper and tailgate.",
-      "photo_paths": [
-        "C:/Users/shree/OneDrive/Desktop/fnol-project/data/uploads/CLM-26-00008/pol_1006_damage.jpg"
-      ],
-      "injuries": false,
-      "third_party": false,
-      "police_report": false,
-      "claim_status": "STUCK",
-      "current_stage": "5 DECISION GATE",
-      "stages_completed": [
-        "1 INTAKE & TRIAGE",
-        "2 COVERAGE",
-        "3 DA / ESTIMATE",
-        "4 FRAUD & CONSISTENCY",
-        "5 DECISION GATE"
-      ],
-      "priority": "High priority",
-      "action_type": "ESCALATION",
-      "handled_by": "Spark",
-      "loop_count": 0,
-      "returned_to_user_prompt": null,
-      "statement_facts": {
-        "claimed_zones": [],
-        "incident_date": "2026-11-11",
-        "incident_time": "16:10",
-        "location": "Chandigarh",
-        "narrative_summary": "Rear-ended by an autorickshaw at a traffic signal on Madhya Marg, cracking the rear bumper and tailgate.",
-        "injuries_reported": false,
-        "third_party_involved": false,
-        "police_report_filed": false,
-        "weather_claimed": ""
-      },
-      "vision_report": {
-        "findings": [],
-        "overall_severity": "Unknown",
-        "estimated_repair_cost_inr": 0.0,
-        "overall_confidence": 0,
-        "unusable_photos": true,
-        "notes": "Vision analysis failed: GEMINI_API_KEY is not set. Add it to your .env file."
-      },
-      "coverage_result": {
-        "policy_id": "POL-1006",
-        "status": "not_covered",
-        "policy_active_on_date": false,
-        "vehicle_matched": true,
-        "coverage_type": "Comprehensive",
-        "idv_inr": 280000.0,
-        "deductible_inr": 2000.0,
-        "limit_inr": 280000.0,
-        "net_payable_estimate_inr": 0.0,
-        "clause_citations": [
-          "Section II — Policy Validity: Policy must be active on the date of loss",
-          "Section I — Own Damage Excluded under Third-Party Liability Only Policy"
-        ],
-        "explanation": "Policy was expired on incident date 2026-11-11 (effective 2025-11-02 – 2026-11-01); Policy type 'Comprehensive' does not cover own-vehicle damage. Own damage is excluded under Third-Party Liability Only policies."
-      },
-      "fraud_report": {
-        "risk_level": "Low",
-        "signals": [
-          {
-            "signal_name": "Damage Zone Contradiction",
-            "weight": "High",
-            "triggered": false,
-            "reason": "Claimed zones consistent with observed damage."
-          },
-          {
-            "signal_name": "Early Policy Inception",
-            "weight": "High",
-            "triggered": false,
-            "reason": "Policy was 374 days old at incident date — no early inception concern."
-          },
-          {
-            "signal_name": "Prior Claim Frequency",
-            "weight": "Medium",
-            "triggered": false,
-            "reason": "0 prior claim(s) — within normal range."
-          },
-          {
-            "signal_name": "Weather Plausibility Mismatch",
-            "weight": "Low",
-            "triggered": false,
-            "reason": "No weather conditions claimed — signal not applicable."
-          }
-        ],
-        "contradictions": [],
-        "unresolved_contradiction": false,
-        "weather_verification": "Clear sky / 0.0 mm precipitation / 26.5°C max on 2026-11-11 near Chandigarh (Weather data by Open-Meteo.com)"
-      },
-      "final_tier": "Tier 2",
-      "headline_summary": "Loss date / policy coverage gate failed — human sign-off required before rejection",
-      "what_spark_did": "Spark completed the coverage check. The claim cannot be auto-processed because: Policy was expired on incident date 2026-11-11 (effective 2025-11-02 – 2026-11-01); Policy type 'Comprehensive' does not cover own-vehicle damage. Own damage is excluded under Third-Party Liability Only policies. No rejection has been issued — per protocol, coverage denials require a named adjuster sign-off.",
-      "recommendation_title": "Coverage Gate Failed — Adjuster Sign-Off Required",
-      "confidence_score": 0,
-      "rationale_bullets": [
-        "Policy active on date: False",
-        "Vehicle matched: True",
-        "Coverage type: Comprehensive",
-        "Clause citation(s): Section II — Policy Validity: Policy must be active on the date of loss; Section I — Own Damage Excluded under Third-Party Liability Only Policy",
-        "System rule: auto-rejection is prohibited — human sign-off required."
-      ],
-      "referenced_documents": [
-        {
-          "doc_name": "FNOL_intake_CLM-26-00008.pdf",
-          "section_ref": "p. 1, loss narrative",
-          "summary": "Loss description and reported circumstances used for triage."
-        },
-        {
-          "doc_name": "Policy_schedule_POL-1006.pdf",
-          "section_ref": "Cover section, p. 4",
-          "summary": "Cover, limits and deductible confirmed in force on the loss date."
-        },
-        {
-          "doc_name": "Vision_assessment_CLM-26-00008.pdf",
-          "section_ref": "Findings, p. 2",
-          "summary": "Zone-by-zone photographic damage assessment supporting the outcome."
-        }
-      ],
-      "data_tags": [
-        "Policy Schedule DB2",
-        "Open-Meteo Weather",
-        "Fraud Screening Result"
-      ],
-      "agent_trace": [
-        {
-          "timestamp": "2026-11-13T17:23:44.877998+00:00",
-          "stage": "1 INTAKE & TRIAGE",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Intake validation & orchestration",
-          "result_summary": "Observed intake package for Meena Iyer. Photos submitted: 1. Dispatching Statement Analyst Agent."
-        },
-        {
-          "timestamp": "2026-11-13T17:23:44.878072+00:00",
-          "stage": "1 INTAKE & TRIAGE",
-          "agent_or_tool": "Statement Analyst",
-          "purpose": "Untrusted narrative parsing & fact extraction",
-          "result_summary": "Claimed zones: ['unspecified']. Injuries: False, Third-party: False, Police report: False. Narrative summarized."
-        },
-        {
-          "timestamp": "2026-11-13T17:23:44.878659+00:00",
-          "stage": "1 INTAKE & TRIAGE",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Draft case plan",
-          "result_summary": "Plan drafted: [1] Verify policy schedule & deductibles -> [2] Neutral zone-by-zone visual appraisal -> [3] Weather & multi-signal consistency cross-check -> [4] Decision Gate evaluation."
-        },
-        {
-          "timestamp": "2026-11-13T17:23:44.890280+00:00",
-          "stage": "2 COVERAGE",
-          "agent_or_tool": "Policy Coverage Agent",
-          "purpose": "Contractual terms & schedule validation",
-          "result_summary": "Coverage status: NOT_COVERED (Comprehensive). Active on date: False, Vehicle matched: True. IDV: ₹280,000, Deductible: ₹2,000. Citations: Section II — Policy Validity: Policy must be active on the date of loss; Section I — Own Damage Excluded under Third-Party Liability Only Policy."
-        },
-        {
-          "timestamp": "2026-11-13T17:23:44.899445+00:00",
-          "stage": "3 DA / ESTIMATE",
-          "agent_or_tool": "Vision Assessor Agent",
-          "purpose": "Neutral multimodal damage assessment",
-          "result_summary": "Inspecting 1 photo(s) using neutral zone checklist without statement bias."
-        },
-        {
-          "timestamp": "2026-11-13T17:23:44.900200+00:00",
-          "stage": "3 DA / ESTIMATE",
-          "agent_or_tool": "Vision Assessor Agent",
-          "purpose": "Damage severity appraisal & repair calculation",
-          "result_summary": "Damaged zones identified: ['None']. Severity: Unknown. Calculated repair cost: ₹0 from standard IRDAI table. Overall confidence: 0%."
-        },
-        {
-          "timestamp": "2026-11-13T17:23:46.962568+00:00",
-          "stage": "4 FRAUD & CONSISTENCY",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Environmental verification via Open-Meteo",
-          "result_summary": "Weather observation: Clear sky / 0.0 mm precipitation / 26.5°C max on 2026-11-11 near Chandigarh (Weather data by Open-Meteo.com)"
-        },
-        {
-          "timestamp": "2026-11-13T17:23:46.963196+00:00",
-          "stage": "4 FRAUD & CONSISTENCY",
-          "agent_or_tool": "Supervisor Brain",
-          "purpose": "Fraud & Consistency analysis complete",
-          "result_summary": "Risk Level: Low. Triggered signals: ['None']. Unresolved contradiction: False. Loops executed: 0."
-        },
-        {
-          "timestamp": "2026-11-13T17:23:46.974482+00:00",
-          "stage": "5 DECISION GATE",
-          "agent_or_tool": "Decision Gate",
-          "purpose": "Tier assignment — coverage gate",
-          "result_summary": "Tier 2 (STUCK). Coverage status: not_covered. Clauses: Section II — Policy Validity: Policy must be active on the date of loss; Section I — Own Damage Excluded under Third-Party Liability Only Policy."
-        }
-      ],
-      "chat_history": []
-    },
-    {
-      "claim_id": "CLM-26-00009",
-      "created_at": "2026-11-13T17:23:46.983753+00:00",
-      "policy_id": "POL-1007",
-      "policyholder_name": "Aditya Reddy",
-      "vehicle_reg": "AP07MN7007",
-      "line_of_business": "Personal Auto",
-      "incident_date": "2026-11-07",
-      "incident_time": "21:30",
-      "location": "Hyderabad",
-      "raw_statement": "Hit road construction debris on the Outer Ring Road. Underbody and front bumper damaged, front alloy wheel cracked.",
-      "photo_paths": [
-        "C:/Users/shree/OneDrive/Desktop/fnol-project/data/uploads/CLM-26-00009/pol_1007_damage.jpg"
+        "C:/Users/shree/OneDrive/Desktop/fnol-project/data/uploads/CLM-26-00005/pol_1004_damage.jpg"
       ],
       "injuries": false,
       "third_party": false,
@@ -1592,10 +812,10 @@
       "returned_to_user_prompt": null,
       "statement_facts": {
         "claimed_zones": [],
-        "incident_date": "2026-11-07",
-        "incident_time": "21:30",
-        "location": "Hyderabad",
-        "narrative_summary": "Hit road construction debris on the Outer Ring Road. Underbody and front bumper damaged, front alloy wheel cracked.",
+        "incident_date": "2026-11-08",
+        "incident_time": "18:45",
+        "location": "Ahmedabad",
+        "narrative_summary": "Sideswiped a concrete pillar while turning into my apartment basement parking lot, scratching the left doors and rear-left quarter panel.",
         "injuries_reported": false,
         "third_party_involved": false,
         "police_report_filed": false,
@@ -1610,14 +830,14 @@
         "notes": "Vision analysis failed: GEMINI_API_KEY is not set. Add it to your .env file."
       },
       "coverage_result": {
-        "policy_id": "POL-1007",
+        "policy_id": "POL-1004",
         "status": "covered",
         "policy_active_on_date": true,
         "vehicle_matched": true,
         "coverage_type": "Comprehensive",
-        "idv_inr": 4800000.0,
-        "deductible_inr": 10000.0,
-        "limit_inr": 4800000.0,
+        "idv_inr": 980000.0,
+        "deductible_inr": 2000.0,
+        "limit_inr": 980000.0,
         "net_payable_estimate_inr": 0.0,
         "clause_citations": [],
         "explanation": "Policy covered. Net payable estimate: INR 0."
@@ -1635,7 +855,7 @@
             "signal_name": "Early Policy Inception",
             "weight": "High",
             "triggered": false,
-            "reason": "Policy was 266 days old at incident date — no early inception concern."
+            "reason": "Policy was 252 days old at incident date — no early inception concern."
           },
           {
             "signal_name": "Prior Claim Frequency",
@@ -1652,7 +872,7 @@
         ],
         "contradictions": [],
         "unresolved_contradiction": false,
-        "weather_verification": "Light drizzle / 0.3 mm precipitation / 30.5°C max on 2026-11-07 near Hyderabad (Weather data by Open-Meteo.com)"
+        "weather_verification": "Clear sky / 0.0 mm precipitation / 36.2°C max on 2026-11-08 near Ahmedabad (Weather data by Open-Meteo.com)"
       },
       "final_tier": "Tier 2",
       "headline_summary": "Spark has a question — all submitted photos are too blurry or dark to assess — clearer photos required",
@@ -1666,17 +886,17 @@
       ],
       "referenced_documents": [
         {
-          "doc_name": "FNOL_intake_CLM-26-00009.pdf",
+          "doc_name": "FNOL_intake_CLM-26-00005.pdf",
           "section_ref": "p. 1, loss narrative",
           "summary": "Loss description and reported circumstances used for triage."
         },
         {
-          "doc_name": "Policy_schedule_POL-1007.pdf",
+          "doc_name": "Policy_schedule_POL-1004.pdf",
           "section_ref": "Cover section, p. 4",
           "summary": "Cover, limits and deductible confirmed in force on the loss date."
         },
         {
-          "doc_name": "Vision_assessment_CLM-26-00009.pdf",
+          "doc_name": "Vision_assessment_CLM-26-00005.pdf",
           "section_ref": "Findings, p. 2",
           "summary": "Zone-by-zone photographic damage assessment supporting the outcome."
         }
@@ -1688,81 +908,67 @@
       ],
       "agent_trace": [
         {
-          "timestamp": "2026-11-13T17:23:47.009204+00:00",
+          "timestamp": "2026-11-13T19:15:43.829040+00:00",
           "stage": "1 INTAKE & TRIAGE",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Intake validation & orchestration",
-          "result_summary": "Observed intake package for Aditya Reddy. Photos submitted: 1. Dispatching Statement Analyst Agent."
+          "result_summary": "Observed intake package for Sneha Kulkarni. Photos submitted: 1. Dispatching Statement Analyst Agent."
         },
         {
-          "timestamp": "2026-11-13T17:23:47.009760+00:00",
+          "timestamp": "2026-11-13T19:15:43.829290+00:00",
           "stage": "1 INTAKE & TRIAGE",
           "agent_or_tool": "Statement Analyst",
           "purpose": "Untrusted narrative parsing & fact extraction",
           "result_summary": "Claimed zones: ['unspecified']. Injuries: False, Third-party: False, Police report: False. Narrative summarized."
         },
         {
-          "timestamp": "2026-11-13T17:23:47.009779+00:00",
+          "timestamp": "2026-11-13T19:15:43.829300+00:00",
           "stage": "1 INTAKE & TRIAGE",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Draft case plan",
           "result_summary": "Plan drafted: [1] Verify policy schedule & deductibles -> [2] Neutral zone-by-zone visual appraisal -> [3] Weather & multi-signal consistency cross-check -> [4] Decision Gate evaluation."
         },
         {
-          "timestamp": "2026-11-13T17:23:47.020562+00:00",
+          "timestamp": "2026-11-13T19:15:43.837543+00:00",
           "stage": "2 COVERAGE",
           "agent_or_tool": "Policy Coverage Agent",
           "purpose": "Contractual terms & schedule validation",
-          "result_summary": "Coverage status: COVERED (Comprehensive). Active on date: True, Vehicle matched: True. IDV: ₹4,800,000, Deductible: ₹10,000. Citations: Standard Schedule Provisions."
+          "result_summary": "Coverage status: COVERED (Comprehensive). Active on date: True, Vehicle matched: True. IDV: ₹980,000, Deductible: ₹2,000. Citations: Standard Schedule Provisions."
         },
         {
-          "timestamp": "2026-11-13T17:23:47.033284+00:00",
+          "timestamp": "2026-11-13T19:15:43.843546+00:00",
           "stage": "3 DA / ESTIMATE",
           "agent_or_tool": "Vision Assessor Agent",
           "purpose": "Neutral multimodal damage assessment",
           "result_summary": "Inspecting 1 photo(s) using neutral zone checklist without statement bias."
         },
         {
-          "timestamp": "2026-11-13T17:23:47.033773+00:00",
+          "timestamp": "2026-11-13T19:15:43.843779+00:00",
           "stage": "3 DA / ESTIMATE",
           "agent_or_tool": "Vision Assessor Agent",
           "purpose": "Damage severity appraisal & repair calculation",
           "result_summary": "Damaged zones identified: ['None']. Severity: Unknown. Calculated repair cost: ₹0 from standard IRDAI table. Overall confidence: 0%."
         },
         {
-          "timestamp": "2026-11-13T17:23:49.298743+00:00",
+          "timestamp": "2026-11-13T19:15:47.192939+00:00",
           "stage": "4 FRAUD & CONSISTENCY",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Environmental verification via Open-Meteo",
-          "result_summary": "Weather observation: Light drizzle / 0.3 mm precipitation / 30.5°C max on 2026-11-07 near Hyderabad (Weather data by Open-Meteo.com)"
+          "result_summary": "Weather observation: Clear sky / 0.0 mm precipitation / 36.2°C max on 2026-11-08 near Ahmedabad (Weather data by Open-Meteo.com)"
         },
         {
-          "timestamp": "2026-11-13T17:23:49.299382+00:00",
+          "timestamp": "2026-11-13T19:15:47.193323+00:00",
           "stage": "4 FRAUD & CONSISTENCY",
           "agent_or_tool": "Supervisor Brain",
           "purpose": "Fraud & Consistency analysis complete",
           "result_summary": "Risk Level: Low. Triggered signals: ['None']. Unresolved contradiction: False. Loops executed: 0."
         },
         {
-          "timestamp": "2026-11-13T17:23:49.312632+00:00",
+          "timestamp": "2026-11-13T19:15:47.548813+00:00",
           "stage": "5 DECISION GATE",
           "agent_or_tool": "Decision Gate",
           "purpose": "Tier assignment — missing/low-confidence evidence",
           "result_summary": "Tier 2 (NEEDS ATTENTION / QUESTION). No photos: False. Unusable: True. Confidence: 0%."
-        },
-        {
-          "timestamp": "2026-11-13T17:47:20.299998+00:00",
-          "stage": "5 DECISION GATE",
-          "agent_or_tool": "Desk Adjuster (Human)",
-          "purpose": "Manual Override",
-          "result_summary": "Adjuster assumed manual control. Automation paused for this claim."
-        },
-        {
-          "timestamp": "2026-11-13T17:47:22.193178+00:00",
-          "stage": "5 DECISION GATE",
-          "agent_or_tool": "Desk Adjuster (Human)",
-          "purpose": "Return to Spark",
-          "result_summary": "Control returned to Spark. Autonomous processing resumed."
         }
       ],
       "chat_history": []

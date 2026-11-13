@@ -352,10 +352,11 @@ def run_decision_gate(claim: ClaimRecord) -> ClaimRecord:
         ))
 
     # ===========================================================
-    # CASE 4 — Tier 2: Desk Adjuster (Heavy Loss / High Reserve)
+    # CASE 4 — Tier 2: Desk Adjuster (Heavy Loss / High Reserve / Unverified Policy)
     # ===========================================================
     elif (
-        severity in ("Moderate", "Total Loss")
+        coverage.status == "needs_review"
+        or severity in ("Moderate", "Total Loss")
         or cost > FAST_TRACK_LIMIT_INR
         or claim.injuries
         or claim.third_party
@@ -365,8 +366,15 @@ def run_decision_gate(claim: ClaimRecord) -> ClaimRecord:
         priority = "High priority"
         score = confidence
 
-        # REQUEST if reserve exceeds ceiling; RECOMMENDATION if it's a human-required step
-        if cost > FAST_TRACK_LIMIT_INR:
+        # REQUEST if reserve exceeds ceiling or policy needs review; RECOMMENDATION if it's a human-required step
+        if coverage.status == "needs_review":
+            action_type = ActionTypeEnum.REQUEST
+            headline_summary = (
+                f"Policy schedule unverified ({coverage.coverage_type}) — "
+                "desk adjuster verification required"
+            )
+            recommendation_title = "Manual Policy Schedule Verification Required"
+        elif cost > FAST_TRACK_LIMIT_INR:
             action_type = ActionTypeEnum.REQUEST
             headline_summary = (
                 f"Reserve {_fmt_inr(cost)} exceeds {_fmt_inr(FAST_TRACK_LIMIT_INR)} "
