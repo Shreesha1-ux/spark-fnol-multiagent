@@ -1,0 +1,67 @@
+flowchart LR
+%% ========================================================
+%% DIAGRAM 3: SPARK FNOL END-TO-END DATA FLOW
+%% ========================================================
+
+    subgraph SOURCES ["1. Data Origin & Ingestion Sources"]
+        direction TB
+        IN_CLAIM["Claimant Intake Input\n• Statement Text\n• Damage Photos (.jpg/.png)\n• Incident Date & Location"]
+        IN_POLICY["Contract Repository\n(data/db2_policies.json)\n• Effective & Expiry Dates\n• IDV & Deductibles\n• OD / TP Coverage Terms"]
+        IN_REPAIR["Cost Reference Matrix\n(data/repair_costs.json)\n• Zone × Severity Rates\n• Standard Parts & Labor"]
+        IN_WEATHER["External Meteorological API\n(Open-Meteo Radar)\n• Hourly Precipitation\n• Historical Weather Codes"]
+    end
+
+    subgraph AGENT_PIPELINE ["2. Agent Transformation Pipeline"]
+        direction TB
+        T1_AGENT["Statement Analyst (Agent 1)\nTransforms: Narrative → Facts"]
+        T2_AGENT["Policy Specialist (Agent 4)\nTransforms: Facts + Policy → Coverage"]
+        T3_AGENT["Vision Assessor (Agent 2)\nTransforms: Photos + Matrix → Damage & Cost"]
+        T4_AGENT["Supervisor Brain (Agent 3)\nTransforms: Vision + Weather → Fraud Report"]
+        T5_AGENT["Decision Gate (Agent 5)\nTransforms: Reports → Final Tier & Verdict"]
+        T6_AGENT["Surveyor Engine (Agent 6)\nTransforms: Severity + Cost → Field Category"]
+    end
+
+    subgraph INTERMEDIATE ["3. Structured Domain Models (Pydantic v2)"]
+        direction TB
+        SCHEMA_FACTS["StatementFacts\n• claimed_zones\n• injuries_reported\n• third_party_involved"]
+        SCHEMA_COV["CoverageResult\n• status (covered / not_covered)\n• net_payable_estimate_inr\n• clause_citations"]
+        SCHEMA_VIS["VisionReport\n• overall_severity\n• estimated_repair_cost_inr\n• findings (zone-by-zone)"]
+        SCHEMA_FRAUD["FraudConsistencyReport\n• risk_level (Low / High)\n• statement_vs_photo_match\n• weather_verification"]
+        SCHEMA_RECORD["Master ClaimRecord\n• final_tier & action_type\n• rationale_bullets & what_spark_did\n• surveyor_recommendation\n• agent_trace (full audit log)"]
+    end
+
+    subgraph STORAGE_UI ["4. Storage, UI Delivery & Artifacts"]
+        direction TB
+        DB_CLAIMS["Atomic Claims Persistence\n(data/db1_claims.json)\n• Thread-safe JSON write\n• Full historical state"]
+        API_STATE["FastAPI /api/state Endpoint\n• Serializes ClaimRecord list\n• Computes HUD operational counts"]
+        UI_SPA["Adjuster Cockpit UI (SPA)\n• Live Kanban cards\n• Inline Analysis Report (A to E)\n• Surveyor Dispatch Modal"]
+        ARTIFACTS["Exported Reports\n• Downloadable .txt Dossier\n• Printable PDF Document"]
+    end
+
+    %% Data Movement Connections
+    IN_CLAIM -->|"Raw Submission"| T1_AGENT
+    T1_AGENT -->|"Generates"| SCHEMA_FACTS
+
+    SCHEMA_FACTS -->|"Input Facts"| T2_AGENT
+    IN_POLICY -->|"Reads Policy Terms"| T2_AGENT
+    T2_AGENT -->|"Generates"| SCHEMA_COV
+
+    IN_CLAIM -->|"Binary Images"| T3_AGENT
+    IN_REPAIR -->|"Lookups Repair Table"| T3_AGENT
+    T3_AGENT -->|"Generates"| SCHEMA_VIS
+
+    SCHEMA_FACTS -->|"Claimed Zones"| T4_AGENT
+    SCHEMA_VIS -->|"Observed Damage"| T4_AGENT
+    IN_WEATHER -->|"Radar Observations"| T4_AGENT
+    T4_AGENT -->|"Generates"| SCHEMA_FRAUD
+
+    SCHEMA_COV -->|"Contract Limits"| T5_AGENT
+    SCHEMA_VIS -->|"Repair Amount"| T5_AGENT
+    SCHEMA_FRAUD -->|"Risk Heuristics"| T5_AGENT
+    T5_AGENT -->|"Populates Tier"| SCHEMA_RECORD
+    T6_AGENT -->|"Appends Surveyor Rec"| SCHEMA_RECORD
+
+    SCHEMA_RECORD -->|"Atomic File Write"| DB_CLAIMS
+    DB_CLAIMS -->|"Loads Active Claims"| API_STATE
+    API_STATE -->|"HTTP JSON Stream"| UI_SPA
+    UI_SPA -->|"User Triggers Export"| ARTIFACTS

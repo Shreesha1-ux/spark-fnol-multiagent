@@ -1,0 +1,57 @@
+flowchart TD
+%% ========================================================
+%% DIAGRAM 2: SPARK FNOL CONTROL FLOW & VERIFICATION LOOPS
+%% ========================================================
+
+    START(["Claimant Submits Claim\n(Narrative Statement + Photos)"]) --> S1["Stage 1: Intake & Triage\n(Statement Analyst Agent)"]
+    
+    S1 --> T_STMT["Tool Call: extract_statement_facts\n(Parses Claimed Zones & Incident Facts)"]
+    T_STMT --> S2["Stage 2: Contractual Coverage\n(Policy Coverage Agent)"]
+    
+    S2 --> T_COV["Tool Call: verify_policy_coverage\n(Reads db2_policies.json Deterministically)"]
+    T_COV --> CHK_COV{"Policy In-Force &\nOwn Damage Covered?"}
+    
+    CHK_COV -- "No (Expired / TP Only)" --> S2_FAIL["Flag Coverage Denial\n(Policy Exclusion Cited)"]
+    CHK_COV -- "Yes (In-Force)" --> S3["Stage 3: Vision Appraisal\n(Vision Assessor Agent)"]
+    S2_FAIL --> S3
+
+    S3 --> T_VIS["Tool Call: analyze_photos_neutral\n(Multimodal Zone Inspection + repair_costs.json)"]
+    T_VIS --> S4["Stage 4: Fraud & Consistency\n(Supervisor Brain Agent)"]
+
+    S4 --> T_WEA["Tool Call: verify_weather_open_meteo\n(Live Satellite Radar Weather Check)"]
+    T_WEA --> CHK_CONT{"Physical Contradiction?\n(Claimed Zones Disjoint from Photos)"}
+
+    CHK_CONT -- "No (Consistent)" --> S4_CLEAR["Consistency Confirmed\n(Low Fraud Risk)"]
+    
+    %% Autonomous Re-scan Verification Loops
+    CHK_CONT -- "Yes (Mismatch)" --> L1["Verification Loop 1\n(Tool: rescan_photos_for_conflict)"]
+    L1 --> CHK_L1{"Loop 1 Resolved\nContradiction?"}
+    CHK_L1 -- "Yes" --> S4_CLEAR
+    CHK_L1 -- "No" --> L2["Verification Loop 2\n(Final Cross-Photo Consistency Check)"]
+    CHK_L2{"Loop 2 Resolved\nContradiction?"}
+    L2 --> CHK_L2
+    CHK_L2 -- "Yes" --> S4_CLEAR
+    CHK_L2 -- "No (Max Loops Reached)" --> S4_FRAUD["Flag Unresolved Contradiction\n(High Fraud Risk · Escalation)"]
+
+    S4_CLEAR --> S5["Stage 5: Decision Gate\n(Deterministic Decision Router)"]
+    S4_FRAUD --> S5
+
+    %% Decision Gate Tier Branching
+    S5 --> CHK_TIER{"Deterministic Rules\nEvaluation"}
+    
+    CHK_TIER -- "High Fraud Risk OR Policy Denial" --> TIER3["Tier 3: Escalation (STUCK)\n(Special Investigation Unit / Adjuster)"]
+    CHK_TIER -- "Repair > ₹25k / Total Loss / Low Conf" --> TIER2["Tier 2: Adjuster Review (NEEDS ATTENTION)\n(Human Sign-Off Required)"]
+    CHK_TIER -- "Minor Damage ≤ ₹25k & All Clear" --> TIER1["Tier 1: Fast-Track STP (IN PROGRESS)\n(Instant Payout Recommended)"]
+
+    %% Surveyor Recommendation
+    TIER1 --> SURV["AI Surveyor Recommendation\n(Expertise Matching Engine)"]
+    TIER2 --> SURV
+    TIER3 --> SURV
+
+    SURV --> CHK_SURV{"Repair > ₹30k OR Severe\nOR Injury / Third-Party?"}
+    CHK_SURV -- "Yes" --> SENIOR["Recommend Senior Surveyor\n(Major Loss / Complex Oversight)"]
+    CHK_SURV -- "No" --> JUNIOR["Recommend Junior Surveyor\n(Routine Physical Inspection)"]
+
+    SENIOR --> COCKPIT["Adjuster Cockpit Review\n(Execute / Dismiss / Dispatch Surveyor)"]
+    JUNIOR --> COCKPIT
+    COCKPIT --> END(["Final Resolution\n(Settled / Discarded / Dispatched)"])

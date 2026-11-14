@@ -818,37 +818,37 @@ if page_nav == "+ FNOL Intake Portal (Page 1)":
     # 7 Presets for fast 1-click testing
     PRESET_SCENARIOS = {
         "Manual Input": None,
-        "Scenario 1: POL-1001 (Arjun Mehta — Fast-Track Tier 1 Minor Scratch)": {
+        "Scenario 1: POL-1001 — Arjun Mehta (Maruti Swift Dzire)": {
             "policy_id": "POL-1001", "vehicle_reg": "MH12AB1001", "date": "2026-11-10", "time": "14:30", "location": "Pune",
             "statement": "While driving on Pune-Solapur Highway, a loose stone from a truck hit my front bumper and radiator grill, causing a dent and scratch. No other vehicles were involved.",
             "injuries": False, "third_party": False, "police": False, "sample_photo": "data/sample_photos/pol_1001_damage.jpg",
         },
-        "Scenario 2: POL-1002 (Priya Nair — Total Loss / Heavy Loss Tier 2)": {
+        "Scenario 2: POL-1002 — Priya Nair (Hyundai Creta)": {
             "policy_id": "POL-1002", "vehicle_reg": "KA05CD2002", "date": "2026-11-05", "time": "09:15", "location": "Bengaluru",
             "statement": "Severe collision on Outer Ring Road. An oncoming cement mixer rammed into the front and left side of my vehicle at high speed. The front engine compartment is completely crushed, suspension broken, and airbags deployed.",
             "injuries": False, "third_party": True, "police": True, "sample_photo": "data/sample_photos/pol_1002_damage.jpg",
         },
-        "Scenario 3: POL-1003 (Rajan Pillai — Fraud / Contradiction Tier 3 Escalation)": {
+        "Scenario 3: POL-1003 — Rajan Pillai (Honda City)": {
             "policy_id": "POL-1003", "vehicle_reg": "TN09EF3003", "date": "2026-11-12", "time": "10:00", "location": "Chennai",
             "statement": "I was driving through a heavy rainstorm when my car skidded and crashed head-on directly into a banyan tree, crushing the entire front hood and radiator.",
             "injuries": False, "third_party": False, "police": False, "sample_photo": "data/sample_photos/pol_1003_damage.jpg",
         },
-        "Scenario 4: POL-1004 (Sneha Kulkarni — Self-Correction Loop Test)": {
+        "Scenario 4: POL-1004 — Sneha Kulkarni (Tata Nexon)": {
             "policy_id": "POL-1004", "vehicle_reg": "GJ01GH4004", "date": "2026-11-08", "time": "18:45", "location": "Ahmedabad",
             "statement": "Sideswiped a concrete pillar while turning into my apartment basement parking lot, scratching the left doors and rear-left quarter panel.",
             "injuries": False, "third_party": False, "police": False, "sample_photo": "data/sample_photos/pol_1004_damage.jpg",
         },
-        "Scenario 5: POL-1005 (Vikram Sharma — Coverage Gap Third-Party Only)": {
+        "Scenario 5: POL-1005 — Vikram Sharma (Mahindra Scorpio-N)": {
             "policy_id": "POL-1005", "vehicle_reg": "DL08IJ5005", "date": "2026-11-09", "time": "11:20", "location": "New Delhi",
             "statement": "Hit a highway guard rail after swerving to avoid a stray animal, damaging the front bumper, left fender, and headlights.",
             "injuries": False, "third_party": False, "police": False, "sample_photo": "data/sample_photos/pol_1005_damage.jpg",
         },
-        "Scenario 6: POL-1006 (Meena Iyer — Failed Coverage Gate Expired Policy)": {
+        "Scenario 6: POL-1006 — Meena Iyer (Volkswagen Polo)": {
             "policy_id": "POL-1006", "vehicle_reg": "PB10KL6006", "date": "2026-11-11", "time": "16:10", "location": "Chandigarh",
             "statement": "Rear-ended by an autorickshaw at a traffic signal on Madhya Marg, cracking the rear bumper and tailgate.",
             "injuries": False, "third_party": True, "police": False, "sample_photo": "data/sample_photos/pol_1006_damage.jpg",
         },
-        "Scenario 7: POL-1007 (Aditya Reddy — High Value Reserve Sign-Off / Zero-Dep)": {
+        "Scenario 7: POL-1007 — Aditya Reddy (BMW 3 Series)": {
             "policy_id": "POL-1007", "vehicle_reg": "AP07MN7007", "date": "2026-11-07", "time": "21:30", "location": "Hyderabad",
             "statement": "Hit road construction debris on the Outer Ring Road. Underbody and front bumper damaged, front alloy wheel cracked.",
             "injuries": False, "third_party": False, "police": False, "sample_photo": "data/sample_photos/pol_1007_damage.jpg",

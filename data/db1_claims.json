@@ -17,21 +17,22 @@
       "injuries": false,
       "third_party": false,
       "police_report": false,
-      "claim_status": "DISCARDED",
-      "current_stage": "3 DA / ESTIMATE",
+      "claim_status": "NEEDS ATTENTION",
+      "current_stage": "4 FRAUD & CONSISTENCY",
       "stages_completed": [
         "1 INTAKE & TRIAGE",
-        "2 COVERAGE"
+        "2 COVERAGE",
+        "3 DA / ESTIMATE"
       ],
       "priority": "High priority",
       "action_type": "RECOMMENDATION",
       "handled_by": "Spark",
       "loop_count": 0,
       "returned_to_user_prompt": null,
-      "assigned_surveyor": "Junior Surveyor",
-      "surveyor_assigned_at": "2026-11-13T20:27:59.131090+00:00",
-      "surveyor_recommendation": "Junior Surveyor",
-      "surveyor_recommendation_reason": "Minor cosmetic damage with consistent evidence and high visual confidence, suitable for standard field inspection.",
+      "assigned_surveyor": null,
+      "surveyor_assigned_at": null,
+      "surveyor_recommendation": null,
+      "surveyor_recommendation_reason": null,
       "statement_facts": {
         "claimed_zones": [
           "front"
@@ -46,34 +47,17 @@
         "weather_claimed": ""
       },
       "vision_report": {
-        "findings": [
-          {
-            "zone": "front",
-            "status": "damaged",
-            "severity": "Minor",
-            "description": "Front bumper paint scratch & hairline dent",
-            "confidence": 88,
-            "photo_ref": ""
-          },
-          {
-            "zone": "rear",
-            "status": "not_damaged",
-            "severity": "None",
-            "description": "Rear bumper intact",
-            "confidence": 95,
-            "photo_ref": ""
-          }
-        ],
-        "overall_severity": "Minor",
-        "estimated_repair_cost_inr": 8000.0,
-        "overall_confidence": 88,
-        "unusable_photos": false,
-        "notes": ""
+        "findings": [],
+        "overall_severity": "Unknown",
+        "estimated_repair_cost_inr": 0.0,
+        "overall_confidence": 0,
+        "unusable_photos": true,
+        "notes": "Vision analysis failed: GEMINI_API_KEY is not set. Add it to your .env file."
       },
       "coverage_result": null,
       "fraud_report": null,
       "final_tier": null,
-      "headline_summary": "Discarded — dismissed by Adjuster. Adjuster note: Adjuster dismissed claim",
+      "headline_summary": "Damage assessed: Unknown (₹0) — proceeding to fraud & consistency check.",
       "what_spark_did": "Spark completed the analysis for this vehicle collision file and prepared a decision package for approval.",
       "recommendation_title": "Approve the prepared outcome for ₹29,550.",
       "confidence_score": 81,
@@ -107,18 +91,18 @@
       ],
       "agent_trace": [
         {
-          "timestamp": "2026-11-13T20:27:59.131101+00:00",
+          "timestamp": "2026-11-14T05:58:06.624858+00:00",
           "stage": "3 DA / ESTIMATE",
-          "agent_or_tool": "Desk Adjuster (Human)",
-          "purpose": "Surveyor Assignment",
-          "result_summary": "Claim dispatched to Junior Surveyor for physical inspection. (AI Recommendation: Junior Surveyor — Minor cosmetic damage with consistent evidence and high visual confidence, suitable for standard field inspection.)."
+          "agent_or_tool": "Vision Assessor Agent",
+          "purpose": "Neutral multimodal damage assessment",
+          "result_summary": "Inspecting 1 photo(s) using neutral zone checklist without statement bias."
         },
         {
-          "timestamp": "2026-11-13T21:10:21.138902+00:00",
+          "timestamp": "2026-11-14T05:58:06.630347+00:00",
           "stage": "3 DA / ESTIMATE",
-          "agent_or_tool": "Desk Adjuster (Human)",
-          "purpose": "Dismiss / reject recommendation",
-          "result_summary": "Claim dismissed/rejected by adjuster. Adjuster note: Adjuster dismissed claim"
+          "agent_or_tool": "Vision Assessor Agent",
+          "purpose": "Damage severity appraisal & repair calculation",
+          "result_summary": "Damaged zones identified: ['None']. Severity: Unknown. Calculated repair cost: ₹0 from standard IRDAI table. Overall confidence: 0%."
         }
       ],
       "chat_history": []
@@ -220,20 +204,21 @@
       "injuries": false,
       "third_party": true,
       "police_report": false,
-      "claim_status": "DISCARDED",
-      "current_stage": "2 COVERAGE",
+      "claim_status": "STUCK",
+      "current_stage": "3 DA / ESTIMATE",
       "stages_completed": [
-        "1 INTAKE & TRIAGE"
+        "1 INTAKE & TRIAGE",
+        "2 COVERAGE"
       ],
       "priority": "High priority",
       "action_type": "ESCALATION",
       "handled_by": "Spark",
       "loop_count": 0,
       "returned_to_user_prompt": null,
-      "assigned_surveyor": "Senior Surveyor",
-      "surveyor_assigned_at": "2026-11-13T20:27:23.068002+00:00",
-      "surveyor_recommendation": "Senior Surveyor",
-      "surveyor_recommendation_reason": "Claim involves bodily injury or third-party liability requiring senior oversight.",
+      "assigned_surveyor": null,
+      "surveyor_assigned_at": null,
+      "surveyor_recommendation": null,
+      "surveyor_recommendation_reason": null,
       "statement_facts": {
         "claimed_zones": [
           "rear"
@@ -248,10 +233,25 @@
         "weather_claimed": ""
       },
       "vision_report": null,
-      "coverage_result": null,
+      "coverage_result": {
+        "policy_id": "POL-1006",
+        "status": "not_covered",
+        "policy_active_on_date": false,
+        "vehicle_matched": true,
+        "coverage_type": "Comprehensive",
+        "idv_inr": 280000.0,
+        "deductible_inr": 2000.0,
+        "limit_inr": 280000.0,
+        "net_payable_estimate_inr": 0.0,
+        "clause_citations": [
+          "Section II — Policy Validity: Policy must be active on the date of loss",
+          "Section I — Own Damage Excluded under Third-Party Liability Only Policy"
+        ],
+        "explanation": "Policy was expired on incident date 2026-11-11 (effective 2025-11-02 – 2026-11-01); Policy type 'Comprehensive' does not cover own-vehicle damage. Own damage is excluded under Third-Party Liability Only policies."
+      },
       "fraud_report": null,
       "final_tier": null,
-      "headline_summary": "Discarded — dismissed by Adjuster. Adjuster note: Adjuster dismissed claim",
+      "headline_summary": "Policy not_covered (Comprehensive) — executing visual damage appraisal.",
       "what_spark_did": "Spark executed deterministic policy schedule validation. The incident date reported precedes policy inception. Per core protocol, auto-rejection is prohibited; claim escalated to desk adjuster.",
       "recommendation_title": "Coverage Gate Failed — Adjuster Review Required",
       "confidence_score": 12,
@@ -273,18 +273,11 @@
       ],
       "agent_trace": [
         {
-          "timestamp": "2026-11-13T20:27:23.068021+00:00",
+          "timestamp": "2026-11-14T05:58:06.640314+00:00",
           "stage": "2 COVERAGE",
-          "agent_or_tool": "Desk Adjuster (Human)",
-          "purpose": "Surveyor Assignment",
-          "result_summary": "Claim dispatched to Senior Surveyor for physical inspection. (AI Recommendation: Senior Surveyor — Claim involves bodily injury or third-party liability requiring senior oversight.)."
-        },
-        {
-          "timestamp": "2026-11-13T21:16:35.716867+00:00",
-          "stage": "2 COVERAGE",
-          "agent_or_tool": "Desk Adjuster (Human)",
-          "purpose": "Dismiss / reject recommendation",
-          "result_summary": "Claim dismissed/rejected by adjuster. Adjuster note: Adjuster dismissed claim"
+          "agent_or_tool": "Policy Coverage Agent",
+          "purpose": "Contractual terms & schedule validation",
+          "result_summary": "Coverage status: NOT_COVERED (Comprehensive). Active on date: False, Vehicle matched: True. IDV: ₹280,000, Deductible: ₹2,000. Citations: Section II — Policy Validity: Policy must be active on the date of loss; Section I — Own Damage Excluded under Third-Party Liability Only Policy."
         }
       ],
       "chat_history": []
@@ -307,20 +300,21 @@
       "third_party": false,
       "police_report": false,
       "claim_status": "NEEDS ATTENTION",
-      "current_stage": "3 DA / ESTIMATE",
+      "current_stage": "4 FRAUD & CONSISTENCY",
       "stages_completed": [
         "1 INTAKE & TRIAGE",
-        "2 COVERAGE"
+        "2 COVERAGE",
+        "3 DA / ESTIMATE"
       ],
       "priority": "High priority",
       "action_type": "QUESTION",
       "handled_by": "Spark",
       "loop_count": 0,
       "returned_to_user_prompt": null,
-      "assigned_surveyor": "Senior Surveyor",
-      "surveyor_assigned_at": "2026-11-13T20:28:01.443790+00:00",
-      "surveyor_recommendation": "Junior Surveyor",
-      "surveyor_recommendation_reason": "Minor cosmetic damage with consistent evidence and high visual confidence, suitable for standard field inspection.",
+      "assigned_surveyor": null,
+      "surveyor_assigned_at": null,
+      "surveyor_recommendation": null,
+      "surveyor_recommendation_reason": null,
       "statement_facts": {
         "claimed_zones": [
           "left",
@@ -335,11 +329,18 @@
         "police_report_filed": false,
         "weather_claimed": ""
       },
-      "vision_report": null,
+      "vision_report": {
+        "findings": [],
+        "overall_severity": "Unknown",
+        "estimated_repair_cost_inr": 0.0,
+        "overall_confidence": 0,
+        "unusable_photos": true,
+        "notes": "Vision analysis failed: GEMINI_API_KEY is not set. Add it to your .env file."
+      },
       "coverage_result": null,
       "fraud_report": null,
       "final_tier": null,
-      "headline_summary": "Spark has a question — is the second-bathroom damage part of this loss?",
+      "headline_summary": "Damage assessed: Unknown (₹0) — proceeding to fraud & consistency check.",
       "what_spark_did": "Spark analyzed damage photographs and detected secondary damage inconsistency requiring claimant input.",
       "recommendation_title": "Claimant Clarification Needed",
       "confidence_score": 64,
@@ -360,11 +361,18 @@
       ],
       "agent_trace": [
         {
-          "timestamp": "2026-11-13T20:28:01.443803+00:00",
+          "timestamp": "2026-11-14T05:58:06.646804+00:00",
           "stage": "3 DA / ESTIMATE",
-          "agent_or_tool": "Desk Adjuster (Human)",
-          "purpose": "Surveyor Assignment",
-          "result_summary": "Claim dispatched to Senior Surveyor for physical inspection. (AI Recommendation: Junior Surveyor — Minor cosmetic damage with consistent evidence and high visual confidence, suitable for standard field inspection.)."
+          "agent_or_tool": "Vision Assessor Agent",
+          "purpose": "Neutral multimodal damage assessment",
+          "result_summary": "Inspecting 1 photo(s) using neutral zone checklist without statement bias."
+        },
+        {
+          "timestamp": "2026-11-14T05:58:06.648698+00:00",
+          "stage": "3 DA / ESTIMATE",
+          "agent_or_tool": "Vision Assessor Agent",
+          "purpose": "Damage severity appraisal & repair calculation",
+          "result_summary": "Damaged zones identified: ['None']. Severity: Unknown. Calculated repair cost: ₹0 from standard IRDAI table. Overall confidence: 0%."
         }
       ],
       "chat_history": []
@@ -387,9 +395,10 @@
       "third_party": false,
       "police_report": false,
       "claim_status": "STUCK",
-      "current_stage": "2 COVERAGE",
+      "current_stage": "3 DA / ESTIMATE",
       "stages_completed": [
-        "1 INTAKE & TRIAGE"
+        "1 INTAKE & TRIAGE",
+        "2 COVERAGE"
       ],
       "priority": "High priority",
       "action_type": "ESCALATION",
@@ -414,10 +423,24 @@
         "weather_claimed": ""
       },
       "vision_report": null,
-      "coverage_result": null,
+      "coverage_result": {
+        "policy_id": "POL-1005",
+        "status": "not_covered",
+        "policy_active_on_date": true,
+        "vehicle_matched": true,
+        "coverage_type": "Third_Party_Only",
+        "idv_inr": 0.0,
+        "deductible_inr": 0.0,
+        "limit_inr": 750000.0,
+        "net_payable_estimate_inr": 0.0,
+        "clause_citations": [
+          "Section I — Own Damage Excluded under Third-Party Liability Only Policy"
+        ],
+        "explanation": "Policy type 'Third_Party_Only' does not cover own-vehicle damage. Own damage is excluded under Third-Party Liability Only policies."
+      },
       "fraud_report": null,
       "final_tier": null,
-      "headline_summary": "Bank details failed validation — payment file rejected",
+      "headline_summary": "Policy not_covered (Third_Party_Only) — executing visual damage appraisal.",
       "what_spark_did": "Automated payout gateway rejected disbursement due to bank account name mismatch.",
       "recommendation_title": "Banking & KYC Escalation",
       "confidence_score": 45,
@@ -436,7 +459,15 @@
         "Payout gateway",
         "KYC check"
       ],
-      "agent_trace": [],
+      "agent_trace": [
+        {
+          "timestamp": "2026-11-14T05:58:06.655456+00:00",
+          "stage": "2 COVERAGE",
+          "agent_or_tool": "Policy Coverage Agent",
+          "purpose": "Contractual terms & schedule validation",
+          "result_summary": "Coverage status: NOT_COVERED (Third_Party_Only). Active on date: True, Vehicle matched: True. IDV: ₹0, Deductible: ₹0. Citations: Section I — Own Damage Excluded under Third-Party Liability Only Policy."
+        }
+      ],
       "chat_history": []
     },
     {
@@ -457,19 +488,20 @@
       "third_party": false,
       "police_report": false,
       "claim_status": "NEEDS ATTENTION",
-      "current_stage": "2 COVERAGE",
+      "current_stage": "3 DA / ESTIMATE",
       "stages_completed": [
-        "1 INTAKE & TRIAGE"
+        "1 INTAKE & TRIAGE",
+        "2 COVERAGE"
       ],
       "priority": "High priority",
       "action_type": "REQUEST",
       "handled_by": "Spark",
       "loop_count": 0,
       "returned_to_user_prompt": null,
-      "assigned_surveyor": "Junior Surveyor",
-      "surveyor_assigned_at": "2026-11-13T20:28:03.811004+00:00",
-      "surveyor_recommendation": "Junior Surveyor",
-      "surveyor_recommendation_reason": "Minor cosmetic damage with consistent evidence and high visual confidence, suitable for standard field inspection.",
+      "assigned_surveyor": null,
+      "surveyor_assigned_at": null,
+      "surveyor_recommendation": null,
+      "surveyor_recommendation_reason": null,
       "statement_facts": {
         "claimed_zones": [
           "front"
@@ -484,10 +516,22 @@
         "weather_claimed": ""
       },
       "vision_report": null,
-      "coverage_result": null,
+      "coverage_result": {
+        "policy_id": "POL-1007",
+        "status": "covered",
+        "policy_active_on_date": true,
+        "vehicle_matched": true,
+        "coverage_type": "Comprehensive",
+        "idv_inr": 4800000.0,
+        "deductible_inr": 10000.0,
+        "limit_inr": 4800000.0,
+        "net_payable_estimate_inr": 0.0,
+        "clause_citations": [],
+        "explanation": "Policy covered. Net payable estimate: INR 0."
+      },
       "fraud_report": null,
       "final_tier": null,
-      "headline_summary": "Spark needs the signed proof of loss before it can settle",
+      "headline_summary": "Policy covered (Comprehensive) — executing visual damage appraisal.",
       "what_spark_did": "Spark completed preliminary coverage and damage estimates. Settlement is staged and awaiting mandatory signed proof of loss document.",
       "recommendation_title": "Signed Proof of Loss Required",
       "confidence_score": 85,
@@ -508,11 +552,11 @@
       ],
       "agent_trace": [
         {
-          "timestamp": "2026-11-13T20:28:03.811015+00:00",
+          "timestamp": "2026-11-14T05:58:06.664275+00:00",
           "stage": "2 COVERAGE",
-          "agent_or_tool": "Desk Adjuster (Human)",
-          "purpose": "Surveyor Assignment",
-          "result_summary": "Claim dispatched to Junior Surveyor for physical inspection. (AI Recommendation: Junior Surveyor — Minor cosmetic damage with consistent evidence and high visual confidence, suitable for standard field inspection.)."
+          "agent_or_tool": "Policy Coverage Agent",
+          "purpose": "Contractual terms & schedule validation",
+          "result_summary": "Coverage status: COVERED (Comprehensive). Active on date: True, Vehicle matched: True. IDV: ₹4,800,000, Deductible: ₹10,000. Citations: Standard Schedule Provisions."
         }
       ],
       "chat_history": []
@@ -520,7 +564,7 @@
     {
       "claim_id": "CLM-26-00138",
       "created_at": "2026-11-05T08:45:00Z",
-      "policy_id": "POL-1001",
+      "policy_id": "POL-1003",
       "policyholder_name": "Rajan Pillai",
       "vehicle_reg": "TN09EF3003",
       "line_of_business": "Workers Comp",
@@ -529,16 +573,17 @@
       "location": "Chennai",
       "raw_statement": "Work-related vehicle transit incident.",
       "photo_paths": [
-        "static/sample_photos/pol_1001_damage.jpg"
+        "static/sample_photos/pol_1003_damage.jpg"
       ],
       "injuries": false,
       "third_party": false,
       "police_report": false,
       "claim_status": "NEEDS ATTENTION",
-      "current_stage": "3 DA / ESTIMATE",
+      "current_stage": "4 FRAUD & CONSISTENCY",
       "stages_completed": [
         "1 INTAKE & TRIAGE",
-        "2 COVERAGE"
+        "2 COVERAGE",
+        "3 DA / ESTIMATE"
       ],
       "priority": "High priority",
       "action_type": "RECOMMENDATION",
@@ -562,11 +607,18 @@
         "police_report_filed": false,
         "weather_claimed": ""
       },
-      "vision_report": null,
+      "vision_report": {
+        "findings": [],
+        "overall_severity": "Unknown",
+        "estimated_repair_cost_inr": 0.0,
+        "overall_confidence": 0,
+        "unusable_photos": true,
+        "notes": "Vision analysis failed: GEMINI_API_KEY is not set. Add it to your .env file."
+      },
       "coverage_result": null,
       "fraud_report": null,
       "final_tier": null,
-      "headline_summary": "Payment above $10k — second-pair-of-eyes check required by policy",
+      "headline_summary": "Damage assessed: Unknown (₹0) — proceeding to fraud & consistency check.",
       "what_spark_did": "Spark completed triage and determined payout outcome of $28,800. Policy requires dual sign-off for payments exceeding $10,000.",
       "recommendation_title": "Approve the prepared outcome for $28,800.",
       "confidence_score": 87,
@@ -592,7 +644,22 @@
         "Corporate governance",
         "Dual-approval threshold"
       ],
-      "agent_trace": [],
+      "agent_trace": [
+        {
+          "timestamp": "2026-11-14T05:58:06.670306+00:00",
+          "stage": "3 DA / ESTIMATE",
+          "agent_or_tool": "Vision Assessor Agent",
+          "purpose": "Neutral multimodal damage assessment",
+          "result_summary": "Inspecting 1 photo(s) using neutral zone checklist without statement bias."
+        },
+        {
+          "timestamp": "2026-11-14T05:58:06.671952+00:00",
+          "stage": "3 DA / ESTIMATE",
+          "agent_or_tool": "Vision Assessor Agent",
+          "purpose": "Damage severity appraisal & repair calculation",
+          "result_summary": "Damaged zones identified: ['None']. Severity: Unknown. Calculated repair cost: ₹0 from standard IRDAI table. Overall confidence: 0%."
+        }
+      ],
       "chat_history": []
     }
   ],

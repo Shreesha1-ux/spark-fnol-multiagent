@@ -1,0 +1,79 @@
+flowchart TB
+%% ========================================================
+%% DIAGRAM 1: SPARK FNOL COMPLETE SYSTEM ARCHITECTURE
+%% ========================================================
+
+    subgraph UI ["1. Presentation Layer (Adjuster & Claimant Interfaces)"]
+        direction LR
+        UI_FNOL["FNOL Intake Portal\n(Statement & Photo Upload)"]
+        UI_COCKPIT["Adjuster Cockpit\n(Live Kanban & HUD Metrics)"]
+        UI_SURVEYOR["Surveyor Management\n(Roster & Field Dispatch)"]
+    end
+
+    subgraph BACKEND ["2. Application & Backend Services (FastAPI & State)"]
+        direction LR
+        API_SERVER["FastAPI Server & REST Endpoints\n(server.py · Port 8000)"]
+        STATE_MGR["Atomic State Manager\n(state_manager.py)"]
+        STAGE_RUNNER["Stage Progression Engine\n(agents_crew.py)"]
+    end
+
+    subgraph AGENTS ["3. Agentic Intelligence Core (CrewAI & Specialized Agents)"]
+        direction TB
+        A1["Agent 1: Statement Analyst\n(gemini-2.5-flash-lite)"]
+        A4["Agent 4: Policy & Coverage Specialist\n(Contractual Gating)"]
+        A2["Agent 2: Vision Assessor\n(gemini-2.5-flash Multimodal)"]
+        A3["Agent 3: Supervisor Brain\n(Verification Loop Orchestrator)"]
+        A5["Agent 5: Decision Gate\n(Deterministic Tier Router)"]
+        A6["Agent 6: Surveyor Recommender\n(AI Expertise Matching)"]
+    end
+
+    subgraph TOOLS_EXT ["4. External Tools & Domain Knowledge"]
+        direction LR
+        EXT_WEATHER["Open-Meteo Weather API\n(Historical Radar Verification)"]
+        EXT_GEMINI["Google GenAI API\n(Multimodal Vision Inference)"]
+        DATA_REPAIR["Repair Cost Tables\n(data/repair_costs.json)"]
+    end
+
+    subgraph PERSISTENCE ["5. Local Persistent Data Repositories"]
+        direction LR
+        DB_POLICIES["Policy Schedule Master DB\n(data/db2_policies.json)"]
+        DB_CLAIMS["Operational Claims DB\n(data/db1_claims.json)"]
+    end
+
+    subgraph OUTPUTS ["6. Actionable Decisions & Human Governance"]
+        direction LR
+        T1["Tier 1: Fast-Track STP\n(Instant Settlement Offer)"]
+        T2["Tier 2: Adjuster Review\n(High Reserve / Sign-Off)"]
+        T3["Tier 3: SIU Escalation\n(Fraud / Coverage Denial)"]
+        DISPATCH["Surveyor Dispatch\n(Junior vs. Senior Category)"]
+    end
+
+    %% Inter-layer Connections
+    UI_FNOL -->|"Submits Claim"| API_SERVER
+    API_SERVER <-->|"Reads / Updates Claims"| STATE_MGR
+    STATE_MGR <-->|"Atomic Read / Write"| DB_CLAIMS
+    API_SERVER -->|"Triggers Stage"| STAGE_RUNNER
+
+    STAGE_RUNNER -->|"Orchestrates Execution"| AGENTS
+
+    %% Agent-specific Tool & Data Connections
+    A1 -->|"Extracts Narrative Facts"| A4
+    A4 -->|"Reads Policy Terms"| DB_POLICIES
+    A4 -->|"Verifies Coverage"| A2
+    A2 -->|"Multimodal Zone Appraisal"| EXT_GEMINI
+    A2 -->|"Calculates Costs"| DATA_REPAIR
+    A2 -->|"Passes Damage Report"| A3
+    A3 <-->|"Checks Weather Radar"| EXT_WEATHER
+    A3 -->|"Synthesizes Heuristics"| A5
+    A5 -->|"Evaluates Thresholds"| A6
+
+    %% Agent Outputs to Persistence and Tiers
+    A5 -->|"Populates Final Tier"| T1
+    A5 -->|"Requires Adjuster Sign-Off"| T2
+    A5 -->|"Routes to Special Unit"| T3
+    A6 -->|"Recommends Field Category"| DISPATCH
+
+    T1 -->|"Streams Live Status"| UI_COCKPIT
+    T2 -->|"Presents Audit Dossier"| UI_COCKPIT
+    T3 -->|"Flags Blocking Issues"| UI_COCKPIT
+    DISPATCH -->|"Updates Caseload"| UI_SURVEYOR

@@ -1,0 +1,242 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080" style="background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Drop Shadows -->
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+    <filter id="badge-shadow" x="-10%" y="-10%" width="120%" height="130%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.08"/>
+    </filter>
+    
+    <!-- Arrow Marker -->
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#2563EB" />
+    </marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#64748B" />
+    </marker>
+    <marker id="arrow-teal" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#0D9488" />
+    </marker>
+    <marker id="arrow-rose" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#E11D48" />
+    </marker>
+  </defs>
+
+
+  <!-- Slide Header -->
+  <rect x="60" y="35" width="1800" height="90" rx="12" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.5"/>
+  <text x="90" y="75" font-size="26" font-weight="800" fill="#0F172A" letter-spacing="-0.5">SPARK FNOL — END-TO-END DATA FLOW ARCHITECTURE</text>
+  <text x="90" y="102" font-size="14" font-weight="500" fill="#64748B">Tracing Data Origin, Pydantic Schema Transformations, Atomic File Storage & UI Presentation</text>
+  
+  <rect x="1480" y="60" width="350" height="34" rx="17" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+  <circle cx="1500" cy="77" r="5" fill="#2563EB"/>
+  <text x="1516" y="82" font-size="11.5" font-weight="700" fill="#1E40AF" letter-spacing="0.5">AEROPHILIA 2026 HACKATHON · AGENTIC AI</text>
+
+
+  <!-- Column Container -->
+  <rect x="80" y="150" width="380" height="860" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.5"/>
+  <text x="100" y="180" font-size="12" font-weight="800" fill="#334155" letter-spacing="0.8">1. DATA ORIGIN SOURCES</text>
+
+
+  <!-- Column Container -->
+  <rect x="520" y="150" width="410" height="860" rx="10" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
+  <text x="540" y="180" font-size="12" font-weight="800" fill="#334155" letter-spacing="0.8">2. AGENT TRANSFORMATIONS</text>
+
+
+  <!-- Column Container -->
+  <rect x="990" y="150" width="410" height="860" rx="10" fill="#F0FDFA" stroke="#99F6E4" stroke-width="1.5"/>
+  <text x="1010" y="180" font-size="12" font-weight="800" fill="#334155" letter-spacing="0.8">3. PYDANTIC DOMAIN SCHEMAS</text>
+
+
+  <!-- Column Container -->
+  <rect x="1460" y="150" width="380" height="860" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.5"/>
+  <text x="1480" y="180" font-size="12" font-weight="800" fill="#334155" letter-spacing="0.8">4. STORAGE & UI ARTIFACTS</text>
+
+
+  <rect x="100" y="210" width="340" height="130" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="116" y="222" width="185.0" height="18" rx="4" fill="#F1F5F9"/>
+  <text x="124" y="235" font-size="9.5" font-weight="700" fill="#64748B">Untrusted User Submissions</text>
+  <text x="118" y="260" font-size="14.5" font-weight="800" fill="#0F172A">Claimant Input Data</text>
+
+<text x="118" y="282" font-size="10.5" font-weight="500" fill="#475569">• Free-text accident narrative statement</text>
+<text x="118" y="300" font-size="10.5" font-weight="500" fill="#475569">• Uploaded vehicle damage images (.jpg/.png)</text>
+<text x="118" y="318" font-size="10.5" font-weight="500" fill="#475569">• Incident date, time and loss location</text>
+
+  <rect x="100" y="370" width="340" height="160" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="116" y="382" width="159.0" height="18" rx="4" fill="#F1F5F9"/>
+  <text x="124" y="395" font-size="9.5" font-weight="700" fill="#64748B">data/db2_policies.json</text>
+  <text x="118" y="420" font-size="14.5" font-weight="800" fill="#0F172A">Policy Contract DB</text>
+
+<text x="118" y="442" font-size="10.5" font-weight="500" fill="#475569">• Policy schedule records (POL-1001 to 1007)</text>
+<text x="118" y="460" font-size="10.5" font-weight="500" fill="#475569">• Inception & expiry date windows</text>
+<text x="118" y="478" font-size="10.5" font-weight="500" fill="#475569">• Insured Declared Value (IDV) limits</text>
+<text x="118" y="496" font-size="10.5" font-weight="500" fill="#475569">• Standard deductibles & zero-dep riders</text>
+<text x="118" y="514" font-size="10.5" font-weight="500" fill="#475569">• Own Damage (OD) vs Third-Party (TP) flags</text>
+
+  <rect x="100" y="560" width="340" height="140" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="116" y="572" width="159.0" height="18" rx="4" fill="#F1F5F9"/>
+  <text x="124" y="585" font-size="9.5" font-weight="700" fill="#64748B">data/repair_costs.json</text>
+  <text x="118" y="610" font-size="14.5" font-weight="800" fill="#0F172A">Repair Cost Matrix</text>
+
+<text x="118" y="632" font-size="10.5" font-weight="500" fill="#475569">• 6 Vehicle body zones (Front, Rear, etc.)</text>
+<text x="118" y="650" font-size="10.5" font-weight="500" fill="#475569">• 3 Severity ratings (Minor, Moderate, Severe)</text>
+<text x="118" y="668" font-size="10.5" font-weight="500" fill="#475569">• Standard parts & labor pricing in INR</text>
+<text x="118" y="686" font-size="10.5" font-weight="500" fill="#475569">• Modeled on IRDAI market benchmarks</text>
+
+  <rect x="100" y="730" width="340" height="140" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="116" y="742" width="217.5" height="18" rx="4" fill="#F1F5F9"/>
+  <text x="124" y="755" font-size="9.5" font-weight="700" fill="#64748B">External Historical Weather API</text>
+  <text x="118" y="780" font-size="14.5" font-weight="800" fill="#0F172A">Open-Meteo Weather Radar</text>
+
+<text x="118" y="802" font-size="10.5" font-weight="500" fill="#475569">• Geocodes loss location (lat/long)</text>
+<text x="118" y="820" font-size="10.5" font-weight="500" fill="#475569">• Hourly precipitation & rainfall (mm)</text>
+<text x="118" y="838" font-size="10.5" font-weight="500" fill="#475569">• Historical WMO weather event codes</text>
+<text x="118" y="856" font-size="10.5" font-weight="500" fill="#475569">• Cross-checks environmental claims</text>
+
+  <rect x="540" y="210" width="370" height="115" rx="8" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="556" y="220" width="204.4" height="18" rx="4" fill="#DBEAFE"/>
+  <text x="563" y="233" font-size="9.5" font-weight="700" fill="#2563EB">Model: gemini-2.5-flash-lite</text>
+  <text x="558" y="256" font-size="14" font-weight="800" fill="#0F172A">Agent 1: Statement Analyst</text>
+  <text x="558" y="278" font-size="11" font-weight="500" fill="#64748B">Parses raw claimant narrative into verified loss coordinates while discarding injection attacks.</text>
+
+
+  <rect x="540" y="350" width="370" height="115" rx="8" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="556" y="360" width="231.6" height="18" rx="4" fill="#DBEAFE"/>
+  <text x="563" y="373" font-size="9.5" font-weight="700" fill="#2563EB">Deterministic Rules + DB2 Lookup</text>
+  <text x="558" y="396" font-size="14" font-weight="800" fill="#0F172A">Agent 4: Policy Specialist</text>
+  <text x="558" y="418" font-size="11" font-weight="500" fill="#64748B">Validates in-force period, Own Damage coverage, deductibles, and cites IRDAI policy clauses.</text>
+
+
+  <rect x="540" y="490" width="370" height="115" rx="8" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="556" y="500" width="245.2" height="18" rx="4" fill="#DBEAFE"/>
+  <text x="563" y="513" font-size="9.5" font-weight="700" fill="#2563EB">Model: gemini-2.5-flash Multimodal</text>
+  <text x="558" y="536" font-size="14" font-weight="800" fill="#0F172A">Agent 2: Vision Assessor</text>
+  <text x="558" y="558" font-size="11" font-weight="500" fill="#64748B">Conducts zone-by-zone damage appraisal and computes repair cost from standard pricing tables.</text>
+
+
+  <rect x="540" y="630" width="370" height="115" rx="8" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="556" y="640" width="170.4" height="18" rx="4" fill="#E0E7FF"/>
+  <text x="563" y="653" font-size="9.5" font-weight="700" fill="#4F46E5">Model: gemini-2.5-flash</text>
+  <text x="558" y="676" font-size="14" font-weight="800" fill="#0F172A">Agent 3: Supervisor Brain</text>
+  <text x="558" y="698" font-size="11" font-weight="500" fill="#64748B">Reconciles statement vs photos; queries Open-Meteo; coordinates 2-iteration re-scan loops.</text>
+
+
+  <rect x="540" y="770" width="370" height="115" rx="8" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="556" y="780" width="184.0" height="18" rx="4" fill="#CCFBF1"/>
+  <text x="563" y="793" font-size="9.5" font-weight="700" fill="#0D9488">Pure Deterministic Engine</text>
+  <text x="558" y="816" font-size="14" font-weight="800" fill="#0F172A">Agent 5: Decision Gate</text>
+  <text x="558" y="838" font-size="11" font-weight="500" fill="#64748B">Evaluates top-down rules (Tier 1 Fast-Track to Tier 3 SIU Escalation) with zero LLM math hallucination.</text>
+
+
+  <rect x="540" y="905" width="370" height="85" rx="8" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="556" y="915" width="184.0" height="18" rx="4" fill="#CCFBF1"/>
+  <text x="563" y="928" font-size="9.5" font-weight="700" fill="#0D9488">Expertise Matching Engine</text>
+  <text x="558" y="951" font-size="14" font-weight="800" fill="#0F172A">Agent 6: Surveyor Recommender</text>
+  <text x="558" y="973" font-size="11" font-weight="500" fill="#64748B">Evaluates repair cost (> ₹30k), severity & bodily injury to recommend Junior/Senior Surveyor.</text>
+
+
+  <rect x="1010" y="210" width="370" height="115" rx="8" fill="#FFFFFF" stroke="#99F6E4" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="1026" y="220" width="211.0" height="18" rx="4" fill="#F0FDFA"/>
+  <text x="1034" y="233" font-size="9.5" font-weight="700" fill="#0D9488">Output of Agent 1 (schemas.py)</text>
+  <text x="1028" y="256" font-size="14" font-weight="800" fill="#0F172A">Schema: StatementFacts</text>
+
+<text x="1028" y="278" font-size="10.5" font-weight="500" fill="#334155">• claimed_zones: ['front', 'hood']</text>
+<text x="1028" y="296" font-size="10.5" font-weight="500" fill="#334155">• injuries_reported: False | third_party: False</text>
+<text x="1028" y="314" font-size="10.5" font-weight="500" fill="#334155">• narrative_summary: clean loss description</text>
+
+  <rect x="1010" y="350" width="370" height="115" rx="8" fill="#FFFFFF" stroke="#99F6E4" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="1026" y="360" width="211.0" height="18" rx="4" fill="#F0FDFA"/>
+  <text x="1034" y="373" font-size="9.5" font-weight="700" fill="#0D9488">Output of Agent 4 (schemas.py)</text>
+  <text x="1028" y="396" font-size="14" font-weight="800" fill="#0F172A">Schema: CoverageResult</text>
+
+<text x="1028" y="418" font-size="10.5" font-weight="500" fill="#334155">• status: 'covered' | 'not_covered'</text>
+<text x="1028" y="436" font-size="10.5" font-weight="500" fill="#334155">• net_payable_estimate_inr: ₹22,000</text>
+<text x="1028" y="454" font-size="10.5" font-weight="500" fill="#334155">• clause_citations: ['Clause 4(a) Motor OD']</text>
+
+  <rect x="1010" y="490" width="370" height="115" rx="8" fill="#FFFFFF" stroke="#99F6E4" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="1026" y="500" width="211.0" height="18" rx="4" fill="#F0FDFA"/>
+  <text x="1034" y="513" font-size="9.5" font-weight="700" fill="#0D9488">Output of Agent 2 (schemas.py)</text>
+  <text x="1028" y="536" font-size="14" font-weight="800" fill="#0F172A">Schema: VisionReport</text>
+
+<text x="1028" y="558" font-size="10.5" font-weight="500" fill="#334155">• overall_severity: 'Minor' | 'Moderate' | 'Severe'</text>
+<text x="1028" y="576" font-size="10.5" font-weight="500" fill="#334155">• estimated_repair_cost_inr: ₹22,000</text>
+<text x="1028" y="594" font-size="10.5" font-weight="500" fill="#334155">• findings: [ZoneFinding(zone='rear', ...)]</text>
+
+  <rect x="1010" y="630" width="370" height="115" rx="8" fill="#FFFFFF" stroke="#99F6E4" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="1026" y="640" width="211.0" height="18" rx="4" fill="#F0FDFA"/>
+  <text x="1034" y="653" font-size="9.5" font-weight="700" fill="#0D9488">Output of Agent 3 (schemas.py)</text>
+  <text x="1028" y="676" font-size="14" font-weight="800" fill="#0F172A">Schema: FraudConsistencyReport</text>
+
+<text x="1028" y="698" font-size="10.5" font-weight="500" fill="#334155">• risk_level: 'Low' | 'Medium' | 'High'</text>
+<text x="1028" y="716" font-size="10.5" font-weight="500" fill="#334155">• statement_vs_photo_match: 'match' | 'mismatch'</text>
+<text x="1028" y="734" font-size="10.5" font-weight="500" fill="#334155">• weather_verification: 'Open-Meteo Verified'</text>
+
+  <rect x="1010" y="770" width="370" height="220" rx="8" fill="#FFFFFF" stroke="#99F6E4" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="1026" y="780" width="243.5" height="18" rx="4" fill="#F0FDFA"/>
+  <text x="1034" y="793" font-size="9.5" font-weight="700" fill="#0D9488">Single Source of Truth (schemas.py)</text>
+  <text x="1028" y="816" font-size="14" font-weight="800" fill="#0F172A">Master Schema: ClaimRecord</text>
+
+<text x="1028" y="838" font-size="10.5" font-weight="500" fill="#334155">• claim_id & policy_id: e.g. CLM-26-00037</text>
+<text x="1028" y="856" font-size="10.5" font-weight="500" fill="#334155">• final_tier: 'Tier 1' | 'Tier 2' | 'Tier 3'</text>
+<text x="1028" y="874" font-size="10.5" font-weight="500" fill="#334155">• action_type: 'RECOMMENDATION' | 'ESCALATION'</text>
+<text x="1028" y="892" font-size="10.5" font-weight="500" fill="#334155">• headline_summary & what_spark_did</text>
+<text x="1028" y="910" font-size="10.5" font-weight="500" fill="#334155">• rationale_bullets: audit why bullets</text>
+<text x="1028" y="928" font-size="10.5" font-weight="500" fill="#334155">• surveyor_recommendation: 'Junior' | 'Senior'</text>
+<text x="1028" y="946" font-size="10.5" font-weight="500" fill="#334155">• agent_trace: comprehensive step-by-step audit log</text>
+
+  <rect x="1480" y="210" width="340" height="160" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="1496" y="220" width="146.0" height="18" rx="4" fill="#F1F5F9"/>
+  <text x="1504" y="233" font-size="9.5" font-weight="700" fill="#475569">data/db1_claims.json</text>
+  <text x="1498" y="256" font-size="14" font-weight="800" fill="#0F172A">Atomic File Persistence</text>
+
+<text x="1498" y="278" font-size="10.5" font-weight="500" fill="#475569">• Thread-safe JSON serialization</text>
+<text x="1498" y="296" font-size="10.5" font-weight="500" fill="#475569">• Uses .tmp atomic rename write pattern</text>
+<text x="1498" y="314" font-size="10.5" font-weight="500" fill="#475569">• Zero partial-write database corruption</text>
+<text x="1498" y="332" font-size="10.5" font-weight="500" fill="#475569">• Stores active claims, audit traces & state</text>
+
+  <rect x="1480" y="395" width="340" height="160" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="1496" y="405" width="133.0" height="18" rx="4" fill="#F1F5F9"/>
+  <text x="1504" y="418" font-size="9.5" font-weight="700" fill="#475569">server.py REST API</text>
+  <text x="1498" y="441" font-size="14" font-weight="800" fill="#0F172A">FastAPI /api/state Endpoint</text>
+
+<text x="1498" y="463" font-size="10.5" font-weight="500" fill="#475569">• Serializes Master ClaimRecords to client</text>
+<text x="1498" y="481" font-size="10.5" font-weight="500" fill="#475569">• Computes live HUD counts (Needs Attention, etc.)</text>
+<text x="1498" y="499" font-size="10.5" font-weight="500" fill="#475569">• Streams active stage Kanban columns</text>
+<text x="1498" y="517" font-size="10.5" font-weight="500" fill="#475569">• Powers instant client-side UI filters</text>
+
+  <rect x="1480" y="580" width="340" height="210" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="1496" y="590" width="126.5" height="18" rx="4" fill="#F1F5F9"/>
+  <text x="1504" y="603" font-size="9.5" font-weight="700" fill="#475569">static/index.html</text>
+  <text x="1498" y="626" font-size="14" font-weight="800" fill="#0F172A">Adjuster Cockpit (SPA)</text>
+
+<text x="1498" y="648" font-size="10.5" font-weight="500" fill="#475569">• Live interactive Kanban stage cards</text>
+<text x="1498" y="666" font-size="10.5" font-weight="500" fill="#475569">• 4 Horizontal Filters (High Sev, Fraud, etc.)</text>
+<text x="1498" y="684" font-size="10.5" font-weight="500" fill="#475569">• Inline Analysis Report (Sections A to E)</text>
+<text x="1498" y="702" font-size="10.5" font-weight="500" fill="#475569">• Surveyor Recommendation & Modal Dispatch</text>
+<text x="1498" y="720" font-size="10.5" font-weight="500" fill="#475569">• Dedicated Surveyor Management Roster</text>
+
+  <rect x="1480" y="815" width="340" height="175" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <rect x="1496" y="825" width="185.0" height="18" rx="4" fill="#F1F5F9"/>
+  <text x="1504" y="838" font-size="9.5" font-weight="700" fill="#475569">Multi-Format Audit Dossier</text>
+  <text x="1498" y="861" font-size="14" font-weight="800" fill="#0F172A">Exported Report Artifacts</text>
+
+<text x="1498" y="883" font-size="10.5" font-weight="500" fill="#475569">• 1-Click Plaintext Download (.txt)</text>
+<text x="1498" y="901" font-size="10.5" font-weight="500" fill="#475569">• Styled PDF Report Export (Save as PDF)</text>
+<text x="1498" y="919" font-size="10.5" font-weight="500" fill="#475569">• Formatted Paper Print Layout</text>
+<text x="1498" y="937" font-size="10.5" font-weight="500" fill="#475569">• Dynamic 'Copy Text' Clipboard Sync</text>
+<line x1="440" y1="275" x2="540" y2="275" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<line x1="440" y1="450" x2="540" y2="410" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<line x1="440" y1="630" x2="540" y2="550" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<line x1="440" y1="800" x2="540" y2="690" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<line x1="910" y1="275" x2="1010" y2="275" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<line x1="910" y1="410" x2="1010" y2="410" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<line x1="910" y1="550" x2="1010" y2="550" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<line x1="910" y1="690" x2="1010" y2="690" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<line x1="910" y1="830" x2="1010" y2="830" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<line x1="910" y1="940" x2="1010" y2="910" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<line x1="1380" y1="880" x2="1480" y2="300" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<line x1="1650" y1="370" x2="1650" y2="395" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<line x1="1650" y1="555" x2="1650" y2="580" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<line x1="1650" y1="790" x2="1650" y2="815" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+</svg>
