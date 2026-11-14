@@ -327,6 +327,32 @@
     margin-bottom: 10px;
     border-bottom: 1px solid #f1f5f9;
   }
+
+  /* Floating AI Bot Assistant */
+  @keyframes sparkBotFloat {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-6px) rotate(1.2deg);
+    }
+  }
+
+  .spark-bot-avatar {
+    animation: sparkBotFloat 3.4s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  @media (max-width: 640px) {
+    #spark-floating-bot {
+      bottom: 84px !important;
+      right: 18px !important;
+    }
+    .spark-bot-avatar {
+      width: 50px !important;
+      height: 50px !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -887,6 +913,20 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- FLOATING AI BOT ASSISTANT (Bottom Right Corner) -->
+  <div id="spark-floating-bot" class="fixed bottom-24 right-6 z-40 flex items-center gap-2.5 group pointer-events-auto select-none" style="filter: drop-shadow(0 6px 14px rgba(13, 148, 136, 0.28));">
+    <!-- Friendly Hover Tooltip on Left -->
+    <div class="bg-slate-900/95 text-white text-xs px-2.5 py-1.5 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap flex items-center gap-2 border border-slate-700/80 backdrop-blur-xs -translate-x-1 group-hover:translate-x-0">
+      <span class="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
+      <span class="font-bold text-slate-100">Spark AI</span>
+      <span class="text-[10.5px] text-teal-300 font-semibold bg-teal-950/70 px-1.5 py-0.5 rounded border border-teal-800/60">Assistant</span>
+    </div>
+    <!-- Floating Robot Head Container (Approx 60x60) -->
+    <div class="spark-bot-avatar w-[60px] h-[60px] flex items-center justify-center cursor-pointer transition-transform duration-200 group-hover:scale-105" title="Spark AI Assistant">
+      <img src="/static/spark_assistant.png" alt="Spark AI Assistant" class="w-full h-full object-contain select-none pointer-events-none" />
     </div>
   </div>
 

@@ -32,6 +32,7 @@ import os
 import shutil
 import textwrap
 import time
+import base64
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -606,6 +607,45 @@ div[data-testid="stVerticalBlockBorderWrapper"]:hover {
 </style>
 """
 st.markdown(EXACT_THEME_CSS, unsafe_allow_html=True)
+
+# Floating Spark AI Assistant Overlay
+try:
+    _bot_img_path = Path(__file__).parent / "static" / "spark_assistant.png"
+    if _bot_img_path.exists():
+        with open(_bot_img_path, "rb") as _f:
+            _b64_bot = base64.b64encode(_f.read()).decode("utf-8")
+        st.markdown(
+            f"""
+            <style>
+            @keyframes sparkBotFloat {{
+                0%, 100% {{ transform: translateY(0px) rotate(0deg); }}
+                50% {{ transform: translateY(-6px) rotate(1.2deg); }}
+            }}
+            .spark-bot-avatar {{
+                animation: sparkBotFloat 3.4s ease-in-out infinite;
+                will-change: transform;
+            }}
+            @media (max-width: 640px) {{
+                #spark-floating-bot {{
+                    bottom: 20px !important;
+                    right: 16px !important;
+                }}
+                .spark-bot-avatar {{
+                    width: 50px !important;
+                    height: 50px !important;
+                }}
+            }}
+            </style>
+            <div id="spark-floating-bot" style="position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; align-items: center; gap: 10px; filter: drop-shadow(0 6px 14px rgba(13, 148, 136, 0.28));">
+                <div class="spark-bot-avatar" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; cursor: pointer;" title="Spark AI Assistant">
+                    <img src="data:image/png;base64,{_b64_bot}" alt="Spark AI Assistant" style="width: 100%; height: 100%; object-fit: contain;" />
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+except Exception:
+    pass
 
 
 # ===========================================================================
